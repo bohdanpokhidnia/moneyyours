@@ -8,17 +8,38 @@
 
 /* Begin PBXBuildFile section */
 		F708116E2C198AC700257CFE /* MoneyYoursApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708116D2C198AC700257CFE /* MoneyYoursApp.swift */; };
-		F70811702C198AC700257CFE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708116F2C198AC700257CFE /* ContentView.swift */; };
-		F70811722C198AC800257CFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70811712C198AC800257CFE /* Assets.xcassets */; };
 		F70811752C198AC800257CFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70811742C198AC800257CFE /* Preview Assets.xcassets */; };
+		F708117D2C198D0800257CFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F708117C2C198D0800257CFE /* ComposableArchitecture */; };
+		F70811802C198D2000257CFE /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708117F2C198D2000257CFE /* Address.swift */; };
+		F70811842C198D4C00257CFE /* AddressesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811812C198D4C00257CFE /* AddressesFeature.swift */; };
+		F70811852C198D4C00257CFE /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesView.swift */; };
+		F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddressFeature.swift */; };
+		F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811882C198D9800257CFE /* AddAddressView.swift */; };
+		F7AD329F2C19903C000768C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7AD329D2C19903C000768C3 /* Assets.xcassets */; };
+		F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A22C1990C4000768C3 /* UINavigationController.swift */; };
+		F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */; };
+		F7AD32AB2C19920A000768C3 /* AddressesButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */; };
+		F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AD2C19927E000768C3 /* AppColor.swift */; };
+		F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B02C1992CE000768C3 /* GrayTextField.swift */; };
+		F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F708116A2C198AC700257CFE /* MoneyYours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyYours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F708116D2C198AC700257CFE /* MoneyYoursApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyYoursApp.swift; sourceTree = "<group>"; };
-		F708116F2C198AC700257CFE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F70811712C198AC800257CFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F70811742C198AC800257CFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F708117F2C198D2000257CFE /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		F70811812C198D4C00257CFE /* AddressesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesFeature.swift; sourceTree = "<group>"; };
+		F70811822C198D4C00257CFE /* AddressesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
+		F70811872C198D9800257CFE /* AddAddressFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressFeature.swift; sourceTree = "<group>"; };
+		F70811882C198D9800257CFE /* AddAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressView.swift; sourceTree = "<group>"; };
+		F7AD329D2C19903C000768C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7AD32A22C1990C4000768C3 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAddressesButtonStyle.swift; sourceTree = "<group>"; };
+		F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesButtonStyle.swift; sourceTree = "<group>"; };
+		F7AD32AD2C19927E000768C3 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
+		F7AD32B02C1992CE000768C3 /* GrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTextField.swift; sourceTree = "<group>"; };
+		F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightThemeShadow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F708117D2C198D0800257CFE /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,8 +74,12 @@
 			isa = PBXGroup;
 			children = (
 				F708116D2C198AC700257CFE /* MoneyYoursApp.swift */,
-				F708116F2C198AC700257CFE /* ContentView.swift */,
-				F70811712C198AC800257CFE /* Assets.xcassets */,
+				F7AD32A02C1990AC000768C3 /* Extensions */,
+				F7AD32B22C199671000768C3 /* Views */,
+				F7AD32AC2C19926E000768C3 /* Services */,
+				F708117E2C198D1800257CFE /* Models */,
+				F70811862C198D8D00257CFE /* Modules */,
+				F7AD329E2C19903C000768C3 /* Resources */,
 				F70811732C198AC800257CFE /* Preview Content */,
 			);
 			path = MoneyYours;
@@ -65,6 +91,100 @@
 				F70811742C198AC800257CFE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F708117E2C198D1800257CFE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F708117F2C198D2000257CFE /* Address.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F70811832C198D4C00257CFE /* Addresses */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32A72C1991D3000768C3 /* Views */,
+				F70811812C198D4C00257CFE /* AddressesFeature.swift */,
+				F70811822C198D4C00257CFE /* AddressesView.swift */,
+			);
+			path = Addresses;
+			sourceTree = "<group>";
+		};
+		F70811862C198D8D00257CFE /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				F70811832C198D4C00257CFE /* Addresses */,
+				F70811892C198D9800257CFE /* AddAddress */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		F70811892C198D9800257CFE /* AddAddress */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32AF2C1992C5000768C3 /* Views */,
+				F70811872C198D9800257CFE /* AddAddressFeature.swift */,
+				F70811882C198D9800257CFE /* AddAddressView.swift */,
+			);
+			path = AddAddress;
+			sourceTree = "<group>";
+		};
+		F7AD329E2C19903C000768C3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD329D2C19903C000768C3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F7AD32A02C1990AC000768C3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32A12C1990B3000768C3 /* UIKit */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F7AD32A12C1990B3000768C3 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32A22C1990C4000768C3 /* UINavigationController.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		F7AD32A72C1991D3000768C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */,
+				F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7AD32AC2C19926E000768C3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32AD2C19927E000768C3 /* AppColor.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F7AD32AF2C1992C5000768C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32B02C1992CE000768C3 /* GrayTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7AD32B22C199671000768C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +203,9 @@
 			dependencies = (
 			);
 			name = MoneyYours;
+			packageProductDependencies = (
+				F708117C2C198D0800257CFE /* ComposableArchitecture */,
+			);
 			productName = MoneyYours;
 			productReference = F708116A2C198AC700257CFE /* MoneyYours.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +234,9 @@
 				Base,
 			);
 			mainGroup = F70811612C198AC700257CFE;
+			packageReferences = (
+				F708117B2C198D0800257CFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = F708116B2C198AC700257CFE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,8 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7AD329F2C19903C000768C3 /* Assets.xcassets in Resources */,
 				F70811752C198AC800257CFE /* Preview Assets.xcassets in Resources */,
-				F70811722C198AC800257CFE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +263,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F70811702C198AC700257CFE /* ContentView.swift in Sources */,
+				F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */,
+				F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */,
+				F70811802C198D2000257CFE /* Address.swift in Sources */,
+				F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */,
+				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
 				F708116E2C198AC700257CFE /* MoneyYoursApp.swift in Sources */,
+				F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */,
+				F70811852C198D4C00257CFE /* AddressesView.swift in Sources */,
+				F70811842C198D4C00257CFE /* AddressesFeature.swift in Sources */,
+				F7AD32AB2C19920A000768C3 /* AddressesButtonStyle.swift in Sources */,
+				F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */,
+				F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,21 +411,27 @@
 				DEVELOPMENT_TEAM = 3S8AVD2TKW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.moneyyours.app.MoneyYours;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moneyyours.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -304,21 +446,27 @@
 				DEVELOPMENT_TEAM = 3S8AVD2TKW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.moneyyours.app.MoneyYours;
+				PRODUCT_BUNDLE_IDENTIFIER = com.moneyyours.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -344,6 +492,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F708117B2C198D0800257CFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F708117C2C198D0800257CFE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F708117B2C198D0800257CFE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F70811622C198AC700257CFE /* Project object */;
 }
