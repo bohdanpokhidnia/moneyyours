@@ -22,6 +22,7 @@
 		F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AD2C19927E000768C3 /* AppColor.swift */; };
 		F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B02C1992CE000768C3 /* GrayTextField.swift */; };
 		F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */; };
+		F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		F7AD32AD2C19927E000768C3 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		F7AD32B02C1992CE000768C3 /* GrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTextField.swift; sourceTree = "<group>"; };
 		F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightThemeShadow.swift; sourceTree = "<group>"; };
+		F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomActionButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32B02C1992CE000768C3 /* GrayTextField.swift */,
+				F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */,
 				F70811852C198D4C00257CFE /* AddressesView.swift in Sources */,
 				F70811842C198D4C00257CFE /* AddressesFeature.swift in Sources */,
+				F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */,
 				F7AD32AB2C19920A000768C3 /* AddressesButtonStyle.swift in Sources */,
 				F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */,
 				F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */,

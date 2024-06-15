@@ -8,24 +8,6 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct FullActionButtonStyle: ButtonStyle {
-    @Dependency(\.appColor) private var appColor
-    @Environment(\.isEnabled) private var isEnabled
-    
-    func makeBody(configuration: Configuration) -> some View {
-        RoundedRectangle(cornerRadius: 14)
-            .fill(isEnabled ? appColor.tint : .pastelGrey)
-            .padding(.horizontal, 16)
-            .overlay {
-                configuration.label
-                    .foregroundStyle(.white)
-                    .font(.system(size: 16, weight: .bold))
-                    .padding(.vertical, 12)
-            }
-            .frame(maxHeight: 56)
-    }
-}
-
 struct AddAddressView: View {
     @Bindable var store: StoreOf<AddAddressFeature>
     
@@ -34,6 +16,7 @@ struct AddAddressView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Add new address")
                     .font(.system(size: 28, weight: .bold))
+                    .foregroundStyle(.appTitle)
                 
                 Text("Or other any name")
                     .font(.system(size: 14, weight: .regular))
@@ -41,9 +24,13 @@ struct AddAddressView: View {
             }
             .padding(.leading, 16)
             
-            TextField("Address name", text: $store.address.name.sending(\.setAddress))
-                .textFieldStyle(GrayTextField())
-                .padding(16)
+            TextField(
+                "",
+                text: $store.address.name.sending(\.setAddress),
+                prompt: Text("Address name").foregroundStyle(.starDust)
+            )
+            .textFieldStyle(GrayTextField())
+            .padding(16)
             
             Spacer()
             
@@ -52,14 +39,15 @@ struct AddAddressView: View {
             }
             .padding(.bottom, 24)
             .buttonStyle(
-                FullActionButtonStyle()
+                BottomActionButtonStyle()
             )
             .disabled(store.state.isSaveDisabled)
         }
+        .background(.appBackgroundSecondary)
     }
 }
 
-#Preview {
+#Preview("Light") {
     NavigationStack {
         AddAddressView(
             store: Store(
@@ -70,5 +58,20 @@ struct AddAddressView: View {
                     AddAddressFeature()
                 }
         )
+    }
+}
+
+#Preview("Dark") {
+    NavigationStack {
+        AddAddressView(
+            store: Store(
+                initialState: AddAddressFeature.State(
+                    isSaveDisabled: true,
+                    address: Address(name: "")
+                )) {
+                    AddAddressFeature()
+                }
+        )
+        .environment(\.colorScheme, .dark)
     }
 }
