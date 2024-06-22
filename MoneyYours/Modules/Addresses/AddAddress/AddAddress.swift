@@ -1,5 +1,5 @@
 //
-//  AddAddressFeature.swift
+//  AddAddress.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 12.06.2024.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct AddAddressFeature {
+struct AddAddress {
     @ObservableState
     struct State: Equatable {
         var isSaveDisabled: Bool = true

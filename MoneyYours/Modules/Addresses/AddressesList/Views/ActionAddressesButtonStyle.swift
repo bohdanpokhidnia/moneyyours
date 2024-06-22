@@ -21,7 +21,7 @@ struct ActionAddressesButtonStyle: ButtonStyle {
                     if let emoji {
                         ZStack {
                             Circle()
-                                .fill(emojiBackground)
+                                .fill(emojiBackground.gradient)
                                 .frame(width: 48, height: 48)
                             
                             Text(emoji)

@@ -9,7 +9,8 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AddAddressView: View {
-    @Bindable var store: StoreOf<AddAddressFeature>
+    @Bindable var store: StoreOf<AddAddress>
+    @Dependency(\.appColor) private var appColor
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -44,6 +45,7 @@ struct AddAddressView: View {
             .disabled(store.state.isSaveDisabled)
         }
         .background(.appBackgroundSecondary)
+        .updateBackButton(color: appColor.tint)
     }
 }
 
@@ -51,11 +53,11 @@ struct AddAddressView: View {
     NavigationStack {
         AddAddressView(
             store: Store(
-                initialState: AddAddressFeature.State(
+                initialState: AddAddress.State(
                     isSaveDisabled: true,
                     address: Address(name: "")
                 )) {
-                    AddAddressFeature()
+                    AddAddress()
                 }
         )
     }
@@ -65,11 +67,11 @@ struct AddAddressView: View {
     NavigationStack {
         AddAddressView(
             store: Store(
-                initialState: AddAddressFeature.State(
+                initialState: AddAddress.State(
                     isSaveDisabled: true,
                     address: Address(name: "")
                 )) {
-                    AddAddressFeature()
+                    AddAddress()
                 }
         )
         .environment(\.colorScheme, .dark)

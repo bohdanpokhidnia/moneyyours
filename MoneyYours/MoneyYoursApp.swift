@@ -10,19 +10,13 @@ import ComposableArchitecture
 
 @main
 struct MoneyYoursApp: App {
-    static var addressesStore = Store(initialState: AddressesFeature.State()) {
-        AddressesFeature()
+    static var addressesStore = Store(initialState: AddressesList.State()) {
+        AddressesList()
     }
     
     var body: some Scene {
         WindowGroup {
-            AddressesView(store: Self.addressesStore)
-                .onAppear {
-                    let image = UIImage(systemName: "arrow.backward")?.withRenderingMode(.alwaysOriginal).withTintColor(.tintColor)
-                    
-                    UINavigationBar.appearance().backIndicatorImage = image
-                    UINavigationBar.appearance().backIndicatorTransitionMaskImage = image
-                }
+            AddressesListView(store: Self.addressesStore)
         }
     }
 }

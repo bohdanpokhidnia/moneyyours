@@ -11,18 +11,32 @@
 		F70811752C198AC800257CFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70811742C198AC800257CFE /* Preview Assets.xcassets */; };
 		F708117D2C198D0800257CFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F708117C2C198D0800257CFE /* ComposableArchitecture */; };
 		F70811802C198D2000257CFE /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708117F2C198D2000257CFE /* Address.swift */; };
-		F70811842C198D4C00257CFE /* AddressesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811812C198D4C00257CFE /* AddressesFeature.swift */; };
-		F70811852C198D4C00257CFE /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesView.swift */; };
-		F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddressFeature.swift */; };
+		F70811842C198D4C00257CFE /* AddressesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811812C198D4C00257CFE /* AddressesList.swift */; };
+		F70811852C198D4C00257CFE /* AddressesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesListView.swift */; };
+		F708118A2C198D9800257CFE /* AddAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddress.swift */; };
 		F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811882C198D9800257CFE /* AddAddressView.swift */; };
+		F7278EF62C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7278EF52C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift */; };
+		F7A58B8F2C1EF2E400D2C4D7 /* InvoicesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B8E2C1EF2E400D2C4D7 /* InvoicesList.swift */; };
+		F7A58B912C1EF2F200D2C4D7 /* InvoicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B902C1EF2F200D2C4D7 /* InvoicesListView.swift */; };
+		F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */; };
+		F7A58B952C1F04F700D2C4D7 /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B942C1F04F700D2C4D7 /* Invoice.swift */; };
+		F7A58B972C1F058E00D2C4D7 /* InvoicesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B962C1F058E00D2C4D7 /* InvoicesLoader.swift */; };
+		F7A58B9A2C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B992C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift */; };
 		F7AD329F2C19903C000768C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7AD329D2C19903C000768C3 /* Assets.xcassets */; };
 		F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A22C1990C4000768C3 /* UINavigationController.swift */; };
 		F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */; };
-		F7AD32AB2C19920A000768C3 /* AddressesButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */; };
+		F7AD32AB2C19920A000768C3 /* AddressButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AA2C19920A000768C3 /* AddressButtonStyle.swift */; };
 		F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AD2C19927E000768C3 /* AppColor.swift */; };
 		F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B02C1992CE000768C3 /* GrayTextField.swift */; };
 		F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */; };
 		F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */; };
+		F7ADA0922C1D87FA001E649F /* AddressDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0912C1D87FA001E649F /* AddressDetails.swift */; };
+		F7ADA0942C1D8863001E649F /* AddressDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */; };
+		F7ADA0962C1D88B9001E649F /* GradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */; };
+		F7ADA0992C1DCFBB001E649F /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0982C1DCFBB001E649F /* Font.swift */; };
+		F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA09A2C1DD2A7001E649F /* View.swift */; };
+		F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA062C2320F800F6580E /* InvoiceType.swift */; };
+		F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA082C23249900F6580E /* FallbackCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,18 +44,32 @@
 		F708116D2C198AC700257CFE /* MoneyYoursApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyYoursApp.swift; sourceTree = "<group>"; };
 		F70811742C198AC800257CFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F708117F2C198D2000257CFE /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		F70811812C198D4C00257CFE /* AddressesFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesFeature.swift; sourceTree = "<group>"; };
-		F70811822C198D4C00257CFE /* AddressesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
-		F70811872C198D9800257CFE /* AddAddressFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressFeature.swift; sourceTree = "<group>"; };
+		F70811812C198D4C00257CFE /* AddressesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesList.swift; sourceTree = "<group>"; };
+		F70811822C198D4C00257CFE /* AddressesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListView.swift; sourceTree = "<group>"; };
+		F70811872C198D9800257CFE /* AddAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddress.swift; sourceTree = "<group>"; };
 		F70811882C198D9800257CFE /* AddAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressView.swift; sourceTree = "<group>"; };
+		F7278EF52C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInvoiceButtonStyle.swift; sourceTree = "<group>"; };
+		F7A58B8E2C1EF2E400D2C4D7 /* InvoicesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicesList.swift; sourceTree = "<group>"; };
+		F7A58B902C1EF2F200D2C4D7 /* InvoicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicesListView.swift; sourceTree = "<group>"; };
+		F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleGradientHeaderView.swift; sourceTree = "<group>"; };
+		F7A58B942C1F04F700D2C4D7 /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
+		F7A58B962C1F058E00D2C4D7 /* InvoicesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicesLoader.swift; sourceTree = "<group>"; };
+		F7A58B992C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectInvoiceButtonStyle.swift; sourceTree = "<group>"; };
 		F7AD329D2C19903C000768C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7AD32A22C1990C4000768C3 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAddressesButtonStyle.swift; sourceTree = "<group>"; };
-		F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesButtonStyle.swift; sourceTree = "<group>"; };
+		F7AD32AA2C19920A000768C3 /* AddressButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressButtonStyle.swift; sourceTree = "<group>"; };
 		F7AD32AD2C19927E000768C3 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		F7AD32B02C1992CE000768C3 /* GrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTextField.swift; sourceTree = "<group>"; };
 		F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightThemeShadow.swift; sourceTree = "<group>"; };
 		F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomActionButtonStyle.swift; sourceTree = "<group>"; };
+		F7ADA0912C1D87FA001E649F /* AddressDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetails.swift; sourceTree = "<group>"; };
+		F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailsView.swift; sourceTree = "<group>"; };
+		F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHeaderView.swift; sourceTree = "<group>"; };
+		F7ADA0982C1DCFBB001E649F /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		F7ADA09A2C1DD2A7001E649F /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		F7BCCA062C2320F800F6580E /* InvoiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceType.swift; sourceTree = "<group>"; };
+		F7BCCA082C23249900F6580E /* FallbackCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,25 +127,26 @@
 			isa = PBXGroup;
 			children = (
 				F708117F2C198D2000257CFE /* Address.swift */,
+				F7A58B942C1F04F700D2C4D7 /* Invoice.swift */,
+				F7BCCA062C2320F800F6580E /* InvoiceType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F70811832C198D4C00257CFE /* Addresses */ = {
+		F70811832C198D4C00257CFE /* AddressesList */ = {
 			isa = PBXGroup;
 			children = (
 				F7AD32A72C1991D3000768C3 /* Views */,
-				F70811812C198D4C00257CFE /* AddressesFeature.swift */,
-				F70811822C198D4C00257CFE /* AddressesView.swift */,
+				F70811812C198D4C00257CFE /* AddressesList.swift */,
+				F70811822C198D4C00257CFE /* AddressesListView.swift */,
 			);
-			path = Addresses;
+			path = AddressesList;
 			sourceTree = "<group>";
 		};
 		F70811862C198D8D00257CFE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F70811832C198D4C00257CFE /* Addresses */,
-				F70811892C198D9800257CFE /* AddAddress */,
+				F7ADA09C2C1EF107001E649F /* Addresses */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -126,10 +155,36 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32AF2C1992C5000768C3 /* Views */,
-				F70811872C198D9800257CFE /* AddAddressFeature.swift */,
+				F70811872C198D9800257CFE /* AddAddress.swift */,
 				F70811882C198D9800257CFE /* AddAddressView.swift */,
 			);
 			path = AddAddress;
+			sourceTree = "<group>";
+		};
+		F7278EF42C26D0BB0027AAB4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7278EF52C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7A58B8D2C1EF2CE00D2C4D7 /* InvoicesList */ = {
+			isa = PBXGroup;
+			children = (
+				F7A58B982C1F079600D2C4D7 /* Views */,
+				F7A58B8E2C1EF2E400D2C4D7 /* InvoicesList.swift */,
+				F7A58B902C1EF2F200D2C4D7 /* InvoicesListView.swift */,
+			);
+			path = InvoicesList;
+			sourceTree = "<group>";
+		};
+		F7A58B982C1F079600D2C4D7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7A58B992C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F7AD329E2C19903C000768C3 /* Resources */ = {
@@ -144,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32A12C1990B3000768C3 /* UIKit */,
+				F7ADA0972C1DCFAB001E649F /* SwiftUI */,
+				F7BCCA082C23249900F6580E /* FallbackCase.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -160,7 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */,
-				F7AD32AA2C19920A000768C3 /* AddressesButtonStyle.swift */,
+				F7AD32AA2C19920A000768C3 /* AddressButtonStyle.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -169,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32AD2C19927E000768C3 /* AppColor.swift */,
+				F7A58B962C1F058E00D2C4D7 /* InvoicesLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -186,8 +244,40 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */,
+				F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */,
+				F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F7ADA0902C1D87E2001E649F /* AddressDetails */ = {
+			isa = PBXGroup;
+			children = (
+				F7278EF42C26D0BB0027AAB4 /* Views */,
+				F7ADA0912C1D87FA001E649F /* AddressDetails.swift */,
+				F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */,
+			);
+			path = AddressDetails;
+			sourceTree = "<group>";
+		};
+		F7ADA0972C1DCFAB001E649F /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				F7ADA0982C1DCFBB001E649F /* Font.swift */,
+				F7ADA09A2C1DD2A7001E649F /* View.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		F7ADA09C2C1EF107001E649F /* Addresses */ = {
+			isa = PBXGroup;
+			children = (
+				F70811832C198D4C00257CFE /* AddressesList */,
+				F70811892C198D9800257CFE /* AddAddress */,
+				F7ADA0902C1D87E2001E649F /* AddressDetails */,
+				F7A58B8D2C1EF2CE00D2C4D7 /* InvoicesList */,
+			);
+			path = Addresses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,16 +359,30 @@
 				F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */,
 				F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */,
 				F70811802C198D2000257CFE /* Address.swift in Sources */,
+				F7278EF62C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift in Sources */,
+				F7A58B972C1F058E00D2C4D7 /* InvoicesLoader.swift in Sources */,
 				F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */,
+				F7A58B8F2C1EF2E400D2C4D7 /* InvoicesList.swift in Sources */,
+				F7ADA0962C1D88B9001E649F /* GradientHeaderView.swift in Sources */,
+				F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */,
 				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
+				F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */,
+				F7A58B9A2C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift in Sources */,
+				F7A58B912C1EF2F200D2C4D7 /* InvoicesListView.swift in Sources */,
 				F708116E2C198AC700257CFE /* MoneyYoursApp.swift in Sources */,
 				F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */,
-				F70811852C198D4C00257CFE /* AddressesView.swift in Sources */,
-				F70811842C198D4C00257CFE /* AddressesFeature.swift in Sources */,
+				F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */,
+				F7ADA0942C1D8863001E649F /* AddressDetailsView.swift in Sources */,
+				F70811852C198D4C00257CFE /* AddressesListView.swift in Sources */,
+				F70811842C198D4C00257CFE /* AddressesList.swift in Sources */,
 				F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */,
-				F7AD32AB2C19920A000768C3 /* AddressesButtonStyle.swift in Sources */,
-				F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */,
+				F7ADA0992C1DCFBB001E649F /* Font.swift in Sources */,
+				F7AD32AB2C19920A000768C3 /* AddressButtonStyle.swift in Sources */,
+				F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */,
+				F708118A2C198D9800257CFE /* AddAddress.swift in Sources */,
 				F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */,
+				F7ADA0922C1D87FA001E649F /* AddressDetails.swift in Sources */,
+				F7A58B952C1F04F700D2C4D7 /* Invoice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

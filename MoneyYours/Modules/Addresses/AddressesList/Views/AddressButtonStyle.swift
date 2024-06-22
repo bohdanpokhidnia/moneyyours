@@ -1,5 +1,5 @@
 //
-//  AddressesButtonStyle.swift
+//  AddressButtonStyle.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 12.06.2024.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AddressesButtonStyle: ButtonStyle {
+struct AddressButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 18) {
             ZStack {
                 Circle()
-                    .fill(.rubberDuckyYellow)
+                    .fill(.rubberDuckyYellow.gradient)
                     .frame(width: 48, height: 48)
                 
                 Text("📂")

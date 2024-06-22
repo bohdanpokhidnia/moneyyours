@@ -1,5 +1,5 @@
 //
-//  AddressesView.swift
+//  AddressesListView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 12.06.2024.
@@ -8,15 +8,13 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AddressesView: View {
-    @Bindable var store: StoreOf<AddressesFeature>
-    
-    private let headerGradient = Gradient(colors: [.cerulean, .richElectricBlue, .frenchBlue])
+struct AddressesListView: View {
+    @Bindable var store: StoreOf<AddressesList>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack(alignment: .leading, spacing: 0) {
-                headerView
+                GradientHeaderView(presetColors: .addresses)
                     .frame(height: 187)
                     .padding(.bottom, -111)
                     
@@ -39,29 +37,27 @@ struct AddressesView: View {
             switch store.case {
             case let .addAddress(store):
                 AddAddressView(store: store)
+                
+            case let .addressDetails(store):
+                AddressDetailsView(store: store)
+                
+            case let .invoicesList(store):
+                InvoicesListView(store: store)
             }
         }
     }
     
-    private var headerView: some View {
-        LinearGradient(
-            gradient: headerGradient,
-            startPoint: UnitPoint(x: 0.11966469444160704, y: 8.33727533122719e-8),
-            endPoint: UnitPoint(x: 0.8125000346174127, y: 0.9733925237930536)
-        )
-    }
-    
     private var titleText: some View {
         Text("Addresses")
-            .font(.system(size: 28, weight: .bold))
             .foregroundStyle(.white)
+            .font(.screenTitle)
     }
     
     private var actionButtons: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 NavigationLink(
-                   state: AddressesFeature.Path.State.addAddress(AddAddressFeature.State(address: Address(name: "")))
+                   state: AddressesList.Path.State.addAddress(AddAddress.State(address: Address(name: "")))
                  ) {
                    Text("Detail")
                  }
@@ -97,10 +93,10 @@ struct AddressesView: View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
                 ForEach(store.addresses) { (address) in
-                    Button(address.name) {
-                        
+                    NavigationLink(state: AddressesList.Path.State.addressDetails(AddressDetails.State(address: address))) {
+                        Text(address.name)
                     }
-                    .buttonStyle(AddressesButtonStyle())
+                    .buttonStyle(AddressButtonStyle())
                 }
             }
             .padding(.horizontal, 16)
@@ -112,20 +108,20 @@ struct AddressesView: View {
 
 #Preview("Light") {
     NavigationStack {
-        AddressesView(store: Store(
-            initialState: AddressesFeature.State(
-                addresses: [.init(name: "м. Полтава, вул. Клінкерна, буд. 13, кв. 1")]
+        AddressesListView(store: Store(
+            initialState: AddressesList.State(
+                addresses: [.mock]
             )) {
-                AddressesFeature()
+                AddressesList()
             })
     }
 }
 
 #Preview("Dark") {
-    AddressesView(store: Store(initialState: AddressesFeature.State(
-        addresses: [.init(name: "м. Полтава, вул. Клінкерна, буд. 13, кв. 1")]
+    AddressesListView(store: Store(initialState: AddressesList.State(
+        addresses: [.mock]
     )) {
-        AddressesFeature()
+        AddressesList()
     })
     .preferredColorScheme(.dark)
 }

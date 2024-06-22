@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 class AppColor {
-    @Published var tint: Color = .accentColor
+    @Published var tint: Color = .beanRed
 }
 
 extension AppColor: DependencyKey {
