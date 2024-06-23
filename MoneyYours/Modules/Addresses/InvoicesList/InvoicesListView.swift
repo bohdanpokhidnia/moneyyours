@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct InvoicesListView: View {
     @Bindable var store: StoreOf<InvoicesList>
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,6 +25,7 @@ struct InvoicesListView: View {
                     ForEach(store.invoices) { (invoice) in
                         Button(invoice.type.name) {
                             store.send(.select(invoice))
+                            dismiss()
                         }
                         .buttonStyle(
                             SelectInvoiceButtonStyle(
@@ -37,7 +39,7 @@ struct InvoicesListView: View {
             }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .ignoresSafeArea(edges: .top)
+        .ignoresSafeArea(.container, edges: [.top])
         .updateBackButton(color: .white)
         .background(.appBackground)
         .onAppear {

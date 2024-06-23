@@ -31,7 +31,7 @@ struct AddressesListView: View {
                 addressesList
                     .padding(.top, 24)
             }
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
         } destination: { (store) in
             switch store.case {
@@ -40,9 +40,6 @@ struct AddressesListView: View {
                 
             case let .addressDetails(store):
                 AddressDetailsView(store: store)
-                
-            case let .invoicesList(store):
-                InvoicesListView(store: store)
             }
         }
     }

@@ -13,7 +13,6 @@ struct AddressesList {
     struct State: Equatable {
         var addresses: IdentifiedArrayOf<Address> = []
         var path = StackState<Path.State>()
-        var addressDetailsState: AddressDetails.State?
     }
     
     enum Action {
@@ -24,7 +23,6 @@ struct AddressesList {
     enum Path {
         case addAddress(AddAddress)
         case addressDetails(AddressDetails)
-        case invoicesList(InvoicesList)
     }
     
     var body: some ReducerOf<Self> {
@@ -32,14 +30,6 @@ struct AddressesList {
             switch action {
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
                 state.addresses.append(address)
-                state.path.pop(from: id)
-                return .none
-                
-            case .path(.element(id: _, action: .addressDetails(.delegate(.addInvoice)))):
-                state.path.append(.invoicesList(InvoicesList.State()))
-                return .none
-                
-            case let .path(.element(id: id, action: .invoicesList(.delegate(.save(invoice))))):
                 state.path.pop(from: id)
                 return .none
                 

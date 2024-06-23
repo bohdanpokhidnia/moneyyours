@@ -31,8 +31,10 @@ struct AddressDetailsView: View {
                     }
                     .padding(.horizontal, 16)
                     
-                    Button("Add invoice") {
-                        store.send(.addInvoiceButtonTapped)
+                    NavigationLink {
+                        InvoicesListView(store: store.scope(state: \.invoicesList, action: \.invoicesList))
+                    } label: {
+                        Text("Add invoice")
                     }
                     .buttonStyle(AddInvoiceButtonStyle())
                     .padding(.horizontal, 16)
@@ -40,7 +42,7 @@ struct AddressDetailsView: View {
             }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .ignoresSafeArea(edges: .top)
+        .ignoresSafeArea(.container, edges: [.top])
         .updateBackButton(color: .white)
         .background(.appBackground)
         .toolbar {

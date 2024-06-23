@@ -12,25 +12,29 @@ struct AddressDetails {
     @ObservableState
     struct State: Equatable {
         var address: Address
+        var invoicesList = InvoicesList.State()
     }
     
     enum Action {
         case addInvoiceButtonTapped
-        case delegate(Delegate)
-        
-        @CasePathable
-        enum Delegate {
-            case addInvoice
-        }
+        case invoicesList(InvoicesList.Action)
     }
     
     var body: some ReducerOf<Self> {
+        Scope(state: \.invoicesList, action: \.invoicesList) {
+            InvoicesList()
+        }
+        
         Reduce { (state, action) in
             switch action {
             case .addInvoiceButtonTapped:
-                return .send(.delegate(.addInvoice))
+                return .none
                 
-            case .delegate:
+            case let .invoicesList(.delegate(.save(invoice))):
+                state.address.invoices.append(invoice)
+                return .none
+                
+            case .invoicesList:
                 return .none
             }
         }

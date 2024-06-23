@@ -25,7 +25,7 @@ struct InvoicesList {
         }
     }
     
-    @Dependency(\.invoicesLoader) var invoicesLoader
+    @Dependency(\.invoicesLoader) private var invoicesLoader
     
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
