@@ -9,22 +9,18 @@ import SwiftUI
 
 struct SelectInvoiceButtonStyle: ButtonStyle {
     let emoji: String
-    var emojiBackground: Color = .clear
+    var emojiBackground: Color
     
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(emojiBackground.gradient)
-                    .frame(width: 48, height: 48)
-                
-                Text(emoji)
-                    .font(.system(size: 20))
-            }
+            EmojiView(
+                emoji: emoji,
+                emojiBackground: emojiBackground
+            )
             
             configuration.label
                 .font(.system(size: 20, weight: .regular))
-                .foregroundStyle(.appTitle)
+                .foregroundStyle(.primaryText)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
                 .minimumScaleFactor(0.5)

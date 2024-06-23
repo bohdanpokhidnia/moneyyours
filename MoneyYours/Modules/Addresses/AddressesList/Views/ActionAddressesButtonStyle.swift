@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ActionAddressesButtonStyle: ButtonStyle {
     let title: String
-    var emoji: String? = nil
+    var emoji: String
     var emojiBackground: Color = .clear
     
     func makeBody(configuration: Configuration) -> some View {
@@ -18,16 +18,10 @@ struct ActionAddressesButtonStyle: ButtonStyle {
             .frame(minWidth: 210, maxHeight: 80)
             .overlay(alignment: .leading) {
                 HStack(spacing: 16) {
-                    if let emoji {
-                        ZStack {
-                            Circle()
-                                .fill(emojiBackground.gradient)
-                                .frame(width: 48, height: 48)
-                            
-                            Text(emoji)
-                                .font(.system(size: 20))
-                        }
-                    }
+                    EmojiView(
+                        emoji: emoji,
+                        emojiBackground: emojiBackground
+                    )
                     
                     Text(title)
                         .font(.system(size: 16, weight: .bold))

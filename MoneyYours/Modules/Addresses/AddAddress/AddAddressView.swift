@@ -17,7 +17,7 @@ struct AddAddressView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("Add new address")
                     .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(.appTitle)
+                    .foregroundStyle(.primaryText)
                 
                 Text("Or other any name")
                     .font(.system(size: 14, weight: .regular))

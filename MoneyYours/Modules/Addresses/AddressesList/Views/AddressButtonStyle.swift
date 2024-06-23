@@ -10,14 +10,10 @@ import SwiftUI
 struct AddressButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 18) {
-            ZStack {
-                Circle()
-                    .fill(.rubberDuckyYellow.gradient)
-                    .frame(width: 48, height: 48)
-                
-                Text("📂")
-                    .font(.system(size: 20))
-            }
+            EmojiView(
+                emoji: "📂",
+                emojiBackground: .rubberDuckyYellow
+            )
             
             configuration.label
                 .font(.system(size: 18, weight: .semibold))

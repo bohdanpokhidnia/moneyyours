@@ -37,6 +37,10 @@
 		F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA09A2C1DD2A7001E649F /* View.swift */; };
 		F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA062C2320F800F6580E /* InvoiceType.swift */; };
 		F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA082C23249900F6580E /* FallbackCase.swift */; };
+		F7BDEEF52C281D53007E9C1D /* InvoiceItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF42C281D53007E9C1D /* InvoiceItemRow.swift */; };
+		F7BDEEF82C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */; };
+		F7BDEEFA2C282672007E9C1D /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF92C282672007E9C1D /* EmojiView.swift */; };
+		F7BDEEFE2C283555007E9C1D /* HintGrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEFD2C283555007E9C1D /* HintGrayTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +74,10 @@
 		F7ADA09A2C1DD2A7001E649F /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		F7BCCA062C2320F800F6580E /* InvoiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceType.swift; sourceTree = "<group>"; };
 		F7BCCA082C23249900F6580E /* FallbackCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCase.swift; sourceTree = "<group>"; };
+		F7BDEEF42C281D53007E9C1D /* InvoiceItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceItemRow.swift; sourceTree = "<group>"; };
+		F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UkrainianHryvniaFormatStyle.swift; sourceTree = "<group>"; };
+		F7BDEEF92C282672007E9C1D /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
+		F7BDEEFD2C283555007E9C1D /* HintGrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintGrayTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				F708116D2C198AC700257CFE /* MoneyYoursApp.swift */,
-				F7AD32A02C1990AC000768C3 /* Extensions */,
-				F7AD32B22C199671000768C3 /* Views */,
+				F7BDEEF62C28256E007E9C1D /* Core */,
 				F7AD32AC2C19926E000768C3 /* Services */,
 				F708117E2C198D1800257CFE /* Models */,
 				F70811862C198D8D00257CFE /* Modules */,
@@ -165,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				F7278EF52C26D0D50027AAB4 /* AddInvoiceButtonStyle.swift */,
+				F7BDEEF42C281D53007E9C1D /* InvoiceItemRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -200,7 +208,6 @@
 			children = (
 				F7AD32A12C1990B3000768C3 /* UIKit */,
 				F7ADA0972C1DCFAB001E649F /* SwiftUI */,
-				F7BCCA082C23249900F6580E /* FallbackCase.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -234,7 +241,6 @@
 		F7AD32AF2C1992C5000768C3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F7AD32B02C1992CE000768C3 /* GrayTextField.swift */,
 				F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */,
 			);
 			path = Views;
@@ -246,6 +252,7 @@
 				F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */,
 				F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */,
 				F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */,
+				F7BDEEF92C282672007E9C1D /* EmojiView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +285,35 @@
 				F7A58B8D2C1EF2CE00D2C4D7 /* InvoicesList */,
 			);
 			path = Addresses;
+			sourceTree = "<group>";
+		};
+		F7BDEEF62C28256E007E9C1D /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32A02C1990AC000768C3 /* Extensions */,
+				F7AD32B22C199671000768C3 /* Views */,
+				F7BDEEFB2C283464007E9C1D /* Formatters */,
+				F7BDEEFC2C283476007E9C1D /* TextFieldStyles */,
+				F7BCCA082C23249900F6580E /* FallbackCase.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F7BDEEFB2C283464007E9C1D /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */,
+			);
+			path = Formatters;
+			sourceTree = "<group>";
+		};
+		F7BDEEFC2C283476007E9C1D /* TextFieldStyles */ = {
+			isa = PBXGroup;
+			children = (
+				F7AD32B02C1992CE000768C3 /* GrayTextField.swift */,
+				F7BDEEFD2C283555007E9C1D /* HintGrayTextField.swift */,
+			);
+			path = TextFieldStyles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +403,7 @@
 				F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */,
 				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
 				F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */,
+				F7BDEEF52C281D53007E9C1D /* InvoiceItemRow.swift in Sources */,
 				F7A58B9A2C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift in Sources */,
 				F7A58B912C1EF2F200D2C4D7 /* InvoicesListView.swift in Sources */,
 				F708116E2C198AC700257CFE /* MoneyYoursApp.swift in Sources */,
@@ -380,9 +417,12 @@
 				F7AD32AB2C19920A000768C3 /* AddressButtonStyle.swift in Sources */,
 				F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */,
 				F708118A2C198D9800257CFE /* AddAddress.swift in Sources */,
+				F7BDEEF82C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift in Sources */,
 				F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */,
 				F7ADA0922C1D87FA001E649F /* AddressDetails.swift in Sources */,
 				F7A58B952C1F04F700D2C4D7 /* Invoice.swift in Sources */,
+				F7BDEEFE2C283555007E9C1D /* HintGrayTextField.swift in Sources */,
+				F7BDEEFA2C282672007E9C1D /* EmojiView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

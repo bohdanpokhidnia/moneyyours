@@ -24,10 +24,7 @@ struct AddressDetailsView: View {
                     subtitleText
                     
                     ForEach(store.address.invoices) { (invoice) in
-                        HStack {
-                            Text(invoice.type.emoji)
-                            Text(invoice.type.name)
-                        }
+                        InvoiceItemRow(invoice: invoice)
                     }
                     .padding(.horizontal, 16)
                     
@@ -66,7 +63,7 @@ private extension AddressDetailsView {
             VStack(alignment: .leading, spacing: 12) {
                 Text("Invoices")
                     .font(.system(size: 19, weight: .bold))
-                    .foregroundStyle(.appTitle)
+                    .foregroundStyle(.primaryText)
                 
                 Text("Add invoices for billing")
                     .foregroundStyle(.starDust)
