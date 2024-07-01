@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ActionAddressesButtonStyle: ButtonStyle {
-    let title: String
     var emoji: String
     var emojiBackground: Color = .clear
     
@@ -23,7 +22,7 @@ struct ActionAddressesButtonStyle: ButtonStyle {
                         emojiBackground: emojiBackground
                     )
                     
-                    Text(title)
+                    configuration.label
                         .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(.foreground)
                         .lineLimit(1)

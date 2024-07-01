@@ -20,26 +20,32 @@ struct AddressDetailsView: View {
             .frame(height: 147)
             
             ScrollView {
-                VStack(alignment: .leading, spacing: 32) {
+                VStack(alignment: .leading, spacing: 16) {
                     subtitleText
                     
-                    ForEach(store.address.invoices) { (invoice) in
-                        InvoiceItemRow(invoice: invoice)
+                    ForEach(store.address.yearInvoices) { (yearInvoice) in
+                        Text(yearInvoice.year.description)
+                            .frame(maxWidth: .infinity)
+                        
+                        ForEach(yearInvoice.monthInvoices) { (monthInvoice) in
+                            Button(monthInvoice.month.name) {
+                                store.send(.monthInvoiceButtonTapped(monthInvoice))
+                            }
+                            .buttonStyle(
+                                EmojiRowButtonStyle(
+                                    emoji: monthInvoice.month.emoji,
+                                    emojiBackground: monthInvoice.month.color
+                                )
+                            )
+                        }
                     }
-                    .padding(.horizontal, 16)
-                    
-                    NavigationLink {
-                        InvoicesListView(store: store.scope(state: \.invoicesList, action: \.invoicesList))
-                    } label: {
-                        Text("Add invoice")
-                    }
-                    .buttonStyle(AddInvoiceButtonStyle())
                     .padding(.horizontal, 16)
                 }
+                .padding(.bottom, 16)
             }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .ignoresSafeArea(.container, edges: [.top])
+        .ignoresSafeArea(edges: [.top])
         .updateBackButton(color: .white)
         .background(.appBackground)
         .toolbar {
@@ -76,7 +82,7 @@ private extension AddressDetailsView {
     }
 }
 
-#Preview("Light") {
+#Preview {
     NavigationStack {
         AddressDetailsView(
             store: Store(
@@ -85,18 +91,5 @@ private extension AddressDetailsView {
                 AddressDetails()
             }
         )
-    }
-}
-
-#Preview("Dark") {
-    NavigationStack {
-        AddressDetailsView(
-            store: Store(
-                initialState: AddressDetails.State(address: .mock)
-            ) {
-                AddressDetails()
-            }
-        )
-        .environment(\.colorScheme, .dark)
     }
 }

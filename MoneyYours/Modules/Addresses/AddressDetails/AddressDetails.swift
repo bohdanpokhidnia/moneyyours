@@ -5,6 +5,7 @@
 //  Created by Bohdan Pokhidnia on 15.06.2024.
 //
 
+import Foundation
 import ComposableArchitecture
 
 @Reducer
@@ -12,29 +13,25 @@ struct AddressDetails {
     @ObservableState
     struct State: Equatable {
         var address: Address
-        var invoicesList = InvoicesList.State()
+        var monthInvoicesListState = MonthInvoicesList.State()
     }
     
     enum Action {
-        case addInvoiceButtonTapped
-        case invoicesList(InvoicesList.Action)
+        case monthInvoiceButtonTapped(MonthInvoice)
+        case monthInvoicesListAction(MonthInvoicesList.Action)
     }
     
     var body: some ReducerOf<Self> {
-        Scope(state: \.invoicesList, action: \.invoicesList) {
-            InvoicesList()
+        Scope(state: \.monthInvoicesListState, action: \.monthInvoicesListAction) {
+            MonthInvoicesList()
         }
         
         Reduce { (state, action) in
             switch action {
-            case .addInvoiceButtonTapped:
+            case .monthInvoiceButtonTapped:
                 return .none
                 
-            case let .invoicesList(.delegate(.save(invoice))):
-                state.address.invoices.append(invoice)
-                return .none
-                
-            case .invoicesList:
+            case .monthInvoicesListAction:
                 return .none
             }
         }

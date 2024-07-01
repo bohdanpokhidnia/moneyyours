@@ -1,5 +1,5 @@
 //
-//  InvoicesListView.swift
+//  InvoiceSelectionListView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 16.06.2024.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct InvoicesListView: View {
-    @Bindable var store: StoreOf<InvoicesList>
+struct InvoiceSelectionListView: View {
+    @Bindable var store: StoreOf<InvoiceSelectionList>
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -48,27 +48,15 @@ struct InvoicesListView: View {
     }
 }
 
-#Preview("Light") {
-    InvoicesListView(
+#Preview {
+    InvoiceSelectionListView(
         store: Store(
-            initialState: InvoicesList.State(
+            initialState: InvoiceSelectionList.State(
+                monthInvoice: .mock,
                 invoices: [.mock]
             )
         ) {
-            InvoicesList()
+            InvoiceSelectionList()
         }
     )
-}
-
-#Preview("Dark") {
-    InvoicesListView(
-        store: Store(
-            initialState: InvoicesList.State(
-                invoices: [.mock]
-            )
-        ) {
-            InvoicesList()
-        }
-    )
-    .environment(\.colorScheme, .dark)
 }

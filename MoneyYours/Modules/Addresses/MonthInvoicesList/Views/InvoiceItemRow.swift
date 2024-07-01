@@ -71,5 +71,5 @@ struct InvoiceItemRow: View {
     ZStack {
         InvoiceItemRow(invoice: .mock)
     }
-    .background(.red)
+    .background(.black)
 }

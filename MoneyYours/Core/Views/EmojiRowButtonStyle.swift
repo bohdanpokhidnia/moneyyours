@@ -1,5 +1,5 @@
 //
-//  AddressButtonStyle.swift
+//  EmojiRowButtonStyle.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 12.06.2024.
@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct AddressButtonStyle: ButtonStyle {
+struct EmojiRowButtonStyle: ButtonStyle {
+    let emoji: String
+    let emojiBackground: Color
+    
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 18) {
             EmojiView(
-                emoji: "📂",
-                emojiBackground: .rubberDuckyYellow
+                emoji: emoji,
+                emojiBackground: emojiBackground
             )
             
             configuration.label

@@ -40,6 +40,9 @@ struct AddressesListView: View {
                 
             case let .addressDetails(store):
                 AddressDetailsView(store: store)
+                
+            case let .monthInvoicesList(store):
+                MonthInvoicesListView(store: store)
             }
         }
     }
@@ -54,22 +57,22 @@ struct AddressesListView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 NavigationLink(
-                   state: AddressesList.Path.State.addAddress(AddAddress.State(address: Address(name: "")))
-                 ) {
-                   Text("Detail")
-                 }
-                .buttonStyle(ActionAddressesButtonStyle(
-                    title: "Add address",
-                    emoji: "🏠",
-                    emojiBackground: .chromeYellow
-                ))
+                    state: AddressesList.Path.State.addAddress(AddAddress.State(address: Address(name: "")))
+                ) {
+                    Text("Add address")
+                }
+                .buttonStyle(
+                    ActionAddressesButtonStyle(
+                        emoji: "🏠",
+                        emojiBackground: .chromeYellow
+                    )
+                )
                 
                 Button("Archive") {
                     
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
-                        title: "Archive",
                         emoji: "🗂️",
                         emojiBackground: .artyClickWarmRed
                     )
@@ -93,7 +96,12 @@ struct AddressesListView: View {
                     NavigationLink(state: AddressesList.Path.State.addressDetails(AddressDetails.State(address: address))) {
                         Text(address.name)
                     }
-                    .buttonStyle(AddressButtonStyle())
+                    .buttonStyle(
+                        EmojiRowButtonStyle(
+                            emoji: "📁",
+                            emojiBackground: .rubberDuckyYellow
+                        )
+                    )
                 }
             }
             .padding(.horizontal, 16)

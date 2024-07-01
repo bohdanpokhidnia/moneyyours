@@ -8,15 +8,23 @@
 import Foundation
 import ComposableArchitecture
 
-struct Address: Identifiable, Equatable {
+struct Address: Identifiable {
     let id = UUID()
     var name: String
-    var invoices: IdentifiedArrayOf<Invoice> = []
+    var yearInvoices: IdentifiedArrayOf<YearInvoice> = []
+}
+
+// MARK: - Equatable
+
+extension Address: Equatable {
+    static func == (lhs: Address, rhs: Address) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 extension Address {
-    static let mock = Address(
+    static let mock = Self(
         name: "Dev 1",
-        invoices: [.mock]
+        yearInvoices: [YearInvoice(year: 2024, monthInvoices: [MonthInvoice(month: .july)])]
     )
 }

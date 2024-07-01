@@ -26,7 +26,7 @@ struct AddAddress {
         }
     }
     
-    @Dependency(\.dismiss) var dismiss
+    @Dependency(\.yearInvoicesLoader) private var yearInvoicesLoader
     
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
@@ -40,6 +40,9 @@ struct AddAddress {
                 guard !state.isSaveDisabled else {
                     return .none
                 }
+                let yearInvoice = yearInvoicesLoader.fetch(.now)
+                state.address.yearInvoices.append(yearInvoice)
+                
                 return .run { [address = state.address] (send) in
                     await send(.delegate(.save(address: address)))
                 }

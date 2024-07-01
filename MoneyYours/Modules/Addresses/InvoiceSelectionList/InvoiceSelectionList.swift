@@ -1,5 +1,5 @@
 //
-//  InvoicesList.swift
+//  InvoiceSelectionList.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 16.06.2024.
@@ -8,9 +8,10 @@
 import ComposableArchitecture
 
 @Reducer
-struct InvoicesList {
+struct InvoiceSelectionList {
     @ObservableState
     struct State: Equatable {
+        var monthInvoice: MonthInvoice
         var invoices: IdentifiedArrayOf<Invoice> = []
     }
     
@@ -21,7 +22,7 @@ struct InvoicesList {
         
         @CasePathable
         enum Delegate {
-            case save(Invoice)
+            case save(MonthInvoice)
         }
     }
     
@@ -36,7 +37,8 @@ struct InvoicesList {
                 return .none
                 
             case let .select(invoice):
-                return .send(.delegate(.save(invoice)))
+                state.monthInvoice.invoices.append(invoice)
+                return .send(.delegate(.save(state.monthInvoice)))
                 
             case .delegate:
                 return .none

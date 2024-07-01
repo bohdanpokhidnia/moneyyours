@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum InvoiceType: Int, CaseIterable, FallbackCase {
+enum InvoiceType: Int, FallbackCase {
     static var fallbackCase: InvoiceType { .unknown }
     
     case electricity
