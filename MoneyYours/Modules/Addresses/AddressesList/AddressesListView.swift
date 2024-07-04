@@ -40,9 +40,6 @@ struct AddressesListView: View {
                 
             case let .addressDetails(store):
                 AddressDetailsView(store: store)
-                
-            case let .monthInvoicesList(store):
-                MonthInvoicesListView(store: store)
             }
         }
     }

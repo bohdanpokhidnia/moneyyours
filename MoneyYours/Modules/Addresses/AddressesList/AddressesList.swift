@@ -23,7 +23,6 @@ struct AddressesList {
     enum Path {
         case addAddress(AddAddress)
         case addressDetails(AddressDetails)
-        case monthInvoicesList(MonthInvoicesList)
     }
     
     var body: some ReducerOf<Self> {
@@ -32,10 +31,6 @@ struct AddressesList {
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
                 state.addresses.append(address)
                 state.path.pop(from: id)
-                return .none
-                
-            case let .path(.element(id: _, action: .addressDetails(.monthInvoiceButtonTapped(monthInvoice)))):
-                state.path.append(.monthInvoicesList(MonthInvoicesList.State(monthInvoice: monthInvoice)))
                 return .none
                 
             case .path:
