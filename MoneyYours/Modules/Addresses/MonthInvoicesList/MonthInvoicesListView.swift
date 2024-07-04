@@ -48,7 +48,9 @@ struct MonthInvoicesListView: View {
 #Preview {
     NavigationStack {
         MonthInvoicesListView(store: Store(
-            initialState: MonthInvoicesList.State(monthInvoice: .mock)
+            initialState: MonthInvoicesList.State(
+                monthInvoice: .mock
+            )
         ) {
             MonthInvoicesList()
         })

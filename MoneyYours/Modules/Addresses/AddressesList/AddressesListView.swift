@@ -40,6 +40,9 @@ struct AddressesListView: View {
                 
             case let .addressDetails(store):
                 AddressDetailsView(store: store)
+                
+            case let .monthInvoicesList(store):
+                MonthInvoicesListView(store: store)
             }
         }
     }
@@ -53,10 +56,8 @@ struct AddressesListView: View {
     private var actionButtons: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
-                NavigationLink(
-                    state: AddressesList.Path.State.addAddress(AddAddress.State(address: Address(name: "")))
-                ) {
-                    Text("Add address")
+                Button("Add address") {
+                    store.send(.addButtonTapped)
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -89,8 +90,8 @@ struct AddressesListView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(store.addresses) { (address) in
-                    NavigationLink(state: AddressesList.Path.State.addressDetails(AddressDetails.State(address: address))) {
+                ForEach(store.$addresses.elements) { ($address) in
+                    NavigationLink(state: AddressesList.Path.State.addressDetails(AddressDetails.State(address: $address))) {
                         Text(address.name)
                     }
                     .buttonStyle(

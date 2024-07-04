@@ -51,10 +51,7 @@ struct InvoiceSelectionListView: View {
 #Preview {
     InvoiceSelectionListView(
         store: Store(
-            initialState: InvoiceSelectionList.State(
-                monthInvoice: .mock,
-                invoices: [.mock]
-            )
+            initialState: InvoiceSelectionList.State(invoices: [.mock])
         ) {
             InvoiceSelectionList()
         }

@@ -12,15 +12,7 @@ struct MonthInvoicesList {
     @ObservableState
     struct State: Equatable {
         var monthInvoice: MonthInvoice
-        var invoiceSelectionListState: InvoiceSelectionList.State
-        
-        init(
-            monthInvoice: MonthInvoice? = nil,
-            invoiceSelectionListState: InvoiceSelectionList.State? = nil
-        ) {
-            self.monthInvoice = monthInvoice ?? .mock
-            self.invoiceSelectionListState = InvoiceSelectionList.State(monthInvoice: monthInvoice ?? .mock)
-        }
+        var invoiceSelectionListState = InvoiceSelectionList.State()
     }
     
     enum Action {
@@ -34,8 +26,8 @@ struct MonthInvoicesList {
         
         Reduce { (state, action) in
             switch action {
-            case let .invoiceSelectionListAction(.delegate(.save(monthInvoice))):
-                state.monthInvoice = monthInvoice
+            case let .invoiceSelectionListAction(.delegate(.save(invoice))):
+                state.monthInvoice.invoices.append(invoice)
                 return .none
                 
             case .invoiceSelectionListAction:

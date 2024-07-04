@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Invoice: Identifiable, Equatable {
+struct Invoice: Identifiable, Equatable, Codable {
     var id = UUID()
     let type: InvoiceType
     let price: Double

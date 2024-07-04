@@ -11,7 +11,6 @@ import ComposableArchitecture
 struct InvoiceSelectionList {
     @ObservableState
     struct State: Equatable {
-        var monthInvoice: MonthInvoice
         var invoices: IdentifiedArrayOf<Invoice> = []
     }
     
@@ -22,7 +21,7 @@ struct InvoiceSelectionList {
         
         @CasePathable
         enum Delegate {
-            case save(MonthInvoice)
+            case save(Invoice)
         }
     }
     
@@ -37,8 +36,7 @@ struct InvoiceSelectionList {
                 return .none
                 
             case let .select(invoice):
-                state.monthInvoice.invoices.append(invoice)
-                return .send(.delegate(.save(state.monthInvoice)))
+                return .send(.delegate(.save(invoice)))
                 
             case .delegate:
                 return .none

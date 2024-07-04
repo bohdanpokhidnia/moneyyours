@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Month: Int, CaseIterable {
+enum Month: Int, CaseIterable, Codable {
     case january = 1
     case february
     case march

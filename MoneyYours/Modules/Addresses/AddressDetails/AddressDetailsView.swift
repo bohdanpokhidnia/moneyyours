@@ -86,7 +86,7 @@ private extension AddressDetailsView {
     NavigationStack {
         AddressDetailsView(
             store: Store(
-                initialState: AddressDetails.State(address: .mock)
+                initialState: AddressDetails.State(address: Shared(.mock))
             ) {
                 AddressDetails()
             }

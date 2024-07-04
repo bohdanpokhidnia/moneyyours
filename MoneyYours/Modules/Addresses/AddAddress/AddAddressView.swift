@@ -62,18 +62,3 @@ struct AddAddressView: View {
         )
     }
 }
-
-#Preview("Dark") {
-    NavigationStack {
-        AddAddressView(
-            store: Store(
-                initialState: AddAddress.State(
-                    isSaveDisabled: true,
-                    address: Address(name: "")
-                )) {
-                    AddAddress()
-                }
-        )
-        .environment(\.colorScheme, .dark)
-    }
-}

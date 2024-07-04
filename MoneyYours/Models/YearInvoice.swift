@@ -8,8 +8,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct YearInvoice: Identifiable, Equatable {
-    let id = UUID()
+struct YearInvoice: Identifiable, Equatable, Codable {
+    var id = UUID()
     let year: Int
     var monthInvoices: IdentifiedArrayOf<MonthInvoice> = []
 }
