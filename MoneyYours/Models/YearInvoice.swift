@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct YearInvoice: Identifiable, Equatable, Codable {
     var id = UUID()
     let year: Int
-    var monthInvoices: IdentifiedArrayOf<MonthInvoice> = []
+    var monthInvoices: IdentifiedArrayOf<MonthInvoice>
 }
 
 extension YearInvoice {

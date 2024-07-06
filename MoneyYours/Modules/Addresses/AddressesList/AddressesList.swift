@@ -27,11 +27,15 @@ struct AddressesList {
         case monthInvoicesList(MonthInvoicesList)
     }
     
+    @Dependency(\.yearInvoicesLoader) private var yearInvoicesLoader
+    
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
             case .addButtonTapped:
-                state.path.append(.addAddress(AddAddress.State(address: Address(name: ""))))
+                let yearInvoice = yearInvoicesLoader.fetch(.now)
+                let address = Address(name: "", yearInvoices: [yearInvoice])
+                state.path.append(.addAddress(AddAddress.State(address: address)))
                 return .none
                 
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
@@ -39,8 +43,14 @@ struct AddressesList {
                 state.path.pop(from: id)
                 return .none
 
-            case let .path(.element(id: _, action: .addressDetails(.monthInvoiceButtonTapped(monthInvoice)))):
-                state.path.append(.monthInvoicesList(MonthInvoicesList.State(monthInvoice: monthInvoice)))
+            case let .path(.element(id: _, action: .addressDetails(.delegate(.select(monthInvoice))))):
+                state.path.append(
+                    .monthInvoicesList(
+                        MonthInvoicesList.State(
+                            monthInvoice: monthInvoice
+                        )
+                    )
+                )
                 return .none
                 
             case .path:

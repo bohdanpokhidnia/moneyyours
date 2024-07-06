@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct MonthInvoicesList {
     @ObservableState
     struct State: Equatable {
-        var monthInvoice: MonthInvoice
+        @Shared var monthInvoice: MonthInvoice
         var invoiceSelectionListState = InvoiceSelectionList.State()
     }
     

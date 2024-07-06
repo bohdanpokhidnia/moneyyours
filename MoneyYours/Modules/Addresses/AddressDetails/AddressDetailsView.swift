@@ -29,7 +29,7 @@ struct AddressDetailsView: View {
                         
                         ForEach(yearInvoice.monthInvoices) { (monthInvoice) in
                             Button(monthInvoice.month.name) {
-                                store.send(.monthInvoiceButtonTapped(monthInvoice))
+                                store.send(.monthInvoiceButtonTapped(yearInvoice, monthInvoice))
                             }
                             .buttonStyle(
                                 EmojiRowButtonStyle(

@@ -20,7 +20,7 @@ extension YearInvoicesLoader: DependencyKey {
             let months = Month.allCases
                 .filter({ $0.rawValue <= currentMonthIndex })
                 .sorted(by: { $0.rawValue > $1.rawValue })
-            let monthInvoices = IdentifiedArrayOf(uniqueElements: months.map { MonthInvoice(month: $0) })
+            let monthInvoices = IdentifiedArrayOf(uniqueElements: months.map { MonthInvoice(month: $0, invoices: []) })
             let yearInvoice = YearInvoice(year: currentYear, monthInvoices: monthInvoices)
             return yearInvoice
         }

@@ -16,13 +16,29 @@ struct AddressDetails {
     }
     
     enum Action {
-        case monthInvoiceButtonTapped(MonthInvoice)
+        case monthInvoiceButtonTapped(YearInvoice, MonthInvoice)
+        case delegate(Delegate)
+        
+        @CasePathable
+        enum Delegate {
+            case select(Shared<MonthInvoice>)
+        }
     }
     
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
-            case .monthInvoiceButtonTapped:
+            case let .monthInvoiceButtonTapped(yearInvoice, monthInvoice):
+                guard let sharedMonthInvoice = state.$address.yearInvoices
+                    .elements.first(where: { $0.id == yearInvoice.id })?
+                    .monthInvoices.elements.first(where: { $0.id == monthInvoice.id })
+                else {
+                    return .none
+                }
+                
+                return .send(.delegate(.select(sharedMonthInvoice)))
+                
+            case .delegate:
                 return .none
             }
         }

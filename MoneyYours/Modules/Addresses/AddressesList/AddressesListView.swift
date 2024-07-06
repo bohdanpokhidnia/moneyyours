@@ -109,7 +109,7 @@ struct AddressesListView: View {
     }
 }
 
-#Preview("Light") {
+#Preview {
     NavigationStack {
         AddressesListView(store: Store(
             initialState: AddressesList.State(
@@ -118,13 +118,4 @@ struct AddressesListView: View {
                 AddressesList()
             })
     }
-}
-
-#Preview("Dark") {
-    AddressesListView(store: Store(initialState: AddressesList.State(
-        addresses: [.mock]
-    )) {
-        AddressesList()
-    })
-    .preferredColorScheme(.dark)
 }

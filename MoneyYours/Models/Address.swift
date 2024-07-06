@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct Address: Identifiable, Codable {
     var id = UUID()
     var name: String
-    var yearInvoices: IdentifiedArrayOf<YearInvoice> = []
+    var yearInvoices: IdentifiedArrayOf<YearInvoice>
 }
 
 // MARK: - Equatable
@@ -25,6 +25,6 @@ extension Address: Equatable {
 extension Address {
     static let mock = Self(
         name: "Dev 1",
-        yearInvoices: [YearInvoice(year: 2024, monthInvoices: [MonthInvoice(month: .july)])]
+        yearInvoices: [YearInvoice(year: 2024, monthInvoices: [MonthInvoice(month: .july, invoices: [])])]
     )
 }

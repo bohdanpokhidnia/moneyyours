@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 struct InvoiceSelectionListView: View {
     @Bindable var store: StoreOf<InvoiceSelectionList>
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,7 +24,6 @@ struct InvoiceSelectionListView: View {
                     ForEach(store.invoices) { (invoice) in
                         Button(invoice.type.name) {
                             store.send(.select(invoice))
-                            dismiss()
                         }
                         .buttonStyle(
                             SelectInvoiceButtonStyle(

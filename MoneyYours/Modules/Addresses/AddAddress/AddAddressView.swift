@@ -49,14 +49,18 @@ struct AddAddressView: View {
     }
 }
 
-#Preview("Light") {
+#Preview {
     NavigationStack {
         AddAddressView(
             store: Store(
                 initialState: AddAddress.State(
                     isSaveDisabled: true,
-                    address: Address(name: "")
-                )) {
+                    address: Address(
+                        name: "",
+                        yearInvoices: []
+                    )
+                )
+            ) {
                     AddAddress()
                 }
         )
