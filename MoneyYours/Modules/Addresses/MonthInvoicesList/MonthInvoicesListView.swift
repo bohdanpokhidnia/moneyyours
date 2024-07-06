@@ -27,12 +27,8 @@ struct MonthInvoicesListView: View {
                 }
                 .padding([.horizontal, .top], 16)
                 
-                NavigationLink{
-                    InvoiceSelectionListView(
-                        store: store.scope(state: \.invoiceSelectionListState, action: \.invoiceSelectionListAction)
-                    )
-                } label: {
-                    Text("Add invoice")
+                Button("Add invoice") {
+                    store.send(.addInvoiceButtonTapped)
                 }
                 .buttonStyle(AddInvoiceButtonStyle())
                 .padding(16)

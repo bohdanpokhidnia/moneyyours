@@ -11,21 +11,17 @@ import ComposableArchitecture
 struct InvoiceSelectionList {
     @ObservableState
     struct State: Equatable {
+        @Shared var monthInvoice: MonthInvoice
         var invoices: IdentifiedArrayOf<Invoice> = []
     }
     
     enum Action {
         case onAppear
         case select(Invoice)
-        case delegate(Delegate)
-        
-        @CasePathable
-        enum Delegate {
-            case save(Invoice)
-        }
     }
     
     @Dependency(\.invoicesLoader) private var invoicesLoader
+    @Dependency(\.dismiss) private var dismiss
     
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
@@ -36,10 +32,10 @@ struct InvoiceSelectionList {
                 return .none
                 
             case let .select(invoice):
-                return .send(.delegate(.save(invoice)))
-                
-            case .delegate:
-                return .none
+                state.monthInvoice.invoices.append(invoice)
+                return .run { _ in
+                    await dismiss()
+                }
             }
         }
     }

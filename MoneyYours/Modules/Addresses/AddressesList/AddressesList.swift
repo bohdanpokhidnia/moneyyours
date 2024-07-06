@@ -25,6 +25,7 @@ struct AddressesList {
         case addAddress(AddAddress)
         case addressDetails(AddressDetails)
         case monthInvoicesList(MonthInvoicesList)
+        case invoiceSelectionList(InvoiceSelectionList)
     }
     
     @Dependency(\.yearInvoicesLoader) private var yearInvoicesLoader
@@ -49,6 +50,14 @@ struct AddressesList {
                         MonthInvoicesList.State(
                             monthInvoice: monthInvoice
                         )
+                    )
+                )
+                return .none
+                
+            case let .path(.element(id: _, action: .monthInvoicesList(.delegate(.addInvoice(monthInvoice))))):
+                state.path.append(
+                    .invoiceSelectionList(
+                        InvoiceSelectionList.State(monthInvoice: monthInvoice)
                     )
                 )
                 return .none

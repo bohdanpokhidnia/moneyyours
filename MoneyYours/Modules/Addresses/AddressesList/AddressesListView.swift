@@ -43,6 +43,9 @@ struct AddressesListView: View {
                 
             case let .monthInvoicesList(store):
                 MonthInvoicesListView(store: store)
+                
+            case let .invoiceSelectionList(store):
+                InvoiceSelectionListView(store: store)
             }
         }
     }
