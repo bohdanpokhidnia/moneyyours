@@ -16,12 +16,12 @@ extension InvoicesLoader: DependencyKey {
         [
             Invoice(
                 type: .electricity,
-                price: 2.64,
+                price: 4.32,
                 amount: .zero
             ),
             Invoice(
                 type: .water,
-                price: .zero,
+                price: 15.00,
                 amount: .zero
             ),
             Invoice(
@@ -31,7 +31,7 @@ extension InvoicesLoader: DependencyKey {
             ),
             Invoice(
                 type: .gas,
-                price: .zero,
+                price: 7.95,
                 amount: .zero
             ),
             Invoice(
