@@ -41,7 +41,7 @@ extension InvoicesLoader: DependencyKey {
             ),
             Invoice(
                 type: .garbageDisposal,
-                price: 24.0,
+                price: 25.26,
                 amount: .zero
             ),
         ]
