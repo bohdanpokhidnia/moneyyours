@@ -15,7 +15,7 @@ struct AddressDetailsView: View {
         VStack(spacing: 0) {
             TitleGradientHeaderView(
                 title: store.address.name,
-                presetColors: .addresses
+                configuration: GradientHeaderConfiguration(presetColors: .addresses)
             )
             .frame(height: 147)
             

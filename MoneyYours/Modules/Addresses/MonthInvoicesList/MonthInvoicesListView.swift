@@ -15,14 +15,14 @@ struct MonthInvoicesListView: View {
         VStack(spacing: 0) {
             TitleGradientHeaderView(
                 title: store.monthInvoice.month.name,
-                presetColors: .addresses
+                configuration: GradientHeaderConfiguration(presetColors: .addresses)
             )
             .frame(height: 147)
             
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     ForEach(store.monthInvoice.invoices) { (invoice) in
-                        InvoiceItemRow(invoice: invoice)
+                        InvoiceRow(invoice: invoice)
                     }
                 }
                 .padding([.horizontal, .top], 16)
@@ -30,7 +30,8 @@ struct MonthInvoicesListView: View {
                 Button("Add invoice") {
                     store.send(.addInvoiceButtonTapped)
                 }
-                .buttonStyle(AddInvoiceButtonStyle())
+                .buttonStyle(SystemImageButtonStyle(imageSystemName: "plus.circle.fill"))
+                .tint(.black)
                 .padding(16)
             }
             .scrollBounceBehavior(.basedOnSize)

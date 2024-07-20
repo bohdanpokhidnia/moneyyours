@@ -10,12 +10,14 @@ import SwiftUI
 struct GradientHeaderView: View {
     let colors: [Color]
     
-    init(colors: [Color]) {
-        self.colors = colors
-    }
-    
-    init(presetColors: PresetColors) {
-        self.colors = presetColors.colors
+    init(configuration: GradientHeaderConfiguration) {
+        if let colors = configuration.colors {
+            self.colors = colors
+        } else if let presetColors = configuration.presetColors {
+            self.colors = presetColors.colors
+        } else {
+            self.colors = []
+        }
     }
     
     var body: some View {
@@ -39,6 +41,9 @@ extension GradientHeaderView {
     }
 }
 
-#Preview {
-    GradientHeaderView(presetColors: .addresses)
+#Preview("GradientHeaderView", traits: .sizeThatFitsLayout) {
+    GradientHeaderView(
+        configuration: GradientHeaderConfiguration(presetColors: .addresses)
+    )
+    .frame(height: 147)
 }

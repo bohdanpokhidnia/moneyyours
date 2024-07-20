@@ -14,9 +14,11 @@ struct AddressesListView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack(alignment: .leading, spacing: 0) {
-                GradientHeaderView(presetColors: .addresses)
-                    .frame(height: 187)
-                    .padding(.bottom, -111)
+                GradientHeaderView(
+                    configuration: GradientHeaderConfiguration(presetColors: .addresses)
+                )
+                .frame(height: 187)
+                .padding(.bottom, -111)
                     
                 titleText
                     .padding(.leading, 16)

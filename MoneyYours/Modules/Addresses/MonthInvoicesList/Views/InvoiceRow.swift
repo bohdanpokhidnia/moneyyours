@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct InvoiceItemRow: View {
+struct InvoiceRow: View {
     @State var text: String = ""
     @State var text1: String = ""
     let invoice: Invoice
@@ -69,7 +69,7 @@ struct InvoiceItemRow: View {
 
 #Preview("InvoiceItemRow", traits: .sizeThatFitsLayout) {
     ZStack {
-        InvoiceItemRow(invoice: .mock)
+        InvoiceRow(invoice: .mock)
     }
     .background(.black)
 }

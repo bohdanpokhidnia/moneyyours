@@ -10,29 +10,19 @@ import SwiftUI
 struct TitleGradientHeaderView: View {
     let title: String
     var titleAlignment: Alignment = .bottomLeading
-    var colors: [Color]? = nil
-    var presetColors: GradientHeaderView.PresetColors? = nil
-    
+    let configuration: GradientHeaderConfiguration
+
     var body: some View {
-        gradientView()
+        GradientHeaderView(configuration: configuration)
             .overlay(alignment: titleAlignment) {
                 titleText
             }
     }
 }
 
+// MARK: - Views
+
 private extension TitleGradientHeaderView {
-    @ViewBuilder
-    func gradientView() -> some View {
-        if let colors {
-            GradientHeaderView(colors: colors)
-        } else if let presetColors {
-            GradientHeaderView(presetColors: presetColors)
-        } else {
-            EmptyView()
-        }
-    }
-    
     var titleText: some View {
         Text(title)
             .font(.screenTitle)
@@ -45,6 +35,6 @@ private extension TitleGradientHeaderView {
 #Preview {
     TitleGradientHeaderView(
         title: Address.mock.name,
-        presetColors: .addresses
+        configuration: GradientHeaderConfiguration(presetColors: .addresses)
     )
 }

@@ -15,7 +15,7 @@ struct InvoiceSelectionListView: View {
         VStack(spacing: 0) {
             TitleGradientHeaderView(
                 title: "Invoices",
-                presetColors: .addresses
+                configuration: GradientHeaderConfiguration(presetColors: .addresses)
             )
             .frame(height: 147)
             
