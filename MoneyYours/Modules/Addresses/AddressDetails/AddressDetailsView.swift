@@ -12,38 +12,34 @@ struct AddressDetailsView: View {
     @Bindable var store: StoreOf<AddressDetails>
     
     var body: some View {
-        VStack(spacing: 0) {
-            TitleGradientHeaderView(
-                title: store.address.name,
-                configuration: GradientHeaderConfiguration(presetColors: .addresses)
-            )
-            .frame(height: 147)
-            
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    subtitleText
+        ScrollableGradientHeaderView(
+            title: store.address.name,
+            configuration: GradientHeaderConfiguration(presetColors: .addresses),
+            headerHeight: 147,
+            minVisibleHeight: 17
+        ) {
+            VStack(alignment: .leading, spacing: 16) {
+                subtitleText
+                
+                ForEach(store.address.yearInvoices) { (yearInvoice) in
+                    Text(yearInvoice.year.description)
+                        .frame(maxWidth: .infinity)
                     
-                    ForEach(store.address.yearInvoices) { (yearInvoice) in
-                        Text(yearInvoice.year.description)
-                            .frame(maxWidth: .infinity)
-                        
-                        ForEach(yearInvoice.monthInvoices) { (monthInvoice) in
-                            Button(monthInvoice.month.name) {
-                                store.send(.monthInvoiceButtonTapped(yearInvoice, monthInvoice))
-                            }
-                            .buttonStyle(
-                                EmojiRowButtonStyle(
-                                    emoji: monthInvoice.month.emoji,
-                                    emojiBackground: monthInvoice.month.color
-                                )
-                            )
+                    ForEach(yearInvoice.monthInvoices) { (monthInvoice) in
+                        Button(monthInvoice.month.name) {
+                            store.send(.monthInvoiceButtonTapped(yearInvoice, monthInvoice))
                         }
+                        .buttonStyle(
+                            EmojiRowButtonStyle(
+                                emoji: monthInvoice.month.emoji,
+                                emojiBackground: monthInvoice.month.color
+                            )
+                        )
                     }
-                    .padding(.horizontal, 16)
                 }
-                .padding(.bottom, 16)
+                .padding(.horizontal, 16)
             }
-            .scrollBounceBehavior(.basedOnSize)
+            .padding(.bottom, 16)
         }
         .ignoresSafeArea(edges: [.top])
         .updateBackButton(color: .white)
@@ -91,5 +87,6 @@ private extension AddressDetailsView {
                 AddressDetails()
             }
         )
+        .setupNavigationTransparent()
     }
 }

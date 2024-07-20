@@ -17,6 +17,7 @@ struct MoneyYoursApp: App {
     var body: some Scene {
         WindowGroup {
             AddressesListView(store: Self.addressesStore)
+                .setupNavigationTransparent()
         }
     }
 }

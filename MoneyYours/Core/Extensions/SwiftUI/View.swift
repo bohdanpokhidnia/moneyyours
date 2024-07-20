@@ -24,4 +24,10 @@ extension View {
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = image
         return self
     }
+    
+    func setupNavigationTransparent() -> some View {
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UINavigationBar.appearance().shadowImage = UIImage()
+        return self
+    }
 }
