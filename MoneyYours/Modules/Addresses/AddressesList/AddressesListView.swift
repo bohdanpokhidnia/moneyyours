@@ -17,7 +17,7 @@ struct AddressesListView: View {
                 GradientHeaderView(
                     configuration: GradientHeaderConfiguration(presetColors: .addresses)
                 )
-                .frame(height: 187)
+                .frame(height: safeArea.bottom == .zero ? 147 : 187)
                 .padding(.bottom, -111)
                     
                 titleText
@@ -118,7 +118,13 @@ struct AddressesListView: View {
     NavigationStack {
         AddressesListView(store: Store(
             initialState: AddressesList.State(
-                addresses: [.mock]
+                addresses: [
+                    .mock,
+                    .mock1,
+                    .mock2,
+                    .mock3,
+                    .mock4,
+                ]
             )) {
                 AddressesList()
             })
