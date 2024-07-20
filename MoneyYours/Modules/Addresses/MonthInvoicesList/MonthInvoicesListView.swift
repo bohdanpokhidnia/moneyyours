@@ -15,8 +15,7 @@ struct MonthInvoicesListView: View {
         ScrollableGradientHeaderView(
             title: store.monthInvoice.month.name,
             configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            headerHeight: 147,
-            minVisibleHeight: 17
+            headerHeight: 147
         ) {
             VStack(alignment: .leading, spacing: 16) {
                 ForEach(store.monthInvoice.invoices) { (invoice) in

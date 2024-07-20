@@ -15,8 +15,7 @@ struct AddressDetailsView: View {
         ScrollableGradientHeaderView(
             title: store.address.name,
             configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            headerHeight: 147,
-            minVisibleHeight: 17
+            headerHeight: 147
         ) {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
