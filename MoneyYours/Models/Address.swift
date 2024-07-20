@@ -27,4 +27,24 @@ extension Address {
         name: "Dev 1",
         yearInvoices: [YearInvoice(year: 2024, monthInvoices: [MonthInvoice(month: .july, invoices: [])])]
     )
+    
+    static let mock1 = Self(
+        name: "Dev 2",
+        yearInvoices: [.mock]
+    )
+    
+    static let mock2 = Self(
+        name: "Dev 3",
+        yearInvoices: [.mock]
+    )
+    
+    static let mock3 = Self(
+        name: "Dev 4",
+        yearInvoices: [.mock]
+    )
+    
+    static let mock4 = Self(
+        name: "Dev 5",
+        yearInvoices: [.mock]
+    )
 }
