@@ -25,7 +25,7 @@
 		F72AF67C2C2DB12100B8325D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72AF67B2C2DB12100B8325D /* Color.swift */; };
 		F72AF6802C2DBBCD00B8325D /* YearInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72AF67F2C2DBBCD00B8325D /* YearInvoice.swift */; };
 		F7459FE72C4A90F900482E32 /* ScrollableGradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7459FE62C4A90F900482E32 /* ScrollableGradientHeaderView.swift */; };
-		F7459FEA2C4A912700482E32 /* HeaderOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7459FE92C4A912700482E32 /* HeaderOffsetKey.swift */; };
+		F7459FEA2C4A912700482E32 /* ViewRectKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7459FE92C4A912700482E32 /* ViewRectKey.swift */; };
 		F75DD9612C3186EE003882D9 /* YearInvoicesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75DD9602C3186EE003882D9 /* YearInvoicesLoader.swift */; };
 		F7A58B8F2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B8E2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift */; };
 		F7A58B912C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B902C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift */; };
@@ -74,7 +74,7 @@
 		F72AF67B2C2DB12100B8325D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		F72AF67F2C2DBBCD00B8325D /* YearInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearInvoice.swift; sourceTree = "<group>"; };
 		F7459FE62C4A90F900482E32 /* ScrollableGradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableGradientHeaderView.swift; sourceTree = "<group>"; };
-		F7459FE92C4A912700482E32 /* HeaderOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderOffsetKey.swift; sourceTree = "<group>"; };
+		F7459FE92C4A912700482E32 /* ViewRectKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRectKey.swift; sourceTree = "<group>"; };
 		F75DD9602C3186EE003882D9 /* YearInvoicesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearInvoicesLoader.swift; sourceTree = "<group>"; };
 		F7A58B8E2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceSelectionList.swift; sourceTree = "<group>"; };
 		F7A58B902C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceSelectionListView.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 		F7459FE82C4A911900482E32 /* PreferenceKeys */ = {
 			isa = PBXGroup;
 			children = (
-				F7459FE92C4A912700482E32 /* HeaderOffsetKey.swift */,
+				F7459FE92C4A912700482E32 /* ViewRectKey.swift */,
 			);
 			path = PreferenceKeys;
 			sourceTree = "<group>";
@@ -486,7 +486,7 @@
 				F7A58B8F2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift in Sources */,
 				F72086B62C3165BA0080E32F /* MonthInvoicesList.swift in Sources */,
 				F7ADA0962C1D88B9001E649F /* GradientHeaderView.swift in Sources */,
-				F7459FEA2C4A912700482E32 /* HeaderOffsetKey.swift in Sources */,
+				F7459FEA2C4A912700482E32 /* ViewRectKey.swift in Sources */,
 				F71E43D22C4BA26E00980010 /* GradientHeaderConfiguration.swift in Sources */,
 				F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */,
 				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
