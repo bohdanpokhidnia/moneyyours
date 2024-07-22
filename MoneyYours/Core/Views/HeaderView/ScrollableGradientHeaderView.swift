@@ -13,9 +13,9 @@ struct ScrollableGradientHeaderView<ContentView: View>: View {
     var headerHeight: CGFloat
     @ViewBuilder var content: () -> ContentView
     
-    @State private var fullNavigationBarHeight: CGFloat = .zero
-    @State var titleWidth: CGFloat = .zero
-    private let titleBottomPadding: CGFloat = 16.0
+    @State private var navigationBarHeight: CGFloat = .zero
+    @State private var titleSize: CGSize = .zero
+    private let titlePadding: CGFloat = 16.0
     
     var body: some View {
         ScrollView {
@@ -33,36 +33,36 @@ struct ScrollableGradientHeaderView<ContentView: View>: View {
             }
         }
         .background {
-            NavigationBarHeightReader(fullNavigationBarHeight: $fullNavigationBarHeight)
+            NavigationBarHeightReader(navigationBarHeight: $navigationBarHeight)
         }
         .contentMargins(.top, headerHeight, for: .scrollIndicators)
         .overlayPreferenceValue(ViewRectKey.self, alignment: .top) { (rect) in
             let minY = rect.minY
             let isScrollingUp = minY > 0
-            let adjustedMinVisibleHeight = fullNavigationBarHeight - safeArea.top
-            let offsetY = isScrollingUp ? 0 : min(max(minY, -adjustedMinVisibleHeight), 0)
-            let scrollProgress = max(min(-minY / (headerHeight - fullNavigationBarHeight), 1), 0)
-            let titleOffsetX = ((rect.maxX / 2) - (titleWidth / 2)) * scrollProgress - 8 * scrollProgress
-            let titleOffsetY = 1 - (scrollProgress * titleBottomPadding * 2.5)
+            let offsetY = isScrollingUp ? 0 : min(max(minY, -navigationBarHeight), 0)
+            let scrollProgress = max(min(-minY / (headerHeight - navigationBarHeight), 1), 0)
+            let titleScale = 1 - (scrollProgress * 0.2)
+            let titleOffsetX = ((rect.maxX / 2) - (titleSize.width / 2) - 16) * scrollProgress + 16
+            let titleOffsetY = offsetY - titlePadding / 2
             
             ZStack(alignment: .bottomLeading) {
                 GradientHeaderView(configuration: configuration)
                     .offset(y: offsetY)
-                    .frame(height: headerHeight)
+                    .frame(height: safeArea.top + navigationBarHeight * 2)
                 
                 titleView
                     .background {
                         GeometryReader { (titleProxy) in
                             Color.clear
                                 .onAppear {
-                                    titleWidth = titleProxy.size.width
+                                    titleSize = titleProxy.size
                                 }
-                                .onChange(of: titleProxy.size.width) {
-                                    titleWidth = titleProxy.size.width
+                                .onChange(of: titleProxy.size) {
+                                    titleSize = titleProxy.size
                                 }
                         }
                     }
-                    .scaleEffect(1 - (scrollProgress * 0.2))
+                    .scaleEffect(titleScale)
                     .offset(
                         x: titleOffsetX,
                         y: titleOffsetY
@@ -80,15 +80,13 @@ private extension ScrollableGradientHeaderView {
             .font(.screenTitle)
             .foregroundStyle(.white)
             .lineLimit(1)
-            .padding(.leading, 16)
-            .padding(.bottom, titleBottomPadding)
     }
 }
 
 #Preview {
     NavigationStack {
         ScrollableGradientHeaderView(
-            title: "Money Yours",
+            title: "District",
             configuration: GradientHeaderConfiguration(presetColors: .addresses),
             headerHeight: 147
         ) {
@@ -113,5 +111,12 @@ private extension ScrollableGradientHeaderView {
             .padding(.horizontal, 16)
         }
         .ignoresSafeArea(edges: .top)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Image(systemName: "gear")
+                    .foregroundStyle(.white)
+            }
+        }
+        .setupNavigationTransparent()
     }
 }
