@@ -9,14 +9,14 @@ import SwiftUI
 
 struct NavigationBarHeightReader: UIViewControllerRepresentable {
     class Coordinator: NSObject {
-        var fullNavigationBarHeight: Binding<CGFloat>
+        var navigationBarHeight: Binding<CGFloat>
         
-        init(fullNavigationBarHeight: Binding<CGFloat>) {
-            self.fullNavigationBarHeight = fullNavigationBarHeight
+        init(navigationBarHeight: Binding<CGFloat>) {
+            self.navigationBarHeight = navigationBarHeight
         }
     }
     
-    @Binding var fullNavigationBarHeight: CGFloat
+    @Binding var navigationBarHeight: CGFloat
     
     // MARK: - UIViewControllerRepresentable
 
@@ -27,8 +27,8 @@ struct NavigationBarHeightReader: UIViewControllerRepresentable {
             guard let navigationController = viewController.navigationController else {
                 return
             }
-            let fullHeight = navigationController.navigationBar.frame.height + safeArea.top
-            context.coordinator.fullNavigationBarHeight.wrappedValue = fullHeight
+            let height = navigationController.navigationBar.frame.height
+            context.coordinator.navigationBarHeight.wrappedValue = height
         }
         
         return viewController
@@ -39,6 +39,6 @@ struct NavigationBarHeightReader: UIViewControllerRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(fullNavigationBarHeight: $fullNavigationBarHeight)
+        Coordinator(navigationBarHeight: $navigationBarHeight)
     }
 }
