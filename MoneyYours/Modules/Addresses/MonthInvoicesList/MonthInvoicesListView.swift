@@ -14,12 +14,11 @@ struct MonthInvoicesListView: View {
     var body: some View {
         ScrollableGradientHeaderView(
             title: store.monthInvoice.month.name,
-            configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            headerHeight: 147
+            configuration: GradientHeaderConfiguration(presetColors: .addresses)
         ) {
             VStack(alignment: .leading, spacing: 16) {
                 ForEach(store.monthInvoice.invoices) { (invoice) in
-                    InvoiceRow(invoice: invoice)
+                    MonthInvoiceRow(invoice: invoice)
                 }
             }
             .padding([.horizontal, .top], 16)

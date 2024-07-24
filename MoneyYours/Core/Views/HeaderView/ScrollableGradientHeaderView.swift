@@ -10,7 +10,6 @@ import SwiftUI
 struct ScrollableGradientHeaderView<ContentView: View>: View {
     var title: String
     var configuration: GradientHeaderConfiguration
-    var headerHeight: CGFloat
     @ViewBuilder var content: () -> ContentView
     
     @State private var navigationBarHeight: CGFloat = .zero
@@ -26,7 +25,7 @@ struct ScrollableGradientHeaderView<ContentView: View>: View {
                     Color.clear
                         .preference(key: ViewRectKey.self, value: rect)
                 }
-                .frame(height: headerHeight)
+                .frame(height: safeArea.top + navigationBarHeight * 2)
                 .zIndex(1)
                 
                 content()
@@ -35,12 +34,12 @@ struct ScrollableGradientHeaderView<ContentView: View>: View {
         .background {
             NavigationBarHeightReader(navigationBarHeight: $navigationBarHeight)
         }
-        .contentMargins(.top, headerHeight, for: .scrollIndicators)
+        .contentMargins(.top, safeArea.top + navigationBarHeight * 2, for: .scrollIndicators)
         .overlayPreferenceValue(ViewRectKey.self, alignment: .top) { (rect) in
             let minY = rect.minY
             let isScrollingUp = minY > 0
             let offsetY = isScrollingUp ? 0 : min(max(minY, -navigationBarHeight), 0)
-            let scrollProgress = max(min(-minY / (headerHeight - navigationBarHeight), 1), 0)
+            let scrollProgress = max(min(-minY / (safeArea.top + navigationBarHeight), 1), 0)
             let titleScale = 1 - (scrollProgress * 0.2)
             let titleOffsetX = ((rect.maxX / 2) - (titleSize.width / 2) - 16) * scrollProgress + 16
             let titleOffsetY = offsetY - titlePadding / 2
@@ -87,8 +86,7 @@ private extension ScrollableGradientHeaderView {
     NavigationStack {
         ScrollableGradientHeaderView(
             title: "District",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            headerHeight: 147
+            configuration: GradientHeaderConfiguration(presetColors: .addresses)
         ) {
             VStack(spacing: 8) {
                 ForEach(0...25, id: \.self) { (number) in
