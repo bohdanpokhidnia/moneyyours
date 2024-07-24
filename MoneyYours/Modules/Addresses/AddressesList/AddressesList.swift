@@ -69,12 +69,3 @@ struct AddressesList {
         .forEach(\.path, action: \.path)
     }
 }
-
-extension PersistenceReaderKey where Self == PersistenceKeyDefault<FileStorageKey<IdentifiedArrayOf<Address>>> {
-    static var addresses: Self {
-        PersistenceKeyDefault(
-            .fileStorage(.documentsDirectory.appending(component: "addresses.json")),
-            []
-        )
-    }
-}

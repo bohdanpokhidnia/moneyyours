@@ -15,6 +15,7 @@
 		F70811852C198D4C00257CFE /* AddressesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesListView.swift */; };
 		F708118A2C198D9800257CFE /* AddAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddress.swift */; };
 		F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811882C198D9800257CFE /* AddAddressView.swift */; };
+		F71497FF2C50166500479175 /* PersistenceReaderKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71497FE2C50166500479175 /* PersistenceReaderKey.swift */; };
 		F71E43D22C4BA26E00980010 /* GradientHeaderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71E43D12C4BA26E00980010 /* GradientHeaderConfiguration.swift */; };
 		F71E43D42C4BBB1600980010 /* NavigationBarHeightReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71E43D32C4BBB1600980010 /* NavigationBarHeightReader.swift */; };
 		F72086B32C3161390080E32F /* MonthInvoicesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72086B22C3161390080E32F /* MonthInvoicesListView.swift */; };
@@ -37,7 +38,6 @@
 		F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A22C1990C4000768C3 /* UINavigationController.swift */; };
 		F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */; };
 		F7AD32AB2C19920A000768C3 /* EmojiRowButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AA2C19920A000768C3 /* EmojiRowButtonStyle.swift */; };
-		F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32AD2C19927E000768C3 /* AppColor.swift */; };
 		F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B02C1992CE000768C3 /* GrayTextField.swift */; };
 		F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */; };
 		F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */; };
@@ -64,6 +64,7 @@
 		F70811822C198D4C00257CFE /* AddressesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListView.swift; sourceTree = "<group>"; };
 		F70811872C198D9800257CFE /* AddAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddress.swift; sourceTree = "<group>"; };
 		F70811882C198D9800257CFE /* AddAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressView.swift; sourceTree = "<group>"; };
+		F71497FE2C50166500479175 /* PersistenceReaderKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceReaderKey.swift; sourceTree = "<group>"; };
 		F71E43D12C4BA26E00980010 /* GradientHeaderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHeaderConfiguration.swift; sourceTree = "<group>"; };
 		F71E43D32C4BBB1600980010 /* NavigationBarHeightReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarHeightReader.swift; sourceTree = "<group>"; };
 		F72086B22C3161390080E32F /* MonthInvoicesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthInvoicesListView.swift; sourceTree = "<group>"; };
@@ -86,7 +87,6 @@
 		F7AD32A22C1990C4000768C3 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		F7AD32A82C1991DD000768C3 /* ActionAddressesButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionAddressesButtonStyle.swift; sourceTree = "<group>"; };
 		F7AD32AA2C19920A000768C3 /* EmojiRowButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiRowButtonStyle.swift; sourceTree = "<group>"; };
-		F7AD32AD2C19927E000768C3 /* AppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColor.swift; sourceTree = "<group>"; };
 		F7AD32B02C1992CE000768C3 /* GrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTextField.swift; sourceTree = "<group>"; };
 		F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightThemeShadow.swift; sourceTree = "<group>"; };
 		F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomActionButtonStyle.swift; sourceTree = "<group>"; };
@@ -195,6 +195,14 @@
 			path = AddAddress;
 			sourceTree = "<group>";
 		};
+		F71497FD2C50165A00479175 /* ComposableArchitecture */ = {
+			isa = PBXGroup;
+			children = (
+				F71497FE2C50166500479175 /* PersistenceReaderKey.swift */,
+			);
+			path = ComposableArchitecture;
+			sourceTree = "<group>";
+		};
 		F72086B12C3161170080E32F /* MonthInvoicesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +279,7 @@
 			children = (
 				F7AD32A12C1990B3000768C3 /* UIKit */,
 				F7ADA0972C1DCFAB001E649F /* SwiftUI */,
+				F71497FD2C50165A00479175 /* ComposableArchitecture */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -294,7 +303,6 @@
 		F7AD32AC2C19926E000768C3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F7AD32AD2C19927E000768C3 /* AppColor.swift */,
 				F7A58B962C1F058E00D2C4D7 /* InvoicesLoader.swift */,
 				F75DD9602C3186EE003882D9 /* YearInvoicesLoader.swift */,
 			);
@@ -477,11 +485,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7AD32A92C1991DD000768C3 /* ActionAddressesButtonStyle.swift in Sources */,
-				F7AD32AE2C19927E000768C3 /* AppColor.swift in Sources */,
 				F72AF6802C2DBBCD00B8325D /* YearInvoice.swift in Sources */,
 				F70811802C198D2000257CFE /* Address.swift in Sources */,
 				F7278EF62C26D0D50027AAB4 /* SystemImageButtonStyle.swift in Sources */,
 				F7A58B972C1F058E00D2C4D7 /* InvoicesLoader.swift in Sources */,
+				F71497FF2C50166500479175 /* PersistenceReaderKey.swift in Sources */,
 				F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */,
 				F7A58B8F2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift in Sources */,
 				F72086B62C3165BA0080E32F /* MonthInvoicesList.swift in Sources */,

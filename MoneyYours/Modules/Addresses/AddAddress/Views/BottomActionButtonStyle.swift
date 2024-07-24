@@ -10,11 +10,11 @@ import ComposableArchitecture
 
 struct BottomActionButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
-    @Dependency(\.appColor) private var appColor
+    var fillColor: Color
     
     func makeBody(configuration: Configuration) -> some View {
         RoundedRectangle(cornerRadius: 14)
-            .fill(isEnabled ? appColor.tint : Color.pastelGrey)
+            .fill(fillColor)
             .padding(.horizontal, 16)
             .overlay {
                 configuration.label

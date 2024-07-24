@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 struct AddAddressView: View {
     @Bindable var store: StoreOf<AddAddress>
-    @Dependency(\.appColor) private var appColor
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -40,12 +39,12 @@ struct AddAddressView: View {
             }
             .padding(.bottom, 24)
             .buttonStyle(
-                BottomActionButtonStyle()
+                BottomActionButtonStyle(fillColor: Color(store.appColor))
             )
             .disabled(store.state.isSaveDisabled)
         }
         .background(.appBackgroundSecondary)
-        .updateBackButton(color: appColor.tint)
+        .updateBackButton(color: Color(store.appColor))
     }
 }
 

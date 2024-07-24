@@ -13,6 +13,7 @@ struct AddAddress {
     struct State: Equatable {
         var isSaveDisabled: Bool = true
         var address: Address
+        @Shared(.appColor) var appColor
     }
     
     enum Action {
