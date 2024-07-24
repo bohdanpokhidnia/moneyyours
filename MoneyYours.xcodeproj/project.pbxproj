@@ -49,7 +49,7 @@
 		F7B0D4DE2C3952B900A9C588 /* AddressSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B0D4DD2C3952B900A9C588 /* AddressSettingsView.swift */; };
 		F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA062C2320F800F6580E /* InvoiceType.swift */; };
 		F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA082C23249900F6580E /* FallbackCase.swift */; };
-		F7BDEEF52C281D53007E9C1D /* InvoiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF42C281D53007E9C1D /* InvoiceRow.swift */; };
+		F7BDEEF52C281D53007E9C1D /* MonthInvoiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF42C281D53007E9C1D /* MonthInvoiceRow.swift */; };
 		F7BDEEF82C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */; };
 		F7BDEEFA2C282672007E9C1D /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF92C282672007E9C1D /* EmojiView.swift */; };
 		F7BDEEFE2C283555007E9C1D /* HintGrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEFD2C283555007E9C1D /* HintGrayTextField.swift */; };
@@ -98,7 +98,7 @@
 		F7B0D4DD2C3952B900A9C588 /* AddressSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsView.swift; sourceTree = "<group>"; };
 		F7BCCA062C2320F800F6580E /* InvoiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceType.swift; sourceTree = "<group>"; };
 		F7BCCA082C23249900F6580E /* FallbackCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCase.swift; sourceTree = "<group>"; };
-		F7BDEEF42C281D53007E9C1D /* InvoiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceRow.swift; sourceTree = "<group>"; };
+		F7BDEEF42C281D53007E9C1D /* MonthInvoiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthInvoiceRow.swift; sourceTree = "<group>"; };
 		F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UkrainianHryvniaFormatStyle.swift; sourceTree = "<group>"; };
 		F7BDEEF92C282672007E9C1D /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		F7BDEEFD2C283555007E9C1D /* HintGrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintGrayTextField.swift; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		F72086B42C3161600080E32F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F7BDEEF42C281D53007E9C1D /* InvoiceRow.swift */,
+				F7BDEEF42C281D53007E9C1D /* MonthInvoiceRow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -499,7 +499,7 @@
 				F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */,
 				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
 				F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */,
-				F7BDEEF52C281D53007E9C1D /* InvoiceRow.swift in Sources */,
+				F7BDEEF52C281D53007E9C1D /* MonthInvoiceRow.swift in Sources */,
 				F72AF6772C2DB0B600B8325D /* MonthInvoice.swift in Sources */,
 				F7A58B9A2C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift in Sources */,
 				F72AF67A2C2DB0F600B8325D /* Month.swift in Sources */,
