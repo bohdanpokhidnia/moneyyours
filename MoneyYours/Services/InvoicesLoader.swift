@@ -8,38 +8,38 @@
 import ComposableArchitecture
 
 struct InvoicesLoader {
-    var fetch: () -> [Invoice]
+    var fetch: () -> [CommunalInvoice]
 }
 
 extension InvoicesLoader: DependencyKey {
     static var liveValue = InvoicesLoader {
         [
-            Invoice(
+            CommunalInvoice(
                 type: .electricity,
                 price: 4.32,
                 amount: .zero
             ),
-            Invoice(
+            CommunalInvoice(
                 type: .water,
                 price: 15.00,
                 amount: .zero
             ),
-            Invoice(
+            CommunalInvoice(
                 type: .heating,
                 price: .zero,
                 amount: .zero
             ),
-            Invoice(
+            CommunalInvoice(
                 type: .gas,
                 price: 7.95,
                 amount: .zero
             ),
-            Invoice(
+            CommunalInvoice(
                 type: .gasDelivery,
                 price: 6.86,
                 amount: .zero
             ),
-            Invoice(
+            CommunalInvoice(
                 type: .garbageDisposal,
                 price: 25.26,
                 amount: .zero

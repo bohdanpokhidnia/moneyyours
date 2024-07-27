@@ -1,5 +1,5 @@
 //
-//  MonthInvoiceRow.swift
+//  CommunalInvoiceRow.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 23.06.2024.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct MonthInvoiceRow: View {
-    @State var text: String = ""
-    @State var text1: String = ""
-    let invoice: Invoice
+struct CommunalInvoiceRow: View {
+    let invoice: CommunalInvoice
+    @Binding var past: String
+    @Binding var now: String
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -31,7 +31,7 @@ struct MonthInvoiceRow: View {
                     title: "Price at 1",
                     placeholder: "Past",
                     prompt: "Value",
-                    text: $text
+                    text: $past
                 )
                 
                 priceView(
@@ -39,7 +39,7 @@ struct MonthInvoiceRow: View {
                     title: "Amount",
                     placeholder: "Now",
                     prompt: "Value",
-                    text: $text1
+                    text: $now
                 )
             }
             .padding([.horizontal, .bottom], 16)
@@ -74,9 +74,13 @@ struct MonthInvoiceRow: View {
     }
 }
 
-#Preview("InvoiceItemRow", traits: .sizeThatFitsLayout) {
+#Preview("InvoiceRow", traits: .sizeThatFitsLayout) {
     ZStack {
-        MonthInvoiceRow(invoice: .mock)
+        CommunalInvoiceRow(
+            invoice: .mock,
+            past: .constant("1"),
+            now: .constant("2")
+        )
     }
     .background(.black)
 }

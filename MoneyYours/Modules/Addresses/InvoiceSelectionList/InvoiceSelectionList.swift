@@ -12,12 +12,12 @@ struct InvoiceSelectionList {
     @ObservableState
     struct State: Equatable {
         @Shared var monthInvoice: MonthInvoice
-        var invoices: IdentifiedArrayOf<Invoice> = []
+        var invoices: IdentifiedArrayOf<CommunalInvoice> = []
     }
     
     enum Action {
         case onAppear
-        case select(Invoice)
+        case select(CommunalInvoice)
     }
     
     @Dependency(\.invoicesLoader) private var invoicesLoader
