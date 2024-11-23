@@ -16,6 +16,13 @@ struct AddressSettingsFeature {
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case removeButtonTapped
+        case delegate(Delegate)
+    }
+    
+    @CasePathable
+    enum Delegate {
+        case remove(address: Address)
     }
     
     var body: some ReducerOf<Self> {
@@ -26,7 +33,13 @@ struct AddressSettingsFeature {
                 state.address.name = state.address.name.trimmingCharacters(in: .whitespaces)
                 return .none
                 
+            case .removeButtonTapped:
+                return .send(.delegate(.remove(address: state.address)))
+                
             case .binding:
+                return .none
+                
+            case .delegate:
                 return .none
             }
         }

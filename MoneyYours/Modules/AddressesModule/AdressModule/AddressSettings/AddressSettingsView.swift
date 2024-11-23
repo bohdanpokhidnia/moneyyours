@@ -11,8 +11,6 @@ import SwiftUI
 struct AddressSettingsView: View {
     @Bindable var store: StoreOf<AddressSettingsFeature>
     
-    @State var name: String = "Test"
-    
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Settings",
@@ -47,7 +45,7 @@ struct AddressSettingsView: View {
             .padding(.horizontal, 16)
             
             Button("Remove address") {
-                
+                store.send(.removeButtonTapped)
             }
             .buttonStyle(SystemImageButtonStyle(imageSystemName: "trash"))
             .padding(.top, 16)

@@ -45,6 +45,11 @@ struct AddressesFeature {
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
                 return .none
                 
+            case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(address))))):
+                state.addresses.remove(id: address.id)
+                state.path.removeAll()
+                return .none
+                
             case .path:
                 return .none
             }
