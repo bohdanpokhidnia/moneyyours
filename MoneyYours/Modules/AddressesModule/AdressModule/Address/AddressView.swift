@@ -1,5 +1,5 @@
 //
-//  AddressDetailsView.swift
+//  AddressView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 15.06.2024.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AddressDetailsView: View {
-    @Bindable var store: StoreOf<AddressDetails>
+struct AddressView: View {
+    @Bindable var store: StoreOf<AddressFeature>
     
     var body: some View {
         ScrollableGradientHeaderView(
@@ -19,23 +19,23 @@ struct AddressDetailsView: View {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
                 
-                ForEach(store.address.yearInvoices) { (yearInvoice) in
-                    Text(yearInvoice.year.description)
+                ForEach(store.yeas, id: \.self) { year in
+                    Text(year.description)
                         .frame(maxWidth: .infinity)
                     
-                    ForEach(yearInvoice.monthInvoices) { (monthInvoice) in
-                        Button(monthInvoice.month.name) {
-                            store.send(.monthInvoiceButtonTapped(yearInvoice, monthInvoice))
+                    ForEach(store.address.communalInvoices.filter({ $0.year == year })) { communalInvoice in
+                        Button(communalInvoice.month.name) {
+                            
                         }
                         .buttonStyle(
                             EmojiRowButtonStyle(
-                                emoji: monthInvoice.month.emoji,
-                                emojiBackground: monthInvoice.month.color
+                                emoji: communalInvoice.month.emoji,
+                                emojiBackground: communalInvoice.month.color
                             )
                         )
                     }
+                    .padding(.horizontal, 16)
                 }
-                .padding(.horizontal, 16)
             }
             .padding(.bottom, 16)
         }
@@ -45,7 +45,7 @@ struct AddressDetailsView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    
+                    store.send(.settingsButtonTapped)
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .foregroundStyle(.white)
@@ -57,7 +57,7 @@ struct AddressDetailsView: View {
 
 // MARK: - Views
 
-private extension AddressDetailsView {
+private extension AddressView {
     private var subtitleText: some View {
         HStack {
             VStack(alignment: .leading, spacing: 12) {
@@ -78,11 +78,11 @@ private extension AddressDetailsView {
 
 #Preview {
     NavigationStack {
-        AddressDetailsView(
+        AddressView(
             store: Store(
-                initialState: AddressDetails.State(address: Shared(.mock))
+                initialState: AddressFeature.State(address: Shared(.preview))
             ) {
-                AddressDetails()
+                AddressFeature()
             }
         )
         .setupNavigationTransparent()

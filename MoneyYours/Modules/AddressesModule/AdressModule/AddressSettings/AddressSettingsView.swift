@@ -5,15 +5,19 @@
 //  Created by Bohdan Pokhidnia on 06.07.2024.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
 struct AddressSettingsView: View {
+    @Bindable var store: StoreOf<AddressSettingsFeature>
+    
+    @State var name: String = "Test"
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Settings")
-                .font(.system(size: 28, weight: .bold))
-                .padding(.top, 12)
-            
+        ScrollableGradientHeaderView(
+            title: "Settings",
+            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+        ) {
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
                     EmojiView(
@@ -26,9 +30,12 @@ struct AddressSettingsView: View {
                             .font(.system(size: 16, weight: .semibold))
                             .foregroundStyle(Color(hex: "#9A9A9A"))
                         
-                        Text("Address name")
-                            .font(.system(size: 19, weight: .semibold))
-                            .foregroundStyle(.primaryText)
+                        TextField(
+                            "",
+                            text: $store.address.name
+                        )
+                        .font(.system(size: 19, weight: .semibold))
+                        .foregroundStyle(.primaryText)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -37,6 +44,7 @@ struct AddressSettingsView: View {
             .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(.top, 24)
+            .padding(.horizontal, 16)
             
             Button("Remove address") {
                 
@@ -44,17 +52,22 @@ struct AddressSettingsView: View {
             .buttonStyle(SystemImageButtonStyle(imageSystemName: "trash"))
             .padding(.top, 16)
             .tint(.beanRed)
-            
-            Spacer()
+            .padding(.horizontal, 16)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 16)
+        .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
+        .updateBackButton(color: .white)
     }
 }
 
 #Preview {
     NavigationStack {
-        AddressSettingsView()
+        AddressSettingsView(
+            store: Store(
+                initialState: AddressSettingsFeature.State(address: Shared(.preview))
+            ) {
+                AddressSettingsFeature()
+            }
+        )
     }
 }

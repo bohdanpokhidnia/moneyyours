@@ -1,5 +1,5 @@
 //
-//  AddressesListView.swift
+//  AddressesView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 12.06.2024.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AddressesListView: View {
-    @Bindable var store: StoreOf<AddressesList>
+struct AddressesView: View {
+    @Bindable var store: StoreOf<AddressesFeature>
     
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
@@ -40,8 +40,11 @@ struct AddressesListView: View {
             case let .addAddress(store):
                 AddAddressView(store: store)
                 
-            case let .addressDetails(store):
-                AddressDetailsView(store: store)
+            case let .address(store):
+                AddressView(store: store)
+                
+            case let .addressSettings(store):
+                AddressSettingsView(store: store)
                 
             case let .monthInvoicesList(store):
                 MonthInvoicesListView(store: store)
@@ -95,8 +98,8 @@ struct AddressesListView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(store.$addresses.elements) { ($address) in
-                    NavigationLink(state: AddressesList.Path.State.addressDetails(AddressDetails.State(address: $address))) {
+                ForEach(store.$addresses.elements) { $address in
+                    NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: $address))) {
                         Text(address.name)
                     }
                     .buttonStyle(
@@ -116,17 +119,14 @@ struct AddressesListView: View {
 
 #Preview {
     NavigationStack {
-        AddressesListView(store: Store(
-            initialState: AddressesList.State(
-                addresses: [
-                    .mock,
-                    .mock1,
-                    .mock2,
-                    .mock3,
-                    .mock4,
-                ]
-            )) {
-                AddressesList()
-            })
+        AddressesView(
+            store: Store(
+                initialState: AddressesFeature.State(
+                    addresses: .preview
+                )
+            ){
+                AddressesFeature()
+            }
+        )
     }
 }

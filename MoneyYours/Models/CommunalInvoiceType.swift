@@ -1,5 +1,5 @@
 //
-//  InvoiceType.swift
+//  CommunalInvoiceType.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 19.06.2024.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-enum InvoiceType: Int, FallbackCase {
-    static var fallbackCase: InvoiceType { .unknown }
+enum CommunalInvoiceType: Int, FallbackCase {
+    static var fallbackCase: CommunalInvoiceType { .unknown }
     
     case electricity
     case water

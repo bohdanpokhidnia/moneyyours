@@ -10,13 +10,13 @@ import ComposableArchitecture
 
 @main
 struct MoneyYoursApp: App {
-    static var addressesStore = Store(initialState: AddressesList.State()) {
-        AddressesList()
+    static var addressesStore = Store(initialState: AddressesFeature.State()) {
+        AddressesFeature()
     }
     
     var body: some Scene {
         WindowGroup {
-            AddressesListView(store: Self.addressesStore)
+            AddressesView(store: Self.addressesStore)
                 .setupNavigationTransparent()
         }
     }

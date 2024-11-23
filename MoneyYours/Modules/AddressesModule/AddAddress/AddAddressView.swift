@@ -5,11 +5,11 @@
 //  Created by Bohdan Pokhidnia on 12.06.2024.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct AddAddressView: View {
-    @Bindable var store: StoreOf<AddAddress>
+    @Bindable var store: StoreOf<AddAddressFeature>
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -26,7 +26,7 @@ struct AddAddressView: View {
             
             TextField(
                 "",
-                text: $store.address.name.sending(\.setAddress),
+                text: $store.addressName,
                 prompt: Text("Address name").foregroundStyle(.starDust)
             )
             .textFieldStyle(GrayTextField())
@@ -39,29 +39,21 @@ struct AddAddressView: View {
             }
             .padding(.bottom, 24)
             .buttonStyle(
-                BottomActionButtonStyle(fillColor: Color(store.appColor))
+                BottomActionButtonStyle(fillColor: .beanRed)
             )
-            .disabled(store.state.isSaveDisabled)
+            .disabled(store.isDisableSaveButton)
         }
         .background(.appBackgroundSecondary)
-        .updateBackButton(color: Color(store.appColor))
+        .updateBackButton(color: .beanRed)
     }
 }
 
 #Preview {
-    NavigationStack {
-        AddAddressView(
-            store: Store(
-                initialState: AddAddress.State(
-                    isSaveDisabled: true,
-                    address: Address(
-                        name: "",
-                        yearInvoices: []
-                    )
-                )
-            ) {
-                    AddAddress()
-                }
-        )
-    }
+    AddAddressView(
+        store: Store(
+            initialState: AddAddressFeature.State()
+        ) {
+            AddAddressFeature()
+        }
+    )
 }

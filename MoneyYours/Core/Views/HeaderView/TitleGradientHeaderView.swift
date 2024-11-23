@@ -34,7 +34,7 @@ private extension TitleGradientHeaderView {
 
 #Preview {
     TitleGradientHeaderView(
-        title: Address.mock.name,
+        title: "Title",
         configuration: GradientHeaderConfiguration(presetColors: .addresses)
     )
 }

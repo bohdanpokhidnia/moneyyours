@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct InvoiceSelectionList {
     @ObservableState
     struct State: Equatable {
-        @Shared var monthInvoice: MonthInvoice
+//        @Shared var monthInvoice: MonthInvoice
         var invoices: IdentifiedArrayOf<CommunalInvoice> = []
     }
     
@@ -28,11 +28,11 @@ struct InvoiceSelectionList {
             switch action {
             case .onAppear:
                 let invoices = invoicesLoader.fetch()
-                state.invoices = IdentifiedArray(uniqueElements: invoices)
+//                state.invoices = IdentifiedArray(uniqueElements: invoices)
                 return .none
                 
             case let .select(invoice):
-                state.monthInvoice.invoices.append(invoice)
+//                state.monthInvoice.invoices.append(invoice)
                 return .run { _ in
                     await dismiss()
                 }

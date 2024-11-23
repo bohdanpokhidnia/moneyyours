@@ -46,17 +46,17 @@ struct InvoiceSelectionListView: View {
     }
 }
 
-#Preview {
-    InvoiceSelectionListView(
-        store: Store(
-            initialState: InvoiceSelectionList.State(
-                monthInvoice: Shared(
-                    .mock
-                ),
-                invoices: [.mock]
-            )
-        ) {
-            InvoiceSelectionList()
-        }
-    )
-}
+//#Preview {
+//    InvoiceSelectionListView(
+//        store: Store(
+//            initialState: InvoiceSelectionList.State(
+//                monthInvoice: Shared(
+//                    .mock
+//                ),
+//                invoices: [.mock]
+//            )
+//        ) {
+//            InvoiceSelectionList()
+//        }
+//    )
+//}

@@ -15,12 +15,3 @@ extension PersistenceReaderKey where Self == PersistenceKeyDefault<FileStorageKe
         )
     }
 }
-
-extension PersistenceReaderKey where Self == PersistenceKeyDefault<AppStorageKey<String>> {
-    static var appColor: Self {
-        PersistenceKeyDefault(
-            .appStorage("appColorTint"),
-            "BeanRed"
-        )
-    }
-}

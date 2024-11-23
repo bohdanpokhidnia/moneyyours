@@ -14,7 +14,7 @@ struct BottomActionButtonStyle: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         RoundedRectangle(cornerRadius: 14)
-            .fill(fillColor)
+            .fill(isEnabled ? fillColor : fillColor.opacity(0.5))
             .padding(.horizontal, 16)
             .overlay {
                 configuration.label

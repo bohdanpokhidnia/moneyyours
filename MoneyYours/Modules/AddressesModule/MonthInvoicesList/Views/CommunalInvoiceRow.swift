@@ -34,13 +34,13 @@ struct CommunalInvoiceRow: View {
                     text: $past
                 )
                 
-                priceView(
-                    price: invoice.amount.formatted(.ukrainianHryvnia),
-                    title: "Amount",
-                    placeholder: "Now",
-                    prompt: "Value",
-                    text: $now
-                )
+//                priceView(
+//                    price: invoice.amount.formatted(.ukrainianHryvnia),
+//                    title: "Amount",
+//                    placeholder: "Now",
+//                    prompt: "Value",
+//                    text: $now
+//                )
             }
             .padding([.horizontal, .bottom], 16)
         }
@@ -74,13 +74,13 @@ struct CommunalInvoiceRow: View {
     }
 }
 
-#Preview("InvoiceRow", traits: .sizeThatFitsLayout) {
-    ZStack {
-        CommunalInvoiceRow(
-            invoice: .mock,
-            past: .constant("1"),
-            now: .constant("2")
-        )
-    }
-    .background(.black)
-}
+//#Preview("InvoiceRow", traits: .sizeThatFitsLayout) {
+//    ZStack {
+//        CommunalInvoiceRow(
+//            invoice: .mock,
+//            past: .constant("1"),
+//            now: .constant("2")
+//        )
+//    }
+//    .background(.black)
+//}

@@ -11,9 +11,8 @@
 		F70811752C198AC800257CFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F70811742C198AC800257CFE /* Preview Assets.xcassets */; };
 		F708117D2C198D0800257CFE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F708117C2C198D0800257CFE /* ComposableArchitecture */; };
 		F70811802C198D2000257CFE /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = F708117F2C198D2000257CFE /* Address.swift */; };
-		F70811842C198D4C00257CFE /* AddressesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811812C198D4C00257CFE /* AddressesList.swift */; };
-		F70811852C198D4C00257CFE /* AddressesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesListView.swift */; };
-		F708118A2C198D9800257CFE /* AddAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddress.swift */; };
+		F70811852C198D4C00257CFE /* AddressesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811822C198D4C00257CFE /* AddressesView.swift */; };
+		F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811872C198D9800257CFE /* AddAddressFeature.swift */; };
 		F708118B2C198D9800257CFE /* AddAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70811882C198D9800257CFE /* AddAddressView.swift */; };
 		F71497FF2C50166500479175 /* PersistenceReaderKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71497FE2C50166500479175 /* PersistenceReaderKey.swift */; };
 		F71E43D22C4BA26E00980010 /* GradientHeaderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71E43D12C4BA26E00980010 /* GradientHeaderConfiguration.swift */; };
@@ -28,6 +27,7 @@
 		F7459FE72C4A90F900482E32 /* ScrollableGradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7459FE62C4A90F900482E32 /* ScrollableGradientHeaderView.swift */; };
 		F7459FEA2C4A912700482E32 /* ViewRectKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7459FE92C4A912700482E32 /* ViewRectKey.swift */; };
 		F75DD9612C3186EE003882D9 /* YearInvoicesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75DD9602C3186EE003882D9 /* YearInvoicesLoader.swift */; };
+		F77D59552CF20D440087F6EB /* AddressesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77D59542CF20D440087F6EB /* AddressesFeature.swift */; };
 		F7A58B8F2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B8E2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift */; };
 		F7A58B912C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B902C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift */; };
 		F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */; };
@@ -40,13 +40,14 @@
 		F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B02C1992CE000768C3 /* GrayTextField.swift */; };
 		F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */; };
 		F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */; };
-		F7ADA0922C1D87FA001E649F /* AddressDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0912C1D87FA001E649F /* AddressDetails.swift */; };
-		F7ADA0942C1D8863001E649F /* AddressDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */; };
+		F7ADA0942C1D8863001E649F /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0932C1D8863001E649F /* AddressView.swift */; };
 		F7ADA0962C1D88B9001E649F /* GradientHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */; };
 		F7ADA0992C1DCFBB001E649F /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA0982C1DCFBB001E649F /* Font.swift */; };
 		F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ADA09A2C1DD2A7001E649F /* View.swift */; };
 		F7B0D4DE2C3952B900A9C588 /* AddressSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B0D4DD2C3952B900A9C588 /* AddressSettingsView.swift */; };
-		F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA062C2320F800F6580E /* InvoiceType.swift */; };
+		F7BA1B072CF21D94006B618F /* AddressFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BA1B062CF21D94006B618F /* AddressFeature.swift */; };
+		F7BA1B0A2CF225E9006B618F /* AddressSettingsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BA1B092CF225E9006B618F /* AddressSettingsFeature.swift */; };
+		F7BCCA072C2320F800F6580E /* CommunalInvoiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA062C2320F800F6580E /* CommunalInvoiceType.swift */; };
 		F7BCCA092C23249900F6580E /* FallbackCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BCCA082C23249900F6580E /* FallbackCase.swift */; };
 		F7BDEEF52C281D53007E9C1D /* CommunalInvoiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF42C281D53007E9C1D /* CommunalInvoiceRow.swift */; };
 		F7BDEEF82C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */; };
@@ -60,9 +61,8 @@
 		F708116D2C198AC700257CFE /* MoneyYoursApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyYoursApp.swift; sourceTree = "<group>"; };
 		F70811742C198AC800257CFE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F708117F2C198D2000257CFE /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		F70811812C198D4C00257CFE /* AddressesList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesList.swift; sourceTree = "<group>"; };
-		F70811822C198D4C00257CFE /* AddressesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesListView.swift; sourceTree = "<group>"; };
-		F70811872C198D9800257CFE /* AddAddress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddress.swift; sourceTree = "<group>"; };
+		F70811822C198D4C00257CFE /* AddressesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressesView.swift; sourceTree = "<group>"; };
+		F70811872C198D9800257CFE /* AddAddressFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressFeature.swift; sourceTree = "<group>"; };
 		F70811882C198D9800257CFE /* AddAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAddressView.swift; sourceTree = "<group>"; };
 		F71497FE2C50166500479175 /* PersistenceReaderKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceReaderKey.swift; sourceTree = "<group>"; };
 		F71E43D12C4BA26E00980010 /* GradientHeaderConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHeaderConfiguration.swift; sourceTree = "<group>"; };
@@ -77,6 +77,7 @@
 		F7459FE62C4A90F900482E32 /* ScrollableGradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableGradientHeaderView.swift; sourceTree = "<group>"; };
 		F7459FE92C4A912700482E32 /* ViewRectKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRectKey.swift; sourceTree = "<group>"; };
 		F75DD9602C3186EE003882D9 /* YearInvoicesLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearInvoicesLoader.swift; sourceTree = "<group>"; };
+		F77D59542CF20D440087F6EB /* AddressesFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressesFeature.swift; sourceTree = "<group>"; };
 		F7A58B8E2C1EF2E400D2C4D7 /* InvoiceSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceSelectionList.swift; sourceTree = "<group>"; };
 		F7A58B902C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceSelectionListView.swift; sourceTree = "<group>"; };
 		F7A58B922C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleGradientHeaderView.swift; sourceTree = "<group>"; };
@@ -89,13 +90,14 @@
 		F7AD32B02C1992CE000768C3 /* GrayTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayTextField.swift; sourceTree = "<group>"; };
 		F7AD32B32C1996B7000768C3 /* LightThemeShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightThemeShadow.swift; sourceTree = "<group>"; };
 		F7ADA08E2C1D80A8001E649F /* BottomActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomActionButtonStyle.swift; sourceTree = "<group>"; };
-		F7ADA0912C1D87FA001E649F /* AddressDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetails.swift; sourceTree = "<group>"; };
-		F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDetailsView.swift; sourceTree = "<group>"; };
+		F7ADA0932C1D8863001E649F /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		F7ADA0952C1D88B9001E649F /* GradientHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientHeaderView.swift; sourceTree = "<group>"; };
 		F7ADA0982C1DCFBB001E649F /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		F7ADA09A2C1DD2A7001E649F /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		F7B0D4DD2C3952B900A9C588 /* AddressSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsView.swift; sourceTree = "<group>"; };
-		F7BCCA062C2320F800F6580E /* InvoiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceType.swift; sourceTree = "<group>"; };
+		F7BA1B062CF21D94006B618F /* AddressFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressFeature.swift; sourceTree = "<group>"; };
+		F7BA1B092CF225E9006B618F /* AddressSettingsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSettingsFeature.swift; sourceTree = "<group>"; };
+		F7BCCA062C2320F800F6580E /* CommunalInvoiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunalInvoiceType.swift; sourceTree = "<group>"; };
 		F7BCCA082C23249900F6580E /* FallbackCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackCase.swift; sourceTree = "<group>"; };
 		F7BDEEF42C281D53007E9C1D /* CommunalInvoiceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunalInvoiceRow.swift; sourceTree = "<group>"; };
 		F7BDEEF72C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UkrainianHryvniaFormatStyle.swift; sourceTree = "<group>"; };
@@ -162,25 +164,25 @@
 				F72AF6762C2DB0B600B8325D /* MonthInvoice.swift */,
 				F72AF6792C2DB0F600B8325D /* Month.swift */,
 				F7D178A42C551BAE00299FE5 /* CommunalInvoice.swift */,
-				F7BCCA062C2320F800F6580E /* InvoiceType.swift */,
+				F7BCCA062C2320F800F6580E /* CommunalInvoiceType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F70811832C198D4C00257CFE /* AddressesList */ = {
+		F70811832C198D4C00257CFE /* Addresses */ = {
 			isa = PBXGroup;
 			children = (
 				F7AD32A72C1991D3000768C3 /* Views */,
-				F70811812C198D4C00257CFE /* AddressesList.swift */,
-				F70811822C198D4C00257CFE /* AddressesListView.swift */,
+				F77D59542CF20D440087F6EB /* AddressesFeature.swift */,
+				F70811822C198D4C00257CFE /* AddressesView.swift */,
 			);
-			path = AddressesList;
+			path = Addresses;
 			sourceTree = "<group>";
 		};
 		F70811862C198D8D00257CFE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F7ADA09C2C1EF107001E649F /* Addresses */,
+				F7ADA09C2C1EF107001E649F /* AddressesModule */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -189,7 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				F7AD32AF2C1992C5000768C3 /* Views */,
-				F70811872C198D9800257CFE /* AddAddress.swift */,
+				F70811872C198D9800257CFE /* AddAddressFeature.swift */,
 				F70811882C198D9800257CFE /* AddAddressView.swift */,
 			);
 			path = AddAddress;
@@ -327,13 +329,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F7ADA0902C1D87E2001E649F /* AddressDetails */ = {
+		F7ADA0902C1D87E2001E649F /* Address */ = {
 			isa = PBXGroup;
 			children = (
-				F7ADA0912C1D87FA001E649F /* AddressDetails.swift */,
-				F7ADA0932C1D8863001E649F /* AddressDetailsView.swift */,
+				F7BA1B062CF21D94006B618F /* AddressFeature.swift */,
+				F7ADA0932C1D8863001E649F /* AddressView.swift */,
 			);
-			path = AddressDetails;
+			path = Address;
 			sourceTree = "<group>";
 		};
 		F7ADA0972C1DCFAB001E649F /* SwiftUI */ = {
@@ -346,22 +348,22 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		F7ADA09C2C1EF107001E649F /* Addresses */ = {
+		F7ADA09C2C1EF107001E649F /* AddressesModule */ = {
 			isa = PBXGroup;
 			children = (
-				F70811832C198D4C00257CFE /* AddressesList */,
+				F70811832C198D4C00257CFE /* Addresses */,
 				F70811892C198D9800257CFE /* AddAddress */,
-				F7ADA0902C1D87E2001E649F /* AddressDetails */,
-				F7B0D4DC2C39529800A9C588 /* AddressSettings */,
+				F7BA1B082CF225D3006B618F /* AdressModule */,
 				F72086B12C3161170080E32F /* MonthInvoicesList */,
 				F7A58B8D2C1EF2CE00D2C4D7 /* InvoiceSelectionList */,
 			);
-			path = Addresses;
+			path = AddressesModule;
 			sourceTree = "<group>";
 		};
 		F7B0D4DC2C39529800A9C588 /* AddressSettings */ = {
 			isa = PBXGroup;
 			children = (
+				F7BA1B092CF225E9006B618F /* AddressSettingsFeature.swift */,
 				F7B0D4DD2C3952B900A9C588 /* AddressSettingsView.swift */,
 			);
 			path = AddressSettings;
@@ -374,6 +376,15 @@
 				F7278EF52C26D0D50027AAB4 /* SystemImageButtonStyle.swift */,
 			);
 			path = ButtonStyles;
+			sourceTree = "<group>";
+		};
+		F7BA1B082CF225D3006B618F /* AdressModule */ = {
+			isa = PBXGroup;
+			children = (
+				F7ADA0902C1D87E2001E649F /* Address */,
+				F7B0D4DC2C39529800A9C588 /* AddressSettings */,
+			);
+			path = AdressModule;
 			sourceTree = "<group>";
 		};
 		F7BDEEF62C28256E007E9C1D /* Core */ = {
@@ -500,7 +511,9 @@
 				F7AD32B12C1992CE000768C3 /* GrayTextField.swift in Sources */,
 				F7A58B932C1EFE8200D2C4D7 /* TitleGradientHeaderView.swift in Sources */,
 				F7BDEEF52C281D53007E9C1D /* CommunalInvoiceRow.swift in Sources */,
+				F77D59552CF20D440087F6EB /* AddressesFeature.swift in Sources */,
 				F72AF6772C2DB0B600B8325D /* MonthInvoice.swift in Sources */,
+				F7BA1B0A2CF225E9006B618F /* AddressSettingsFeature.swift in Sources */,
 				F7A58B9A2C1F07AD00D2C4D7 /* SelectInvoiceButtonStyle.swift in Sources */,
 				F72AF67A2C2DB0F600B8325D /* Month.swift in Sources */,
 				F7A58B912C1EF2F200D2C4D7 /* InvoiceSelectionListView.swift in Sources */,
@@ -508,21 +521,20 @@
 				F7D178A52C551BAE00299FE5 /* CommunalInvoice.swift in Sources */,
 				F708116E2C198AC700257CFE /* MoneyYoursApp.swift in Sources */,
 				F7AD32B42C1996B7000768C3 /* LightThemeShadow.swift in Sources */,
-				F7BCCA072C2320F800F6580E /* InvoiceType.swift in Sources */,
+				F7BCCA072C2320F800F6580E /* CommunalInvoiceType.swift in Sources */,
 				F72086B32C3161390080E32F /* MonthInvoicesListView.swift in Sources */,
-				F7ADA0942C1D8863001E649F /* AddressDetailsView.swift in Sources */,
-				F70811852C198D4C00257CFE /* AddressesListView.swift in Sources */,
+				F7ADA0942C1D8863001E649F /* AddressView.swift in Sources */,
+				F70811852C198D4C00257CFE /* AddressesView.swift in Sources */,
 				F72AF67C2C2DB12100B8325D /* Color.swift in Sources */,
-				F70811842C198D4C00257CFE /* AddressesList.swift in Sources */,
 				F7ADA08F2C1D80A8001E649F /* BottomActionButtonStyle.swift in Sources */,
 				F75DD9612C3186EE003882D9 /* YearInvoicesLoader.swift in Sources */,
 				F7ADA0992C1DCFBB001E649F /* Font.swift in Sources */,
 				F7AD32AB2C19920A000768C3 /* EmojiRowButtonStyle.swift in Sources */,
 				F7ADA09B2C1DD2A7001E649F /* View.swift in Sources */,
-				F708118A2C198D9800257CFE /* AddAddress.swift in Sources */,
+				F7BA1B072CF21D94006B618F /* AddressFeature.swift in Sources */,
+				F708118A2C198D9800257CFE /* AddAddressFeature.swift in Sources */,
 				F7BDEEF82C28259B007E9C1D /* UkrainianHryvniaFormatStyle.swift in Sources */,
 				F7AD32A32C1990C4000768C3 /* UINavigationController.swift in Sources */,
-				F7ADA0922C1D87FA001E649F /* AddressDetails.swift in Sources */,
 				F7B0D4DE2C3952B900A9C588 /* AddressSettingsView.swift in Sources */,
 				F7BDEEFE2C283555007E9C1D /* HintGrayTextField.swift in Sources */,
 				F7BDEEFA2C282672007E9C1D /* EmojiView.swift in Sources */,
@@ -751,7 +763,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.11.0;
+				minimumVersion = 1.16.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

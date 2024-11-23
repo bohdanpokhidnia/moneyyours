@@ -5,27 +5,31 @@
 //  Created by Bohdan Pokhidnia on 16.06.2024.
 //
 
-import SwiftUI
+import ComposableArchitecture
+import Foundation
 
 struct CommunalInvoice: Identifiable, Equatable, Codable {
-    var id = UUID()
-    let type: InvoiceType
+    let id: UUID
+    let year: Int
+    let month: Month
+    let type: CommunalInvoiceType
     var price: Double
-    var amount: Double
-    var pastValue: Double = .zero
-    var nowValue: Double = .zero
-}
-
-extension CommunalInvoice: CustomStringConvertible {
-    var description: String {
-        "\(type.emoji) \(type.name) - price: \(price) amount: \(amount)"
-    }
-}
-
-extension CommunalInvoice {
-    static let mock = CommunalInvoice(
+    var value: Double
+    
+    static let preview = CommunalInvoice(
+        id: UUID(),
+        year: 2024,
+        month: .january,
         type: .unknown,
-        price: .zero,
-        amount: .zero
+        price: 100,
+        value: 1000
     )
+}
+
+extension IdentifiedArrayOf where Element == CommunalInvoice {
+    static var preview: IdentifiedArrayOf<CommunalInvoice> {
+        [
+            .preview
+        ]
+    }
 }
