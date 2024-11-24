@@ -70,7 +70,7 @@ struct AddressesView: View {
                 .buttonStyle(
                     ActionAddressesButtonStyle(
                         emoji: "🏠",
-                        emojiBackground: .chromeYellow
+                        emojiBackground: .fuelYellow
                     )
                 )
                 
@@ -79,8 +79,8 @@ struct AddressesView: View {
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
-                        emoji: "🗂️",
-                        emojiBackground: .artyClickWarmRed
+                        emoji: "📁",
+                        emojiBackground: .sunglow
                     )
                 )
             }
@@ -104,8 +104,8 @@ struct AddressesView: View {
                     }
                     .buttonStyle(
                         EmojiRowButtonStyle(
-                            emoji: "📁",
-                            emojiBackground: .rubberDuckyYellow
+                            emoji: "🗂️",
+                            emojiBackground: .paleBlueLily
                         )
                     )
                 }

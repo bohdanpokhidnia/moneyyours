@@ -36,7 +36,6 @@ struct AddressSettingsView: View {
                         .foregroundStyle(.primaryText)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(24)
             }
             .background(.white)
@@ -44,13 +43,20 @@ struct AddressSettingsView: View {
             .padding(.top, 24)
             .padding(.horizontal, 16)
             
-            Button("Remove address") {
-                store.send(.removeButtonTapped)
+            VStack(spacing: 16) {
+                Button("Add to archive") {
+                    
+                }
+                .buttonStyle(ImageButtonStyle(image: Image(systemName: "archivebox")))
+                .tint(.gray)
+                
+                Button("Remove address") {
+                    store.send(.removeButtonTapped)
+                }
+                .buttonStyle(ImageButtonStyle(image: Image(systemName: "trash")))
+                .tint(.beanRed)
             }
-            .buttonStyle(SystemImageButtonStyle(imageSystemName: "trash"))
-            .padding(.top, 16)
-            .tint(.beanRed)
-            .padding(.horizontal, 16)
+            .padding([.top, .horizontal], 16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)

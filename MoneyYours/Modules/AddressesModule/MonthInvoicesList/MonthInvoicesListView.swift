@@ -36,7 +36,7 @@ struct MonthInvoicesListView: View {
             Button("Add invoice") {
                 store.send(.addInvoiceButtonTapped)
             }
-            .buttonStyle(SystemImageButtonStyle(imageSystemName: "plus.circle.fill"))
+            .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
             .tint(.black)
             .padding(16)
         }
