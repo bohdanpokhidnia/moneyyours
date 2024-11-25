@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct AddressSettingsFeature {
     @ObservableState
     struct State: Equatable {
+        @Presents var removeAlert: AlertState<RemoveAlert>?
         @Shared var address: Address
     }
     
@@ -18,11 +19,16 @@ struct AddressSettingsFeature {
         case binding(BindingAction<State>)
         case removeButtonTapped
         case delegate(Delegate)
+        case removeAlert(PresentationAction<RemoveAlert>)
     }
     
-    @CasePathable
     enum Delegate {
         case remove(address: Address)
+    }
+    
+    enum RemoveAlert {
+        case cancel
+        case confirm
     }
     
     var body: some ReducerOf<Self> {
@@ -34,14 +40,39 @@ struct AddressSettingsFeature {
                 return .none
                 
             case .removeButtonTapped:
-                return .send(.delegate(.remove(address: state.address)))
+                let addressName = state.address.name
+                state.removeAlert = AlertState(
+                    title: {
+                        TextState("Do yo want remove?")
+                    },
+                    actions: {
+                        ButtonState(role: .cancel, action: .cancel) {
+                            TextState("Cancel")
+                        }
+                        
+                        ButtonState(role: .destructive, action: .confirm) {
+                            TextState("Confirm")
+                        }
+                    },
+                    message: {
+                        TextState(addressName)
+                    }
+                )
+                return .none
                 
             case .binding:
                 return .none
                 
             case .delegate:
                 return .none
+                
+            case .removeAlert(.presented(.confirm)):
+                return .send(.delegate(.remove(address: state.address)))
+                
+            case .removeAlert:
+                return .none
             }
         }
+        .ifLet(\.$removeAlert, action: \.removeAlert)
     }
 }

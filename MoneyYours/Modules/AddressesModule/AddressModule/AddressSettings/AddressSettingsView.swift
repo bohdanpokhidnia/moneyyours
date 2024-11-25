@@ -61,6 +61,7 @@ struct AddressSettingsView: View {
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
         .updateBackButton(color: .white)
+        .alert($store.scope(state: \.removeAlert, action: \.removeAlert))
     }
 }
 
