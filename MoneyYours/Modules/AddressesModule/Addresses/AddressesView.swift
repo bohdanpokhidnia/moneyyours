@@ -46,6 +46,9 @@ struct AddressesView: View {
             case let .addressSettings(store):
                 AddressSettingsView(store: store)
                 
+            case let .archivedAddresses(store):
+                ArchivedAddressesView(store: store)
+                
             case let .monthInvoicesList(store):
                 MonthInvoicesListView(store: store)
                 
@@ -75,7 +78,7 @@ struct AddressesView: View {
                 )
                 
                 Button("Archive") {
-                    
+                    store.send(.archiveButtonTapped)
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
