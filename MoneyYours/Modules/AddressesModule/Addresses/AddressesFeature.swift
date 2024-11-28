@@ -11,6 +11,11 @@ import ComposableArchitecture
 struct AddressesFeature {
     @ObservableState
     struct State {
+        var activeAddresses: Shared<IdentifiedArrayOf<Address>> {
+            let filteredAddresses = addresses.elements.filter({ $0.state == .active })
+            return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
+        }
+        
         @Shared(.addresses) var addresses: IdentifiedArrayOf<Address> = []
         var path = StackState<Path.State>()
     }
@@ -45,8 +50,13 @@ struct AddressesFeature {
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
                 return .none
                 
-            case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(address))))):
-                state.addresses.remove(id: address.id)
+            case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(addressId))))):
+                state.addresses.remove(id: addressId)
+                state.path.removeAll()
+                return .none
+                
+            case let .path(.element(id: _, action: .addressSettings(.delegate(.archive(addressId))))):
+                state.addresses[id: addressId]?.state = .archived
                 state.path.removeAll()
                 return .none
                 

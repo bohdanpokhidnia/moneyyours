@@ -6,29 +6,43 @@
 //
 
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct AddressSettingsFeature {
     @ObservableState
     struct State: Equatable {
-        @Presents var removeAlert: AlertState<RemoveAlert>?
+        @Presents var destination: Destination.State?
         @Shared var address: Address
     }
     
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case removeButtonTapped
+        case addToArchiveButtonTapped
         case delegate(Delegate)
-        case removeAlert(PresentationAction<RemoveAlert>)
+        case destination(PresentationAction<Destination.Action>)
     }
     
     enum Delegate {
-        case remove(address: Address)
+        case archive(addressId: UUID)
+        case remove(addressId: UUID)
     }
     
     enum RemoveAlert {
         case cancel
         case confirm
+    }
+    
+    enum ArchiveAlert {
+        case cancel
+        case confirm
+    }
+    
+    @Reducer(state: .equatable)
+    enum Destination {
+        case removeAlert(AlertState<RemoveAlert>)
+        case archiveAlert(AlertState<ArchiveAlert>)
     }
     
     var body: some ReducerOf<Self> {
@@ -41,23 +55,12 @@ struct AddressSettingsFeature {
                 
             case .removeButtonTapped:
                 let addressName = state.address.name
-                state.removeAlert = AlertState(
-                    title: {
-                        TextState("Do yo want remove?")
-                    },
-                    actions: {
-                        ButtonState(role: .cancel, action: .cancel) {
-                            TextState("Cancel")
-                        }
-                        
-                        ButtonState(role: .destructive, action: .confirm) {
-                            TextState("Confirm")
-                        }
-                    },
-                    message: {
-                        TextState(addressName)
-                    }
-                )
+                state.destination = .removeAlert(.remove(addressName: addressName))
+                return .none
+                
+            case .addToArchiveButtonTapped:
+                let addressName = state.address.name
+                state.destination = .archiveAlert(.archive(addressName: addressName))
                 return .none
                 
             case .binding:
@@ -66,13 +69,60 @@ struct AddressSettingsFeature {
             case .delegate:
                 return .none
                 
-            case .removeAlert(.presented(.confirm)):
-                return .send(.delegate(.remove(address: state.address)))
+            case .destination(.presented(.removeAlert(.confirm))):
+                return .send(.delegate(.remove(addressId: state.address.id)))
                 
-            case .removeAlert:
+            case .destination(.presented(.archiveAlert(.confirm))):
+                return .send(.delegate(.archive(addressId: state.address.id)))
+                
+            case .destination:
                 return .none
             }
         }
-        .ifLet(\.$removeAlert, action: \.removeAlert)
+        .ifLet(\.$destination, action: \.destination)
+    }
+}
+
+extension AlertState where Action == AddressSettingsFeature.RemoveAlert {
+    static func remove(addressName: String) -> AlertState {
+        AlertState(
+            title: {
+                TextState("Do yo want remove?")
+            },
+            actions: {
+                ButtonState(role: .cancel, action: .cancel) {
+                    TextState("Cancel")
+                }
+                
+                ButtonState(role: .destructive, action: .confirm) {
+                    TextState("Confirm")
+                }
+            },
+            message: {
+                TextState(addressName)
+            }
+        )
+    }
+}
+
+extension AlertState where Action == AddressSettingsFeature.ArchiveAlert {
+    static func archive(addressName: String) -> AlertState {
+        AlertState(
+            title: {
+                TextState("Do yo want move to archive?")
+            },
+            actions: {
+                ButtonState(action: .cancel) {
+                    TextState("Cancel")
+                }
+                
+                ButtonState(action: .confirm) {
+                    TextState("Confirm")
+                }
+            },
+            message: {
+                TextState(addressName)
+            }
+        )
     }
 }

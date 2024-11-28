@@ -98,7 +98,7 @@ struct AddressesView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(store.$addresses.elements) { $address in
+                ForEach(store.activeAddresses.elements) { $address in
                     NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: $address))) {
                         Text(address.name)
                     }

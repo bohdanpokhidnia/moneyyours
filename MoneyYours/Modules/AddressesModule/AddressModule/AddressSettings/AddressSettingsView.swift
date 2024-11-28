@@ -45,7 +45,7 @@ struct AddressSettingsView: View {
             
             VStack(spacing: 16) {
                 Button("Add to archive") {
-                    
+                    store.send(.addToArchiveButtonTapped)
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "archivebox")))
                 .tint(.gray)
@@ -61,7 +61,8 @@ struct AddressSettingsView: View {
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
         .updateBackButton(color: .white)
-        .alert($store.scope(state: \.removeAlert, action: \.removeAlert))
+        .alert($store.scope(state: \.destination?.removeAlert, action: \.destination.removeAlert))
+        .alert($store.scope(state: \.destination?.archiveAlert, action: \.destination.archiveAlert))
     }
 }
 
