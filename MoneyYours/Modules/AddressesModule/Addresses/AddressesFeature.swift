@@ -16,11 +16,6 @@ struct AddressesFeature {
             return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
         }
         
-        var archivedAddresses: Shared<IdentifiedArrayOf<Address>> {
-            let filteredAddresses = addresses.elements.filter({ $0.state == .archived })
-            return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
-        }
-        
         @Shared(.addresses) var addresses: IdentifiedArrayOf<Address> = []
         var path = StackState<Path.State>()
     }
@@ -49,7 +44,7 @@ struct AddressesFeature {
                 return .none
                 
             case .archiveButtonTapped:
-                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State(addresses: state.archivedAddresses)))
+                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State()))
                 return .none
                 
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):

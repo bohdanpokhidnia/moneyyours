@@ -17,9 +17,9 @@ struct ArchivedAddressesView: View {
             configuration: GradientHeaderConfiguration(presetColors: .addresses)
         ) {
             VStack {
-                ForEach(store.addresses.elements) { $address in
+                ForEach(store.archivedAddresses.elements) { $address in
                     Button {
-                        
+                        store.send(.addressButtonTapped(addressId: address.id))
                     } label: {
                         Text(address.name)
                     }
@@ -43,7 +43,7 @@ struct ArchivedAddressesView: View {
     NavigationStack {
         ArchivedAddressesView(
             store: Store(
-                initialState: ArchivedAddressesFeature.State(addresses: Shared(.preview)),
+                initialState: ArchivedAddressesFeature.State(),
                 reducer: {
                     ArchivedAddressesFeature()
                 }
