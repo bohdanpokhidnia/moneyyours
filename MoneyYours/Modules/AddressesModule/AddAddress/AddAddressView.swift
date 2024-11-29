@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 
+@ViewAction(for: AddAddressFeature.self)
 struct AddAddressView: View {
     @Bindable var store: StoreOf<AddAddressFeature>
     
@@ -35,7 +36,7 @@ struct AddAddressView: View {
             Spacer()
             
             Button("Save") {
-                store.send(.saveButtonTapped)
+                send(.saveButtonTapped)
             }
             .padding(.bottom, 24)
             .buttonStyle(

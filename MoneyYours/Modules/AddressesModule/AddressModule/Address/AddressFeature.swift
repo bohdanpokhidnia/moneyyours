@@ -19,9 +19,13 @@ struct AddressFeature {
         }
     }
     
-    enum Action {
-        case settingsButtonTapped
+    enum Action: ViewAction {
+        case view(View)
         case delegate(Delegate)
+        
+        enum View {
+            case settingsButtonTapped
+        }
         
         @CasePathable
         enum Delegate {
@@ -32,7 +36,7 @@ struct AddressFeature {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .settingsButtonTapped:
+            case .view(.settingsButtonTapped):
                 return .send(.delegate(.settings(address: state.$address)))
                 
             case .delegate:

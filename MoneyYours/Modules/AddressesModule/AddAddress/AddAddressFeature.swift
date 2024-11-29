@@ -16,10 +16,14 @@ struct AddAddressFeature {
         var isDisableSaveButton: Bool = true
     }
     
-    enum Action: BindableAction {
+    enum Action: BindableAction, ViewAction {
         case binding(BindingAction<State>)
-        case saveButtonTapped
+        case view(View)
         case delegate(Delegate)
+        
+        enum View {
+            case saveButtonTapped
+        }
         
         @CasePathable
         enum Delegate: Equatable {
@@ -38,7 +42,7 @@ struct AddAddressFeature {
             case .binding:
                 return .none
                 
-            case .saveButtonTapped:
+            case .view(.saveButtonTapped):
                 let address = Address(
                     id: UUID(),
                     name: state.addressName,

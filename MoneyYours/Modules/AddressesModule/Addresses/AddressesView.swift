@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: AddressesFeature.self)
 struct AddressesView: View {
     @Bindable var store: StoreOf<AddressesFeature>
     
@@ -68,7 +69,7 @@ struct AddressesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 Button("Add address") {
-                    store.send(.addButtonTapped)
+                    send(.addButtonTapped)
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -78,7 +79,7 @@ struct AddressesView: View {
                 )
                 
                 Button("Archive") {
-                    store.send(.archiveButtonTapped)
+                    send(.archiveButtonTapped)
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(

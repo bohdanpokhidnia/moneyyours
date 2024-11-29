@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 
+@ViewAction(for: AddressSettingsFeature.self)
 struct AddressSettingsView: View {
     @Bindable var store: StoreOf<AddressSettingsFeature>
     
@@ -45,13 +46,13 @@ struct AddressSettingsView: View {
             
             VStack(spacing: 16) {
                 Button("Add to archive") {
-                    store.send(.addToArchiveButtonTapped)
+                    send(.addToArchiveButtonTapped)
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "archivebox")))
                 .tint(.gray)
                 
                 Button("Remove address") {
-                    store.send(.removeButtonTapped)
+                    send(.removeButtonTapped)
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "trash")))
                 .tint(.beanRed)

@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 
+@ViewAction(for: ArchivedAddressesFeature.self)
 struct ArchivedAddressesView: View {
     @Bindable var store: StoreOf<ArchivedAddressesFeature>
     
@@ -19,7 +20,7 @@ struct ArchivedAddressesView: View {
             VStack {
                 ForEach(store.archivedAddresses.elements) { $address in
                     Button {
-                        store.send(.addressButtonTapped(address: $address.wrappedValue))
+                        send(.addressButtonTapped(address: $address.wrappedValue))
                     } label: {
                         Text(address.name)
                     }

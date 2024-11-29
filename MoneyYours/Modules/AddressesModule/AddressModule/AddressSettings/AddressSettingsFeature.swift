@@ -16,17 +16,21 @@ struct AddressSettingsFeature {
         @Shared var address: Address
     }
     
-    enum Action: BindableAction {
+    enum Action: BindableAction, ViewAction {
         case binding(BindingAction<State>)
-        case removeButtonTapped
-        case addToArchiveButtonTapped
+        case view(View)
         case delegate(Delegate)
         case destination(PresentationAction<Destination.Action>)
-    }
-    
-    enum Delegate {
-        case archive(addressId: UUID)
-        case remove(addressId: UUID)
+        
+        enum View {
+            case removeButtonTapped
+            case addToArchiveButtonTapped
+        }
+        
+        enum Delegate {
+            case archive(addressId: UUID)
+            case remove(addressId: UUID)
+        }
     }
     
     enum RemoveAlert {
@@ -53,12 +57,12 @@ struct AddressSettingsFeature {
                 state.address.name = state.address.name.trimmingCharacters(in: .whitespaces)
                 return .none
                 
-            case .removeButtonTapped:
+            case .view(.removeButtonTapped):
                 let addressName = state.address.name
                 state.destination = .removeAlert(.remove(addressName: addressName))
                 return .none
                 
-            case .addToArchiveButtonTapped:
+            case .view(.addToArchiveButtonTapped):
                 let addressName = state.address.name
                 state.destination = .archiveAlert(.archive(addressName: addressName))
                 return .none

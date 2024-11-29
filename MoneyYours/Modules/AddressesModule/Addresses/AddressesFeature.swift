@@ -20,10 +20,14 @@ struct AddressesFeature {
         var path = StackState<Path.State>()
     }
     
-    enum Action {
-        case addButtonTapped
-        case archiveButtonTapped
+    enum Action: ViewAction {
+        case view(View)
         case path(StackActionOf<Path>)
+        
+        enum View {
+            case addButtonTapped
+            case archiveButtonTapped
+        }
     }
     
     @Reducer(state: .equatable)
@@ -39,11 +43,11 @@ struct AddressesFeature {
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
-            case .addButtonTapped:
+            case .view(.addButtonTapped):
                 state.path.append(.addAddress(AddAddressFeature.State()))
                 return .none
                 
-            case .archiveButtonTapped:
+            case .view(.archiveButtonTapped):
                 state.path.append(.archivedAddresses(ArchivedAddressesFeature.State()))
                 return .none
                 

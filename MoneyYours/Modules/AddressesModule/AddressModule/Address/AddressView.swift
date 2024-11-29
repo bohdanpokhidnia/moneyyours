@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: AddressFeature.self)
 struct AddressView: View {
     @Bindable var store: StoreOf<AddressFeature>
     
@@ -45,7 +46,7 @@ struct AddressView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    store.send(.settingsButtonTapped)
+                    send(.settingsButtonTapped)
                 } label: {
                     Image(systemName: "gearshape.fill")
                         .foregroundStyle(.white)
