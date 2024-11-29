@@ -19,7 +19,7 @@ struct ArchivedAddressesView: View {
             VStack {
                 ForEach(store.archivedAddresses.elements) { $address in
                     Button {
-                        store.send(.addressButtonTapped(addressId: address.id))
+                        store.send(.addressButtonTapped(address: $address.wrappedValue))
                     } label: {
                         Text(address.name)
                     }
@@ -36,6 +36,7 @@ struct ArchivedAddressesView: View {
         .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
         .background(.appBackground)
+        .alert($store.scope(state: \.returnAlert, action: \.returnAlert))
     }
 }
 

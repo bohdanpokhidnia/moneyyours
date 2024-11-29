@@ -5,8 +5,8 @@
 //  Created by Bohdan Pokhidnia on 12.06.2024.
 //
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 @main
 struct MoneyYoursApp: App {
