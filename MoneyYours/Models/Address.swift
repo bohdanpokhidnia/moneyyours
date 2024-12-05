@@ -19,6 +19,13 @@ struct Address: Identifiable, Equatable, Codable {
         name: "Preview Address",
         communalInvoices: .preview
     )
+    
+    static let archivedAddress = Address(
+        id: UUID(),
+        name: "Archived Address",
+        communalInvoices: .preview,
+        state: .archived
+    )
 }
 
 extension IdentifiedArrayOf where Element == Address {

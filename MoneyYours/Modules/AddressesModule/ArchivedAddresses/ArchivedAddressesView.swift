@@ -36,7 +36,11 @@ struct ArchivedAddressesView: View {
         }
         .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
-        .background(.appBackground)
+        .textEmptyStateBackground(
+            isHiddenText: Binding(get: { store.archivedAddresses.elements.isEmpty }, set: { _ in }),
+            title: "No Archived Addresses Yet",
+            description: "It looks like you haven’t archived any addresses."
+        )
         .alert($store.scope(state: \.returnAlert, action: \.returnAlert))
     }
 }
@@ -45,7 +49,7 @@ struct ArchivedAddressesView: View {
     NavigationStack {
         ArchivedAddressesView(
             store: Store(
-                initialState: ArchivedAddressesFeature.State(),
+                initialState: ArchivedAddressesFeature.State(addresses: []),
                 reducer: {
                     ArchivedAddressesFeature()
                 }

@@ -21,9 +21,10 @@ struct ArchivedAddressesFeature {
         @Presents var returnAlert: AlertState<ReturnAlert>?
     }
     
-    enum Action: ViewAction {
+    enum Action: BindableAction, ViewAction {
         case view(View)
         case returnAlert(PresentationAction<ReturnAlert>)
+        case binding(BindingAction<State>)
         
         enum View {
             case addressButtonTapped(address: Address)
@@ -36,6 +37,7 @@ struct ArchivedAddressesFeature {
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case let .view(.addressButtonTapped(address)):
@@ -47,6 +49,9 @@ struct ArchivedAddressesFeature {
                 return .none
                 
             case .returnAlert:
+                return .none
+                
+            case .binding:
                 return .none
             }
         }
