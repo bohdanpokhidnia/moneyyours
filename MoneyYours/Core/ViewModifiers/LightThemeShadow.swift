@@ -32,7 +32,7 @@ extension View {
         x: CGFloat = 0,
         y: CGFloat = 8
     ) -> some View {
-        self.modifier(
+        modifier(
             LightThemeShadow(
                 color: color,
                 radius: radius,
