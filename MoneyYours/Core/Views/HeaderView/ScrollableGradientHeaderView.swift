@@ -10,6 +10,7 @@ import SwiftUI
 struct ScrollableGradientHeaderView<ContentView: View>: View {
     var title: String
     var configuration: GradientHeaderConfiguration
+    var isScrollDisabled: Binding<Bool> = .constant(false)
     @ViewBuilder var content: () -> ContentView
     
     @State private var navigationBarHeight: CGFloat = .zero
@@ -34,6 +35,7 @@ struct ScrollableGradientHeaderView<ContentView: View>: View {
         .background {
             NavigationBarHeightReader(navigationBarHeight: $navigationBarHeight)
         }
+        .scrollDisabled(isScrollDisabled.wrappedValue)
         .contentMargins(.top, safeArea.top + navigationBarHeight * 2, for: .scrollIndicators)
         .overlayPreferenceValue(ViewRectKey.self, alignment: .top) { (rect) in
             let minY = rect.minY

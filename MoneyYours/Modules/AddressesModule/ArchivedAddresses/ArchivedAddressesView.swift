@@ -15,7 +15,8 @@ struct ArchivedAddressesView: View {
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Archived Addresses",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: GradientHeaderConfiguration(presetColors: .addresses),
+            isScrollDisabled: $store.isEmpty
         ) {
             VStack {
                 ForEach(store.archivedAddresses.elements) { $address in
@@ -37,9 +38,11 @@ struct ArchivedAddressesView: View {
         .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
         .textEmptyStateBackground(
-            isHiddenText: Binding(get: { store.archivedAddresses.elements.isEmpty }, set: { _ in }),
-            title: "No Archived Addresses Yet",
-            description: "It looks like you haven’t archived any addresses."
+            isHiddenText: $store.isEmpty,
+            state: TextEmptyStateView.State(
+                title: "No Archived Addresses Yet",
+                description: "It looks like you haven’t archived any addresses."
+            )
         )
         .alert($store.scope(state: \.returnAlert, action: \.returnAlert))
     }
@@ -49,7 +52,7 @@ struct ArchivedAddressesView: View {
     NavigationStack {
         ArchivedAddressesView(
             store: Store(
-                initialState: ArchivedAddressesFeature.State(addresses: []),
+                initialState: ArchivedAddressesFeature.State(addresses: [.archivedAddress]),
                 reducer: {
                     ArchivedAddressesFeature()
                 }

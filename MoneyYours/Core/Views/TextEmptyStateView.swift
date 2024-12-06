@@ -8,16 +8,20 @@
 import SwiftUI
 
 struct TextEmptyStateView: View {
-    let title: String
-    let description: String
+    struct State {
+        let title: String
+        let description: String
+    }
+    
+    let state: State
     
     var body: some View {
         VStack(spacing: 16) {
-            Text(title)
+            Text(state.title)
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(.textEmpyState)
             
-            Text(description)
+            Text(state.description)
                 .font(.system(size: 15, weight: .regular))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.textEmpyState)
@@ -27,7 +31,9 @@ struct TextEmptyStateView: View {
 
 #Preview {
     TextEmptyStateView(
-        title: "You’re offline",
-        description: "There’s no internet connection right now. There’s no internet connection right now."
+        state: TextEmptyStateView.State(
+            title: "You’re offline",
+            description: "There’s no internet connection right now. There’s no internet connection right now."
+        )
     )
 }

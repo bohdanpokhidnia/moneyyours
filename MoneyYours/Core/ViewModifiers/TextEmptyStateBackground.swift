@@ -9,8 +9,7 @@ import SwiftUI
 
 struct TextEmptyStateBackground: ViewModifier {
     let color: Color
-    let title: String
-    let description: String
+    let state: TextEmptyStateView.State
     @Binding var isHiddenText: Bool
     
     func body(content: Content) -> some View {
@@ -20,10 +19,7 @@ struct TextEmptyStateBackground: ViewModifier {
                     .ignoresSafeArea()
                 
                 if isHiddenText {
-                    TextEmptyStateView(
-                        title: title,
-                        description: description
-                    )
+                    TextEmptyStateView(state: state)
                 }
             }
     }
@@ -33,14 +29,12 @@ extension View {
     func textEmptyStateBackground(
         color: Color = .appBackground,
         isHiddenText: Binding<Bool>,
-        title: String,
-        description: String
+        state: TextEmptyStateView.State
     ) -> some View {
         modifier(
             TextEmptyStateBackground(
                 color: color,
-                title: title,
-                description: description,
+                state: state,
                 isHiddenText: isHiddenText
             )
         )

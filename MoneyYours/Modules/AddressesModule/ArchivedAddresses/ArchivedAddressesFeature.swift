@@ -16,6 +16,12 @@ struct ArchivedAddressesFeature {
             let filteredAddresses = addresses.elements.filter({ $0.state == .archived })
             return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
         }
+        var isEmpty: Bool {
+            get {
+                archivedAddresses.elements.isEmpty
+            }
+            set { }
+        }
         
         @Shared(.addresses) var addresses: IdentifiedArrayOf<Address> = []
         @Presents var returnAlert: AlertState<ReturnAlert>?
