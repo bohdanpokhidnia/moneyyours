@@ -16,7 +16,7 @@ struct ArchivedAddressesFeature {
             let filteredAddresses = addresses.elements.filter({ $0.state == .archived })
             return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
         }
-        var isEmpty: Bool {
+        var isArchivedAddressesEmpty: Bool {
             get {
                 archivedAddresses.elements.isEmpty
             }
@@ -39,7 +39,7 @@ struct ArchivedAddressesFeature {
     
     enum ReturnAlert: Equatable {
         case cancel
-        case confirm(addressId: Address.ID)
+        case confirmMove(addressId: Address.ID)
     }
     
     var body: some ReducerOf<Self> {
@@ -47,10 +47,10 @@ struct ArchivedAddressesFeature {
         Reduce { state, action in
             switch action {
             case let .view(.addressButtonTapped(address)):
-                state.returnAlert = .return(address: address)
+                state.returnAlert = .moveFromArchiveAlert(address: address)
                 return .none
                 
-            case let .returnAlert(.presented(.confirm(addressId))):
+            case let .returnAlert(.presented(.confirmMove(addressId))):
                 state.addresses[id: addressId]?.state = .active
                 return .none
                 
@@ -66,7 +66,7 @@ struct ArchivedAddressesFeature {
 }
 
 extension AlertState where Action == ArchivedAddressesFeature.ReturnAlert {
-    static func `return`(address: Address) -> AlertState {
+    static func moveFromArchiveAlert(address: Address) -> AlertState {
         AlertState(
             title: {
                 TextState("Do yo want move to return from archive?")
@@ -76,7 +76,7 @@ extension AlertState where Action == ArchivedAddressesFeature.ReturnAlert {
                     TextState("Cancel")
                 }
                 
-                ButtonState(action: .confirm(addressId: address.id)) {
+                ButtonState(action: .confirmMove(addressId: address.id)) {
                     TextState("Confirm")
                 }
             },
