@@ -6,24 +6,13 @@
 //
 
 import ComposableArchitecture
-import Foundation
 
 @Reducer
 struct ArchivedAddressesFeature {
     @ObservableState
     struct State: Equatable {
-        var archivedAddresses: Shared<IdentifiedArrayOf<Address>> {
-            let filteredAddresses = addresses.elements.filter({ $0.state == .archived })
-            return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
-        }
-        var isArchivedAddressesEmpty: Bool {
-            get {
-                archivedAddresses.elements.isEmpty
-            }
-            set { }
-        }
-        
         @Shared(.fileStorage(.addresses)) var addresses: IdentifiedArrayOf<Address> = []
+        var contentState: ContentState<Shared<IdentifiedArrayOf<Address>>, TextEmptyStateView.State> = .empty
         @Presents var returnAlert: AlertState<ReturnAlert>?
     }
     
@@ -31,8 +20,10 @@ struct ArchivedAddressesFeature {
         case view(View)
         case returnAlert(PresentationAction<ReturnAlert>)
         case binding(BindingAction<State>)
+        case updateAddresses
         
         enum View {
+            case onAppear
             case addressButtonTapped(address: Address)
         }
     }
@@ -46,13 +37,20 @@ struct ArchivedAddressesFeature {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .view(.onAppear):
+                return .send(.updateAddresses)
+                
             case let .view(.addressButtonTapped(address)):
                 state.returnAlert = .moveFromArchiveAlert(address: address)
                 return .none
                 
             case let .returnAlert(.presented(.confirmMove(addressId))):
-                state.addresses[id: addressId]?.state = .active
                 state.$addresses.withLock { $0[id: addressId]?.state = .active }
+                return .send(.updateAddresses)
+                
+            case .updateAddresses:
+                let filteredAddresses = state.addresses.elements.filter({ $0.state == .archived })
+                state.contentState = filteredAddresses.isEmpty ? .empty : .content(content: Shared(value: IdentifiedArray(uniqueElements: filteredAddresses)))
                 return .none
                 
             case .returnAlert:
@@ -66,7 +64,16 @@ struct ArchivedAddressesFeature {
     }
 }
 
-extension AlertState where Action == ArchivedAddressesFeature.ReturnAlert {
+private extension ContentState where Content == Shared<IdentifiedArrayOf<Address>>, Empty == TextEmptyStateView.State {
+    static var empty: ContentState = .empty(
+        state: TextEmptyStateView.State(
+            title: "No Archived Addresses Yet",
+            description: "It looks like you haven’t archived any addresses."
+        )
+    )
+}
+
+private extension AlertState where Action == ArchivedAddressesFeature.ReturnAlert {
     static func moveFromArchiveAlert(address: Address) -> AlertState {
         AlertState(
             title: {

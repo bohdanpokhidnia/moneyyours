@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TextEmptyStateView: View {
-    struct State {
+    struct State: Equatable {
         let title: String
         let description: String
     }
