@@ -23,6 +23,10 @@ enum ContentState<Content: Equatable, Empty: Equatable>: Equatable {
         }
     }
     
+    var isNotEmptyState: Bool {
+        !isEmptyState
+    }
+    
     var emptyState: Binding<Empty?> {
         Binding(
             get: {
