@@ -13,10 +13,10 @@ struct AddressesFeature {
     struct State {
         var activeAddresses: Shared<IdentifiedArrayOf<Address>> {
             let filteredAddresses = addresses.elements.filter({ $0.state == .active })
-            return Shared(IdentifiedArrayOf(uniqueElements: filteredAddresses))
+            return Shared(value: IdentifiedArrayOf(uniqueElements: filteredAddresses))
         }
         
-        @Shared(.addresses) var addresses: IdentifiedArrayOf<Address> = []
+        @Shared(.fileStorage(.addresses)) var addresses: IdentifiedArrayOf<Address> = []
         var path = StackState<Path.State>()
     }
     
@@ -52,7 +52,7 @@ struct AddressesFeature {
                 return .none
                 
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
-                state.addresses.append(address)
+                let _ = state.$addresses.withLock { $0.append(address) }
                 state.path.pop(from: id)
                 return .none
                 
@@ -61,12 +61,12 @@ struct AddressesFeature {
                 return .none
                 
             case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(addressId))))):
-                state.addresses.remove(id: addressId)
+                let _ = state.$addresses.withLock { $0.remove(id: addressId) }
                 state.path.removeAll()
                 return .none
                 
             case let .path(.element(id: _, action: .addressSettings(.delegate(.archive(addressId))))):
-                state.addresses[id: addressId]?.state = .archived
+                state.$addresses.withLock({ $0[id: addressId]?.state = .archived })
                 state.path.removeAll()
                 return .none
                 

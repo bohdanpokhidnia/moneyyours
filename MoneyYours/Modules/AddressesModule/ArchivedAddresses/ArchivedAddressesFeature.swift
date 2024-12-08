@@ -23,7 +23,7 @@ struct ArchivedAddressesFeature {
             set { }
         }
         
-        @Shared(.addresses) var addresses: IdentifiedArrayOf<Address> = []
+        @Shared(.fileStorage(.addresses)) var addresses: IdentifiedArrayOf<Address> = []
         @Presents var returnAlert: AlertState<ReturnAlert>?
     }
     
@@ -52,6 +52,7 @@ struct ArchivedAddressesFeature {
                 
             case let .returnAlert(.presented(.confirmMove(addressId))):
                 state.addresses[id: addressId]?.state = .active
+                state.$addresses.withLock { $0[id: addressId]?.state = .active }
                 return .none
                 
             case .returnAlert:

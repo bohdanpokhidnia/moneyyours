@@ -54,7 +54,7 @@ struct AddressSettingsFeature {
         Reduce { state, action in
             switch action {
             case .binding(\.address):
-                state.address.name = state.address.name.trimmingCharacters(in: .whitespaces)
+                state.$address.withLock { $0.name = state.address.name.trimmingCharacters(in: .whitespaces) }
                 return .none
                 
             case .view(.removeButtonTapped):
