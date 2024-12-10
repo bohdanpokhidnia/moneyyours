@@ -27,27 +27,15 @@ struct AddressesView: View {
                 actionButtons
                     .padding(.top, 32)
                 
-                if store.contentState.isNotEmptyState {
-                    subtitleText
-                        .padding(.top, 16)
-                        .padding(.leading, 16)
-                }
+                subtitleText
+                    .padding(.top, 16)
+                    .padding(.leading, 16)
                 
-                switch store.contentState {
-                case let .content(content):
-                    addressesList(content)
-                        .padding(.top, 24)
-                    
-                case let .empty(state):
-                    TextEmptyStateView(state: state)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+                addressesList
+                    .padding(.top, 24)
             }
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
-            .onAppear {
-                send(.onAppear)
-            }
         } destination: { (store) in
             switch store.case {
             case let .addAddress(store):
@@ -111,10 +99,10 @@ struct AddressesView: View {
             .font(.system(size: 22, weight: .semibold))
     }
     
-    private func addressesList(_ activeAddresses: Shared<IdentifiedArrayOf<Address>>) -> some View {
+    private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(activeAddresses) { $address in
+                ForEach(store.$activeAddresses.elements) { $address in
                     NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: $address))) {
                         Text(address.name)
                     }
@@ -136,7 +124,7 @@ struct AddressesView: View {
 #Preview {
     NavigationStack {
         AddressesView(
-            store: Store(initialState: AddressesFeature.State(addresses: [])) {
+            store: Store(initialState: AddressesFeature.State(activeAddresses: Shared(.preview))) {
                 AddressesFeature()
             }
         )

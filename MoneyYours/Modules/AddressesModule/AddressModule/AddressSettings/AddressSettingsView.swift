@@ -71,7 +71,7 @@ struct AddressSettingsView: View {
     NavigationStack {
         AddressSettingsView(
             store: Store(
-                initialState: AddressSettingsFeature.State(address: Shared(value: .preview))
+                initialState: AddressSettingsFeature.State(address: Shared(.preview))
             ) {
                 AddressSettingsFeature()
             }

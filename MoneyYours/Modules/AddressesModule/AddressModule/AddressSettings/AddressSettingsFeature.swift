@@ -6,14 +6,13 @@
 //
 
 import ComposableArchitecture
-import Foundation
 
 @Reducer
 struct AddressSettingsFeature {
     @ObservableState
     struct State: Equatable {
-        @Presents var destination: Destination.State?
         @Shared var address: Address
+        @Presents var destination: Destination.State?
     }
     
     enum Action: BindableAction, ViewAction {
@@ -28,8 +27,8 @@ struct AddressSettingsFeature {
         }
         
         enum Delegate {
-            case archive(addressId: UUID)
-            case remove(addressId: UUID)
+            case archive(address: Address)
+            case remove(addressId: Address.ID)
         }
     }
     
@@ -54,7 +53,7 @@ struct AddressSettingsFeature {
         Reduce { state, action in
             switch action {
             case .binding(\.address):
-                state.$address.withLock { $0.name = state.address.name.trimmingCharacters(in: .whitespaces) }
+                state.address.name = state.address.name.trimmingCharacters(in: .whitespaces)
                 return .none
                 
             case .view(.removeButtonTapped):
@@ -77,7 +76,7 @@ struct AddressSettingsFeature {
                 return .send(.delegate(.remove(addressId: state.address.id)))
                 
             case .destination(.presented(.archiveAlert(.confirm))):
-                return .send(.delegate(.archive(addressId: state.address.id)))
+                return .send(.delegate(.archive(address: state.address)))
                 
             case .destination:
                 return .none

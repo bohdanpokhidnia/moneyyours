@@ -11,18 +11,16 @@ import ComposableArchitecture
 struct AddressesFeature {
     @ObservableState
     struct State {
-        @Shared(.fileStorage(.addresses)) var addresses: IdentifiedArrayOf<Address> = []
-        var contentState: ContentState<Shared<IdentifiedArrayOf<Address>>, TextEmptyStateView.State> = .empty
+        @Shared(.activeAddresses) var activeAddresses
+        @Shared(.archivedAddresses) var archivedAddresses
         var path = StackState<Path.State>()
     }
     
     enum Action: ViewAction {
         case view(View)
         case path(StackActionOf<Path>)
-        case updateAddresses
         
         enum View {
-            case onAppear
             case addButtonTapped
             case archiveButtonTapped
         }
@@ -41,39 +39,37 @@ struct AddressesFeature {
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
-            case .view(.onAppear):
-                return .send(.updateAddresses)
-                
             case .view(.addButtonTapped):
                 state.path.append(.addAddress(AddAddressFeature.State()))
                 return .none
                 
             case .view(.archiveButtonTapped):
-                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State()))
+                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State(addresses: state.$archivedAddresses)))
                 return .none
                 
             case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
-                let _ = state.$addresses.withLock { $0.append(address) }
+                state.activeAddresses.append(address)
                 state.path.pop(from: id)
-                return .send(.updateAddresses)
+                return .none
                 
             case let .path(.element(id: _, action: .address(.delegate(.settings(address))))):
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
                 return .none
                 
             case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(addressId))))):
-                let _ = state.$addresses.withLock { $0.remove(id: addressId) }
+                state.activeAddresses.remove(id: addressId)
                 state.path.removeAll()
-                return .send(.updateAddresses)
+                return .none
                 
-            case let .path(.element(id: _, action: .addressSettings(.delegate(.archive(addressId))))):
-                state.$addresses.withLock({ $0[id: addressId]?.state = .archived })
+            case let .path(.element(id: _, action: .addressSettings(.delegate(.archive(address))))):
+                state.activeAddresses.remove(id: address.id)
+                state.archivedAddresses.append(address)
                 state.path.removeAll()
-                return .send(.updateAddresses)
+                return .none
                 
-            case .updateAddresses:
-                let filteredAddresses = state.addresses.elements.filter({ $0.state == .active })
-                state.contentState = filteredAddresses.isEmpty ? .empty : .content(content: Shared(value: IdentifiedArray(uniqueElements: filteredAddresses)))
+            case let .path(.element(id: _, action: .archivedAddresses(.delegate(.move(address))))):
+                state.activeAddresses.append(address)
+                state.path.removeAll()
                 return .none
                 
             case .path:
@@ -82,13 +78,4 @@ struct AddressesFeature {
         }
         .forEach(\.path, action: \.path)
     }
-}
-
-private extension ContentState where Content == Shared<IdentifiedArrayOf<Address>>, Empty == TextEmptyStateView.State {
-    static var empty: ContentState = .empty(
-        state: TextEmptyStateView.State(
-            title: "Your address list is empty",
-            description: "Add a new address to have quick access to important locations."
-        )
-    )
 }

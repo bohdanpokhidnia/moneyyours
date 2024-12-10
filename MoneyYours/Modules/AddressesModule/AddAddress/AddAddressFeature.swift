@@ -31,6 +31,8 @@ struct AddAddressFeature {
         }
     }
     
+    @Dependency(\.uuid) var uuid
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { (state, action) in
@@ -44,7 +46,7 @@ struct AddAddressFeature {
                 
             case .view(.saveButtonTapped):
                 let address = Address(
-                    id: UUID(),
+                    id: uuid(),
                     name: state.addressName,
                     communalInvoices: []
                 )

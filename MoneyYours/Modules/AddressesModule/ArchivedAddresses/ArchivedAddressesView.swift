@@ -16,37 +16,29 @@ struct ArchivedAddressesView: View {
         ScrollableGradientHeaderView(
             title: "Archived Addresses",
             configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            isScrollDisabled: $store.contentState.isEmptyState
+            isScrollDisabled: store.addresses.wrappedValue.isBindingEmpty
         ) {
             VStack {
-                if case let .content(content: archivedAddresses) = store.contentState {
-                    ForEach(archivedAddresses) { $address in
-                        Button {
-                            send(.addressButtonTapped(address: $address.wrappedValue))
-                        } label: {
-                            Text(address.name)
-                        }
-                        .buttonStyle(
-                            EmojiRowButtonStyle(
-                                emoji: "🗂️",
-                                emojiBackground: .paleBlueLily
-                            )
-                        )
+                ForEach(store.addresses.elements) { $address in
+                    Button {
+                        send(.addressButtonTapped(address: $address.wrappedValue))
+                    } label: {
+                        Text(address.name)
                     }
+                    .buttonStyle(
+                        EmojiRowButtonStyle(
+                            emoji: "🗂️",
+                            emojiBackground: .paleBlueLily
+                        )
+                    )
                 }
             }
             .padding([.top, .horizontal], 16)
         }
         .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
-        .textEmptyStateBackground(
-            color: .appBackground,
-            state: store.contentState.emptyState
-        )
+        .background(.appBackground)
         .alert($store.scope(state: \.returnAlert, action: \.returnAlert))
-        .onAppear {
-            send(.onAppear)
-        }
     }
 }
 
@@ -54,7 +46,7 @@ struct ArchivedAddressesView: View {
     NavigationStack {
         ArchivedAddressesView(
             store: Store(
-                initialState: ArchivedAddressesFeature.State(addresses: []),
+                initialState: ArchivedAddressesFeature.State(addresses: Shared([.archivedAddress])),
                 reducer: {
                     ArchivedAddressesFeature()
                 }

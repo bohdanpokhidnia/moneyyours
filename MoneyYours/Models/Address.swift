@@ -12,7 +12,6 @@ struct Address: Identifiable, Equatable, Codable {
     let id: UUID
     var name: String
     var communalInvoices: IdentifiedArrayOf<CommunalInvoice>
-    var state: AddressState = .active
     
     static let preview = Address(
         id: UUID(),
@@ -23,8 +22,7 @@ struct Address: Identifiable, Equatable, Codable {
     static let archivedAddress = Address(
         id: UUID(),
         name: "Archived Address",
-        communalInvoices: .preview,
-        state: .archived
+        communalInvoices: .preview
     )
 }
 
