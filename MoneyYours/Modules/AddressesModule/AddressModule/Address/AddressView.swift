@@ -20,6 +20,13 @@ struct AddressView: View {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
                 
+                Button("Add invoice") {
+                    send(.addInvoiceButtonTapped)
+                }
+                .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
+                .tint(.black)
+                .padding(16)
+                
                 ForEach(store.yeas, id: \.self) { year in
                     Text(year.description)
                         .frame(maxWidth: .infinity)

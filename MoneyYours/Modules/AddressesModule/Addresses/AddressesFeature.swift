@@ -32,6 +32,7 @@ struct AddressesFeature {
         case address(AddressFeature)
         case addressSettings(AddressSettingsFeature)
         case archivedAddresses(ArchivedAddressesFeature)
+        case addInvoice(AddInvoiceFeature)
         case monthInvoicesList(MonthInvoicesList)
         case invoiceSelectionList(InvoiceSelectionList)
     }
@@ -54,6 +55,10 @@ struct AddressesFeature {
                 
             case let .path(.element(id: _, action: .address(.delegate(.settings(address))))):
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
+                return .none
+                
+            case .path(.element(id: _, action: .address(.delegate(.addInvoice)))):
+                state.path.append(.addInvoice(AddInvoiceFeature.State()))
                 return .none
                 
             case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(addressId))))):

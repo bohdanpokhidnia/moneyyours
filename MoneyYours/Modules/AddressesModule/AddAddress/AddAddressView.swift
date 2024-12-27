@@ -38,6 +38,7 @@ struct AddAddressView: View {
             Button("Save") {
                 send(.saveButtonTapped)
             }
+            .padding(.horizontal, 16)
             .padding(.bottom, 24)
             .buttonStyle(
                 BottomActionButtonStyle(fillColor: .beanRed)

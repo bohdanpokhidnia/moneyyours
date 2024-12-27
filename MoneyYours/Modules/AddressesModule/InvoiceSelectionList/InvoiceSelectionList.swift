@@ -20,14 +20,14 @@ struct InvoiceSelectionList {
         case select(CommunalInvoice)
     }
     
-    @Dependency(\.invoicesLoader) private var invoicesLoader
+//    @Dependency(\.invoicesLoader) private var invoicesLoader
     @Dependency(\.dismiss) private var dismiss
     
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
             case .onAppear:
-                let invoices = invoicesLoader.fetch()
+//                let invoices = invoicesLoader.fetch()
 //                state.invoices = IdentifiedArray(uniqueElements: invoices)
                 return .none
                 

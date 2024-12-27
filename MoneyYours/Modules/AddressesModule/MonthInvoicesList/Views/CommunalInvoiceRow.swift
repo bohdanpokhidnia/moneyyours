@@ -26,13 +26,13 @@ struct CommunalInvoiceRow: View {
             .padding([.top, .leading], 16)
             
             HStack(spacing: 16) {
-                priceView(
-                    price: invoice.price.formatted(.ukrainianHryvnia),
-                    title: "Price at 1",
-                    placeholder: "Past",
-                    prompt: "Value",
-                    text: $past
-                )
+//                priceView(
+//                    price: invoice.price.formatted(.ukrainianHryvnia),
+//                    title: "Price at 1",
+//                    placeholder: "Past",
+//                    prompt: "Value",
+//                    text: $past
+//                )
                 
 //                priceView(
 //                    price: invoice.amount.formatted(.ukrainianHryvnia),

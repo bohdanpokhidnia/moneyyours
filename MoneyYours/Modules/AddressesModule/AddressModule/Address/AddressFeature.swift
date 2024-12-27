@@ -25,11 +25,13 @@ struct AddressFeature {
         
         enum View {
             case settingsButtonTapped
+            case addInvoiceButtonTapped
         }
         
         @CasePathable
         enum Delegate {
             case settings(address: Shared<Address>)
+            case addInvoice
         }
     }
     
@@ -38,6 +40,9 @@ struct AddressFeature {
             switch action {
             case .view(.settingsButtonTapped):
                 return .send(.delegate(.settings(address: state.$address)))
+                
+            case .view(.addInvoiceButtonTapped):
+                return .send(.delegate(.addInvoice))
                 
             case .delegate:
                 return .none
