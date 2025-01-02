@@ -41,17 +41,17 @@ struct AddInvoiceView: View {
                         )
                     )
                     
-                    Picker(
-                        "Price",
-                        selection: $store.selectedPrice
-                    ) {
-                        ForEach(Price.allCases, id: \.self) { price in
-                            Text(price.name)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                    
-                    priceInput(for: store.selectedPrice)
+                    EmojiFieldView(
+                        title: "Price",
+                        emoji: "💵",
+                        emojiBackground: Color(hex: "#D4EFDF"),
+                        inputType: .text(
+                            text: Binding(get: { "\(store.price.name) \(store.price.text)" }),
+                            action: {
+                                send(.priceButtonTapped)
+                            }
+                        )
+                    )
                 }
                 .padding(16)
             }
@@ -62,44 +62,12 @@ struct AddInvoiceView: View {
             .buttonStyle(
                 BottomActionButtonStyle(fillColor: .beanRed)
             )
+            .disabled(store.isSaveButtonDisabled)
             .padding([.bottom, .horizontal], 16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
         .updateBackButton(color: .white)
-    }
-    
-    @ViewBuilder
-    private func priceInput(for price: Price) -> some View {
-        switch price {
-        case .fixed:
-            EmojiFieldView(
-                title: "Price",
-                emoji: "",
-                emojiBackground: .red,
-                inputType: .textFiled(text: $store.fixedValue),
-                keyboardType: .decimalPad
-            )
-            
-        case .calculate:
-            HStack(spacing: 16) {
-                EmojiFieldView(
-                    title: "Price",
-                    emoji: "",
-                    emojiBackground: .blue,
-                    inputType: .textFiled(text: $store.calculateValue),
-                    keyboardType: .decimalPad
-                )
-                
-                EmojiFieldView(
-                    title: "Count",
-                    emoji: "",
-                    emojiBackground: .yellow,
-                    inputType: .textFiled(text: $store.calculateCount),
-                    keyboardType: .numberPad
-                )
-            }
-        }
     }
 }
 
