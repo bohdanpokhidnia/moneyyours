@@ -36,6 +36,9 @@ struct AddressesView: View {
             }
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
+            .onAppear {
+                send(.onAppear)
+            }
         } destination: { (store) in
             switch store.case {
             case let .addAddress(store):
@@ -105,8 +108,8 @@ struct AddressesView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(store.$activeAddresses.elements) { $address in
-                    NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: $address))) {
+                ForEach(store.addresses) { address in
+                    NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: address))) {
                         Text(address.name)
                     }
                     .buttonStyle(
@@ -127,7 +130,7 @@ struct AddressesView: View {
 #Preview {
     NavigationStack {
         AddressesView(
-            store: Store(initialState: AddressesFeature.State(activeAddresses: Shared(.preview))) {
+            store: Store(initialState: AddressesFeature.State(addresses: .preview)) {
                 AddressesFeature()
             }
         )

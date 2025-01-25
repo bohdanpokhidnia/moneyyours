@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct AddressSettingsFeature {
     @ObservableState
     struct State: Equatable {
-        @Shared var address: Address
+        var address: Address
         @Presents var destination: Destination.State?
     }
     
@@ -24,11 +24,12 @@ struct AddressSettingsFeature {
         enum View {
             case removeButtonTapped
             case addToArchiveButtonTapped
+            case saveButtonTapped
         }
         
         enum Delegate {
-            case archive(address: Address)
-            case remove(addressId: Address.ID)
+            case popToRoot
+            case update
         }
     }
     
@@ -48,6 +49,8 @@ struct AddressSettingsFeature {
         case archiveAlert(AlertState<ArchiveAlert>)
     }
     
+    @Dependency(\.databaseClient) var databaseClient
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
@@ -66,6 +69,13 @@ struct AddressSettingsFeature {
                 state.destination = .archiveAlert(.archive(addressName: addressName))
                 return .none
                 
+            case .view(.saveButtonTapped):
+                let address = state.address
+                return .run { [address = address] send in
+                    try databaseClient.addressDatabase.update(address)
+                    await send(.delegate(.popToRoot))
+                }
+                
             case .binding:
                 return .none
                 
@@ -73,10 +83,17 @@ struct AddressSettingsFeature {
                 return .none
                 
             case .destination(.presented(.removeAlert(.confirm))):
-                return .send(.delegate(.remove(addressId: state.address.id)))
+                return .run { [address = state.address] send in
+                    try databaseClient.addressDatabase.delete(address)
+                    await send(.delegate(.popToRoot))
+                }
                 
             case .destination(.presented(.archiveAlert(.confirm))):
-                return .send(.delegate(.archive(address: state.address)))
+                state.address.state = .archived
+                return .run { [address = state.address] send in
+                    try databaseClient.addressDatabase.update(address)
+                    await send(.delegate(.popToRoot))
+                }
                 
             case .destination:
                 return .none

@@ -16,12 +16,12 @@ struct ArchivedAddressesView: View {
         ScrollableGradientHeaderView(
             title: "Archived Addresses",
             configuration: GradientHeaderConfiguration(presetColors: .addresses),
-            isScrollDisabled: store.addresses.wrappedValue.isBindingEmpty
+            isScrollDisabled: store.addresses.isBindingEmpty
         ) {
             VStack {
-                ForEach(store.addresses.elements) { $address in
+                ForEach(store.addresses) { address in
                     Button {
-                        send(.addressButtonTapped(address: $address.wrappedValue))
+                        send(.addressButtonTapped(address: address))
                     } label: {
                         Text(address.name)
                     }
@@ -35,6 +35,9 @@ struct ArchivedAddressesView: View {
             }
             .padding([.top, .horizontal], 16)
         }
+        .onAppear {
+            send(.onAppear)
+        }
         .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
         .background(.appBackground)
@@ -46,7 +49,7 @@ struct ArchivedAddressesView: View {
     NavigationStack {
         ArchivedAddressesView(
             store: Store(
-                initialState: ArchivedAddressesFeature.State(addresses: Shared([.archivedAddress])),
+                initialState: ArchivedAddressesFeature.State(addresses: [.archivedAddress]),
                 reducer: {
                     ArchivedAddressesFeature()
                 }

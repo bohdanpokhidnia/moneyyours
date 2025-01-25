@@ -6,21 +6,24 @@
 //
 
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct AddressesFeature {
     @ObservableState
     struct State {
-        @Shared(.activeAddresses) var activeAddresses
-        @Shared(.archivedAddresses) var archivedAddresses
+        var addresses = IdentifiedArrayOf<Address>()
         var path = StackState<Path.State>()
     }
     
     enum Action: ViewAction {
         case view(View)
+        case fetchAddresses
+        case update(addresses: [Address])
         case path(StackActionOf<Path>)
         
         enum View {
+            case onAppear
             case addButtonTapped
             case archiveButtonTapped
         }
@@ -37,21 +40,39 @@ struct AddressesFeature {
         case invoiceSelectionList(InvoiceSelectionList)
     }
     
+    @Dependency(\.databaseClient) var databaseClient
+    
     var body: some ReducerOf<Self> {
         Reduce { (state, action) in
             switch action {
+            case .view(.onAppear):
+                return .send(.fetchAddresses)
+                
             case .view(.addButtonTapped):
                 state.path.append(.addAddress(AddAddressFeature.State()))
                 return .none
                 
             case .view(.archiveButtonTapped):
-                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State(addresses: state.$archivedAddresses)))
+                state.path.append(.archivedAddresses(ArchivedAddressesFeature.State()))
+                return .none
+            
+            case .fetchAddresses:
+                return .run { send in
+                    let addresses = try databaseClient.addressDatabase.read(
+                        predicate: nil,
+                        sortDescriptors: SortDescriptor<Address>(\.name)
+                    )
+                    let activeAddresses = addresses.filter({ $0.state == .active })
+                    await send(.update(addresses: activeAddresses))
+                }
+                
+            case let .update(addresses):
+                state.addresses = IdentifiedArrayOf(uniqueElements: addresses)
                 return .none
                 
-            case let .path(.element(id: id, action: .addAddress(.delegate(.save(address))))):
-                state.activeAddresses.append(address)
+            case let .path(.element(id: id, action: .addAddress(.delegate(.addressSaved)))):
                 state.path.pop(from: id)
-                return .none
+                return .send(.fetchAddresses)
                 
             case let .path(.element(id: _, action: .address(.delegate(.settings(address))))):
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
@@ -61,19 +82,15 @@ struct AddressesFeature {
                 state.path.append(.addInvoice(AddInvoiceFeature.State()))
                 return .none
                 
-            case let .path(.element(id: _, action: .addressSettings(.delegate(.remove(addressId))))):
-                state.activeAddresses.remove(id: addressId)
+            case .path(.element(id: _, action: .addressSettings(.delegate(.popToRoot)))):
                 state.path.removeAll()
                 return .none
                 
-            case let .path(.element(id: _, action: .addressSettings(.delegate(.archive(address))))):
-                state.activeAddresses.remove(id: address.id)
-                state.archivedAddresses.append(address)
+            case .path(.element(id: _, action: .addressSettings(.delegate(.update)))):
                 state.path.removeAll()
-                return .none
+                return .send(.fetchAddresses)
                 
-            case let .path(.element(id: _, action: .archivedAddresses(.delegate(.move(address))))):
-                state.activeAddresses.append(address)
+            case .path(.element(id: _, action: .archivedAddresses(.delegate(.popToRoot)))):
                 state.path.removeAll()
                 return .none
                 

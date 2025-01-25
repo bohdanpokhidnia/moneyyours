@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Price: Equatable, Codable, Hashable {
+enum Price: Codable, Equatable {
     case fixed(value: Double)
     case calculate(value: Double, count: Int)
     

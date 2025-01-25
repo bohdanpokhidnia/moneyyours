@@ -12,7 +12,7 @@ import Foundation
 struct AddressFeature {
     @ObservableState
     struct State: Equatable {
-        @Shared var address: Address
+        var address: Address
         
         var yeas: [Int] {
             Set<Int>(address.communalInvoices.map { $0.year }).map({ $0 })
@@ -30,7 +30,7 @@ struct AddressFeature {
         
         @CasePathable
         enum Delegate {
-            case settings(address: Shared<Address>)
+            case settings(address: Address)
             case addInvoice
         }
     }
@@ -39,7 +39,7 @@ struct AddressFeature {
         Reduce { state, action in
             switch action {
             case .view(.settingsButtonTapped):
-                return .send(.delegate(.settings(address: state.$address)))
+                return .send(.delegate(.settings(address: state.address)))
                 
             case .view(.addInvoiceButtonTapped):
                 return .send(.delegate(.addInvoice))

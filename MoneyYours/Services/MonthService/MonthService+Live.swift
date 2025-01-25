@@ -10,7 +10,7 @@ import ComposableArchitecture
 extension MonthService: DependencyKey {
     static var liveValue: MonthService {
         MonthService(
-            month: { (calendar, date) throws(MonthServiceError) in
+            month: { calendar, date throws(MonthServiceError) in
                 let monthNumber = calendar.component(.month, from: date)
                 guard let month = Month(rawValue: monthNumber) else {
                     throw .invalidMonthNumber

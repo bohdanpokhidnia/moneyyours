@@ -88,7 +88,7 @@ private extension AddressView {
     NavigationStack {
         AddressView(
             store: Store(
-                initialState: AddressFeature.State(address: Shared(.preview))
+                initialState: AddressFeature.State(address: .preview)
             ) {
                 AddressFeature()
             }

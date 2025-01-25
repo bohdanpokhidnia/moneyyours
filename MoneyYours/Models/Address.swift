@@ -7,22 +7,42 @@
 
 import ComposableArchitecture
 import Foundation
+import SwiftData
 
-struct Address: Identifiable, Equatable, Codable {
-    let id: UUID
+@Model
+class Address: Identifiable, Equatable {
+    @Attribute(.unique)
+    var id: UUID
     var name: String
     var communalInvoices: IdentifiedArrayOf<CommunalInvoice>
+    var state: AddressState
     
+    init(
+        id: UUID,
+        name: String,
+        communalInvoices: IdentifiedArrayOf<CommunalInvoice>,
+        state: AddressState
+    ) {
+        self.id = id
+        self.name = name
+        self.communalInvoices = communalInvoices
+        self.state = state
+    }
+    
+    @Transient
     static let preview = Address(
         id: UUID(),
         name: "Preview Address",
-        communalInvoices: .preview
+        communalInvoices: [.preview],
+        state: .active
     )
     
+    @Transient
     static let archivedAddress = Address(
         id: UUID(),
         name: "Archived Address",
-        communalInvoices: .preview
+        communalInvoices: [.preview],
+        state: .archived
     )
 }
 

@@ -56,6 +56,14 @@ struct AddressSettingsView: View {
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "trash")))
                 .tint(.beanRed)
+                
+                Button("Save") {
+                    send(.saveButtonTapped)
+                }
+                .buttonStyle(
+                    BottomActionButtonStyle(fillColor: .beanRed)
+                )
+                .frame(height: 52)
             }
             .padding([.top, .horizontal], 16)
         }
@@ -71,7 +79,7 @@ struct AddressSettingsView: View {
     NavigationStack {
         AddressSettingsView(
             store: Store(
-                initialState: AddressSettingsFeature.State(address: Shared(.preview))
+                initialState: AddressSettingsFeature.State(address: .preview)
             ) {
                 AddressSettingsFeature()
             }

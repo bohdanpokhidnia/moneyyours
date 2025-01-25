@@ -12,7 +12,7 @@ import SwiftUI
 struct ArchivedAddressesFeature {
     @ObservableState
     struct State: Equatable {
-        var addresses: Shared<IdentifiedArrayOf<Address>>
+        var addresses = IdentifiedArrayOf<Address>()
         @Presents var returnAlert: AlertState<ReturnAlert>?
     }
     
@@ -23,11 +23,12 @@ struct ArchivedAddressesFeature {
         case delegate(Delegate)
         
         enum View {
+            case onAppear
             case addressButtonTapped(address: Address)
         }
         
         enum Delegate {
-            case move(address: Address)
+            case popToRoot
         }
     }
     
@@ -36,17 +37,41 @@ struct ArchivedAddressesFeature {
         case confirmMove(address: Address)
     }
     
+    @Dependency(\.databaseClient) var databaseClient
+    
     var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce { state, action in
+        Reduce {
+            state,
+            action in
             switch action {
+            case .view(.onAppear):
+                do throws(DatabaseError) {
+                    let addresses = try databaseClient.addressDatabase.read(
+                        predicate: nil,
+                        sortDescriptors: SortDescriptor<Address>(\.name)
+                    )
+                    let archivedAddresses = addresses.filter { $0.state == .archived }
+                    state.addresses = IdentifiedArrayOf(uniqueElements: archivedAddresses)
+                } catch {
+                    print("[dev] \(error.description)")
+                }
+                return .none
+            
             case let .view(.addressButtonTapped(address)):
                 state.returnAlert = .moveFromArchiveAlert(address: address)
                 return .none
                 
             case let .returnAlert(.presented(.confirmMove(address))):
-                state.addresses.wrappedValue.remove(address)
-                return .send(.delegate(.move(address: address)))
+                address.state = .active
+                
+                do throws(DatabaseError) {
+                    try databaseClient.addressDatabase.update(address)
+                    return .send(.delegate(.popToRoot))
+                } catch {
+                    print("[dev] \(error.description)")
+                    return .none
+                }
                 
             case .returnAlert:
                 return .none

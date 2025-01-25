@@ -27,11 +27,12 @@ struct AddAddressFeature {
         
         @CasePathable
         enum Delegate: Equatable {
-            case save(address: Address)
+            case addressSaved
         }
     }
     
     @Dependency(\.uuid) var uuid
+    @Dependency(\.databaseClient) var databaseClient
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -49,8 +50,13 @@ struct AddAddressFeature {
                     id: uuid(),
                     name: state.addressName,
                     communalInvoices: []
+                    ,
+                    state: .active
                 )
-                return .send(.delegate(.save(address: address)))
+                return .run { send in
+                    try databaseClient.addressDatabase.create(address)
+                    await send(.delegate(.addressSaved))
+                }
 
             case .delegate:
                 return .none
