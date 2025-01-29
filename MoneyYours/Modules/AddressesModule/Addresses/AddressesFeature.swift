@@ -36,6 +36,7 @@ struct AddressesFeature {
         case addressSettings(AddressSettingsFeature)
         case archivedAddresses(ArchivedAddressesFeature)
         case addInvoice(AddInvoiceFeature)
+        case addPrice(AddPriceFeature)
         case monthInvoicesList(MonthInvoicesList)
         case invoiceSelectionList(InvoiceSelectionList)
     }
@@ -81,6 +82,18 @@ struct AddressesFeature {
             case .path(.element(id: _, action: .address(.delegate(.addInvoice)))):
                 state.path.append(.addInvoice(AddInvoiceFeature.State()))
                 return .none
+                
+            case let .path(.element(id: _, action: .addInvoice(.delegate(.priceButtonTapped(price))))):
+                state.path.append(.addPrice(AddPriceFeature.State(selectedPrice: price)))
+                return .none
+                
+            case let .path(.element(id: id, action: .addPrice(.delegate(.select(price))))):
+                guard let index = state.path.firstIndex(where: { $0.is(\.addInvoice) }) else {
+                    return .none
+                }
+                let invoiceId = state.path.ids[index]
+                state.path.pop(from: id)
+                return .send(.path(.element(id: invoiceId, action: .addInvoice(.updatePrice(price)))))
                 
             case .path(.element(id: _, action: .addressSettings(.delegate(.popToRoot)))):
                 state.path.removeAll()

@@ -10,7 +10,7 @@ import SwiftUI
 struct EmojiFieldView: View {
     enum InputType {
         case textFiled(text: Binding<String>)
-        case text(text: Binding<String>, action: (() -> Void)?)
+        case text(_ text: String)
     }
     
     let title: String
@@ -21,6 +21,19 @@ struct EmojiFieldView: View {
     @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
+        switch inputType {
+        case .textFiled:
+            content
+                .onTapGesture {
+                    isTextFieldFocused = true
+                }
+            
+        case .text:
+            content
+        }
+    }
+    
+    private var content: some View {
         VStack(spacing: 16) {
             HStack(spacing: 16) {
                 EmojiView(
@@ -43,15 +56,6 @@ struct EmojiFieldView: View {
         }
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .onTapGesture {
-            switch inputType {
-            case .textFiled:
-                isTextFieldFocused = true
-                
-            case let .text(_, action):
-                action?()
-            }
-        }
     }
     
     @ViewBuilder
@@ -62,8 +66,8 @@ struct EmojiFieldView: View {
                 .keyboardType(keyboardType)
                 .focused($isTextFieldFocused)
             
-        case let .text(text, _):
-            Text(text.wrappedValue)
+        case let .text(text):
+            Text(text)
         }
     }
 }
@@ -79,12 +83,7 @@ struct EmojiFieldView: View {
         EmojiFieldView(
             title: "Numbers",
             emoji: "📁",
-            inputType: .text(
-                text: .constant("123"),
-                action: {
-                    print("Action")
-                }
-            )
+            inputType: .text("123")
         )
     }
     .padding(.horizontal, 16)

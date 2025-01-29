@@ -13,7 +13,7 @@ struct CommunalInvoice: Identifiable, Equatable, Codable {
     let year: Int
     let month: Month
     let type: CommunalInvoiceType
-    var price: Price
+    let price: Price
     
     static let preview = CommunalInvoice(
         id: UUID(),

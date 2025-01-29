@@ -13,39 +13,47 @@ struct AddInvoiceFeature {
     struct State: Equatable {
         var name: String = CommunalInvoiceType.electricity.name
         var invoiceType: CommunalInvoiceType = .electricity
-        var price: Price = .fixed(value: 0)
+        var price: Price = .calculate(value: 0, count: 0)
         var isSaveButtonDisabled: Bool = false
     }
     
     enum Action: BindableAction, ViewAction {
         case binding(BindingAction<State>)
         case view(View)
+        case updatePrice(_ price: Price)
+        case delegate(Delegate)
     }
     
     enum View {
-        case invoiceButtonTapped
-        case priceButtonTapped
         case saveButtonTapped
+        case priceButtonTapped
+    }
+    
+    enum Delegate {
+        case priceButtonTapped(price: Price)
     }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .binding:
                 state.isSaveButtonDisabled = state.name.trimmingCharacters(in: .whitespaces).isEmpty
                 return .none
                 
-            case .view(.invoiceButtonTapped):
-                state.invoiceType = .garbageDisposal
+            case .view(.saveButtonTapped):
+                print("Save: \(state.name)\n\(state.invoiceType.name)\n\(state.price.name)\n\(state.price.sumString)")
                 return .none
                 
             case .view(.priceButtonTapped):
-                state.price = .fixed(value: 1.223)
+                return .send(.delegate(.priceButtonTapped(price: state.price)))
+                
+            case let .updatePrice(price):
+                state.price = price
                 return .none
                 
-            case .view(.saveButtonTapped):
-                print("Save: \(state.name)\n\(state.invoiceType.name)\n\(state.price.name)\n\(state.price.text)")
+            case .delegate:
                 return .none
             }
         }

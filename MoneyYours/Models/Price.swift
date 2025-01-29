@@ -7,14 +7,16 @@
 
 import Foundation
 
-enum Price: Codable, Equatable {
+indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
     case fixed(value: Double)
     case calculate(value: Double, count: Int)
+    case doubleCalculate(first: Price, second: Price)
     
     var name: String {
         switch self {
         case .fixed: "Fixed"
         case .calculate: "Calculate"
+        case .doubleCalculate: "Double calculate"
         }
     }
     
@@ -22,11 +24,30 @@ enum Price: Codable, Equatable {
         switch self {
             case let .fixed(value): value
             case let .calculate(value, count): value * Double(count)
+            case let .doubleCalculate(first, second): first.sum + second.sum
         }
     }
     
-    var text: String {
+    var sumString: String {
         let stringSum = String(format: "%.2f", sum)
         return stringSum
     }
+    
+    static var allCases: [Price] = [
+        .fixed(value: 0),
+        .calculate(
+            value: 0,
+            count: 0
+        ),
+        .doubleCalculate(
+            first: .calculate(
+                value: 0,
+                count: 0
+            ),
+            second: .calculate(
+                value: 0,
+                count: 0
+            )
+        )
+    ]
 }

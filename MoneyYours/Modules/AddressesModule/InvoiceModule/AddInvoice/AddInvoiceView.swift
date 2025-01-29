@@ -33,25 +33,21 @@ struct AddInvoiceView: View {
                         title: "Invoice type",
                         emoji: store.invoiceType.emoji,
                         emojiBackground: store.invoiceType.emojiBackground,
-                        inputType: .text(
-                            text: Binding(get: { store.invoiceType.name }),
-                            action: {
-                                send(.invoiceButtonTapped)
-                            }
-                        )
+                        inputType: .text(store.invoiceType.name)
                     )
                     
-                    EmojiFieldView(
-                        title: "Price",
-                        emoji: "💵",
-                        emojiBackground: Color(hex: "#D4EFDF"),
-                        inputType: .text(
-                            text: Binding(get: { "\(store.price.name) \(store.price.text)" }),
-                            action: {
-                                send(.priceButtonTapped)
-                            }
+                    Button {
+                        send(.priceButtonTapped)
+                    } label: {
+                        EmojiFieldView(
+                            title: "Price",
+                            emoji: "💵",
+                            emojiBackground: Color(hex: "#D4EFDF"),
+                            inputType: .text(
+                                store.price.sum > .zero ? "\(store.price.name), \(store.price.sumString)" : "None"
+                            )
                         )
-                    )
+                    }
                 }
                 .padding(16)
             }

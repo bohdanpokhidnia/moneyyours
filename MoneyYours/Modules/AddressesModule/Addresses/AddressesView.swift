@@ -56,6 +56,9 @@ struct AddressesView: View {
             case let .addInvoice(store):
                 AddInvoiceView(store: store)
                 
+            case let .addPrice(store):
+                AddPriceView(store: store)
+                
             case let .monthInvoicesList(store):
                 MonthInvoicesListView(store: store)
                 
