@@ -26,13 +26,13 @@ struct CommunalInvoiceRow: View {
             .padding([.top, .leading], 16)
             
             HStack(spacing: 16) {
-//                priceView(
-//                    price: invoice.price.formatted(.ukrainianHryvnia),
-//                    title: "Price at 1",
-//                    placeholder: "Past",
-//                    prompt: "Value",
-//                    text: $past
-//                )
+                priceView(
+                    price: invoice.price.sum.formatted(.ukrainianHryvnia),
+                    title: "Price at 1",
+                    placeholder: "Past",
+                    prompt: "Value",
+                    text: $past
+                )
                 
 //                priceView(
 //                    price: invoice.amount.formatted(.ukrainianHryvnia),
@@ -74,13 +74,13 @@ struct CommunalInvoiceRow: View {
     }
 }
 
-//#Preview("InvoiceRow", traits: .sizeThatFitsLayout) {
-//    ZStack {
-//        CommunalInvoiceRow(
-//            invoice: .mock,
-//            past: .constant("1"),
-//            now: .constant("2")
-//        )
-//    }
-//    .background(.black)
-//}
+#Preview("InvoiceRow", traits: .sizeThatFitsLayout) {
+    ZStack {
+        CommunalInvoiceRow(
+            invoice: .preview,
+            past: .constant("1"),
+            now: .constant("2")
+        )
+    }
+    .background(.black)
+}

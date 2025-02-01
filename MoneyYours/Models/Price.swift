@@ -33,6 +33,10 @@ indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
         return stringSum
     }
     
+    var isZero: Bool {
+        sum == .zero
+    }
+    
     static var allCases: [Price] = [
         .fixed(value: 0),
         .calculate(
@@ -50,4 +54,12 @@ indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
             )
         )
     ]
+    
+    var zero: Self {
+        switch self {
+        case .fixed: .fixed(value: 0)
+        case .calculate: .calculate(value: 0, count: 0)
+        case .doubleCalculate: .doubleCalculate(first: .calculate(value: 0, count: 0), second: .calculate(value: 0, count: 0))
+        }
+    }
 }

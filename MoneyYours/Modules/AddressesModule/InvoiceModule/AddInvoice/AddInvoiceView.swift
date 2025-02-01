@@ -43,9 +43,7 @@ struct AddInvoiceView: View {
                             title: "Price",
                             emoji: "💵",
                             emojiBackground: Color(hex: "#D4EFDF"),
-                            inputType: .text(
-                                store.price.sum > .zero ? "\(store.price.name), \(store.price.sumString)" : "None"
-                            )
+                            inputType: .text("\(store.price.sumString)")
                         )
                     }
                 }

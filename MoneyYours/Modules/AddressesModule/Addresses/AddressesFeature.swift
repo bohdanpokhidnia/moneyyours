@@ -84,7 +84,7 @@ struct AddressesFeature {
                 return .none
                 
             case let .path(.element(id: _, action: .addInvoice(.delegate(.priceButtonTapped(price))))):
-                state.path.append(.addPrice(AddPriceFeature.State(selectedPrice: price)))
+                state.path.append(.addPrice(AddPriceFeature.State(price: price)))
                 return .none
                 
             case let .path(.element(id: id, action: .addPrice(.delegate(.pop)))):

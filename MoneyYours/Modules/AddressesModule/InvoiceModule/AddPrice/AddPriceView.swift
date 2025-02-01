@@ -35,12 +35,14 @@ struct AddPriceView: View {
                 .presentationDetents([.height(200)])
         }
     }
-    
+}
+
+private extension AddPriceView {
     @ViewBuilder
     private var priceTextField: some View {
         switch store.price.wrappedValue {
         case .fixed:
-            fixedPriceTextField
+            simplePriceTextField
             
         case .calculate:
             calculatePriceView
@@ -50,54 +52,55 @@ struct AddPriceView: View {
         }
     }
     
-    private var fixedPriceTextField: some View {
-        HStack(spacing: 8) {
-            PriceTextField(text: $store.priceText)
-                .background {
-                    GeometryReader { geometry in
-                        Color.clear
-                            .frame(width: geometry.size.width, height: geometry.size.height)
-                    }
-                }
-                .fixedSize()
-                .tint(.beanRed)
-                .keyboardType(.decimalPad)
-                .focused($focus, equals: .price)
+    private var simplePriceTextField: some View {
+        VStack(spacing: 8) {
+            Text("Sum")
+                .foregroundStyle(.slateGrey)
+                .font(.footnote)
             
-            Text(store.currency.string)
+            HStack(spacing: 8) {
+                PriceTextField(text: $store.priceText)
+                    .background {
+                        GeometryReader { geometry in
+                            Color.clear
+                                .frame(width: geometry.size.width, height: geometry.size.height)
+                        }
+                    }
+                    .fixedSize()
+                    .tint(.beanRed)
+                    .keyboardType(.decimalPad)
+                    .focused($focus, equals: .price)
+                
+                Text(store.currency.string)
+            }
+            .font(.price)
         }
-        .font(.price)
     }
     
     private var calculatePriceView: some View {
-        VStack(spacing: 16) {
-            fixedPriceTextField
+        VStack(spacing: 32) {
+            simplePriceTextField
             
-            HStack(spacing: 0) {
-                VStack(spacing: 8) {
-                    Text("Old value")
-                        .foregroundStyle(.starDust)
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    PriceTextField(text: $store.previouslyCounterText)
-                        .keyboardType(.numberPad)
-                        .focused($focus, equals: .oldCounter)
-                        .font(.price)
-                        .tint(.beanRed)
+            HStack(spacing: 16) {
+                TitleTextField(
+                    title: "Previously",
+                    placeholder: "Value",
+                    text: $store.previouslyCounterText
+                )
+                .onChange(of: store.previouslyCounterText) { _, newValue in
+                    store.previouslyCounterText = newValue.formatted(.priceInput)
                 }
                 
-                VStack(spacing: 8) {
-                    Text("New value")
-                        .foregroundStyle(.starDust)
-                        .font(.system(size: 16, weight: .semibold))
-                    
-                    PriceTextField(text: $store.currentCounterText)
-                        .keyboardType(.numberPad)
-                        .focused($focus, equals: .newCounter)
-                        .font(.price)
-                        .tint(.beanRed)
+                TitleTextField(
+                    title: "Current",
+                    placeholder: "Value",
+                    text: $store.currentCounterText
+                )
+                .onChange(of: store.currentCounterText) { _, newValue in
+                    store.currentCounterText = newValue.formatted(.priceInput)
                 }
             }
+            .keyboardType(.numberPad)
         }
     }
     
@@ -116,7 +119,7 @@ struct AddPriceView: View {
     AddPriceView(
         store: Store(
             initialState: AddPriceFeature.State(
-                selectedPrice: Shared(.fixed(value: .zero))
+                price: Shared(.calculate(value: 58, count: 2))
             )
         ) {
             AddPriceFeature()

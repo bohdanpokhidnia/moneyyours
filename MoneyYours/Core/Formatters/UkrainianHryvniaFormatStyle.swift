@@ -21,9 +21,3 @@ struct UkrainianHryvniaFormatStyle: FormatStyle {
         return formatter.string(from: NSNumber(value: value)) ?? ""
     }
 }
-
-extension FormatStyle where Self == UkrainianHryvniaFormatStyle {
-    static var ukrainianHryvnia: UkrainianHryvniaFormatStyle {
-        UkrainianHryvniaFormatStyle()
-    }
-}

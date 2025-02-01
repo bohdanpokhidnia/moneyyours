@@ -24,17 +24,18 @@ struct AddPriceFeature {
             Double(priceText) ?? .zero
         }
         
-        var oldCount: Int {
+        var previouslyCount: Int {
             Int(previouslyCounterText) ?? 0
         }
         
-        var newCount: Int {
+        var currentCount: Int {
             Int(currentCounterText) ?? 0
         }
         
-        init(selectedPrice: Shared<Price>) {
-            self.price = selectedPrice
-            priceText = selectedPrice.wrappedValue.sumString
+        init(price: Shared<Price>) {
+            let afterDotSum = String(price.wrappedValue.sumString.suffix(2))
+            priceText = afterDotSum == "00" ? String(price.wrappedValue.sumString.split(separator: ".").first ?? "0") : price.wrappedValue.sumString
+            self.price = price
         }
     }
     
@@ -72,7 +73,7 @@ struct AddPriceFeature {
                     state.price.wrappedValue = .fixed(value: state.priceDouble)
                     
                 case .calculate:
-                    let different = state.newCount - state.oldCount
+                    let different = state.currentCount - state.previouslyCount
                     state.price.wrappedValue = different > .zero ? .calculate(value: state.priceDouble, count: different) : state.price.wrappedValue.zero
                     
                 case .doubleCalculate:
