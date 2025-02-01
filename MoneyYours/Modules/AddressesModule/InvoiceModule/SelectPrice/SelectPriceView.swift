@@ -13,30 +13,38 @@ struct SelectPriceView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Select Price")
-                .font(.headline)
+            Text("Select price")
+                .font(.title)
+                .fontWeight(.bold)
             
-            ForEach(Price.allCases, id: \.self) { price in
-                Button {
-                    store.send(.select(price: price))
-                } label: {
-                    Text(price.name)
-                        .font(.footnote)
-                        .foregroundStyle(.black)
+            VStack(spacing: 0) {
+                ForEach(Price.allCases, id: \.self) { price in
+                    Button {
+                        store.send(.select(price: price))
+                    } label: {
+                        let isSelected = store.selectedPrice.wrappedValue == price
+                        
+                        SelectPriceRow(
+                            emoji: price.emoji,
+                            title: price.name
+                        )
+                        .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+                        .opacity(isSelected ? 1.0 : 0.5)
+                    }
+                    
+                    Divider()
                 }
-                
-                Divider()
             }
         }
         .padding(.horizontal, 16)
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     SelectPriceView(
         store: Store(
             initialState: SelectPriceFeature.State(
-                selectedPrice: Shared(.fixed(value: 0))
+                selectedPrice: Shared(.fixed(value: .zero))
             ),
             reducer: {
                 SelectPriceFeature()

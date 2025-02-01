@@ -37,6 +37,14 @@ indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
         sum == .zero
     }
     
+    var emoji: String {
+        switch self {
+        case .fixed: "📌"
+        case .calculate: "🔢"
+        case .doubleCalculate: "🧮"
+        }
+    }
+    
     static var allCases: [Price] = [
         .fixed(value: 0),
         .calculate(

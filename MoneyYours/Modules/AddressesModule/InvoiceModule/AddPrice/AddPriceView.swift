@@ -18,8 +18,14 @@ struct AddPriceView: View {
         VStack(spacing: 32) {
             Spacer()
             
-            Button("Price type: \(store.price.wrappedValue.name)") {
+            Button {
                 send(.priceTapped)
+            } label: {
+                SelectPriceRow(
+                    emoji: store.price.wrappedValue.emoji,
+                    title: store.price.wrappedValue.name
+                )
+                .frame(height: 56)
             }
             
             priceTextField
@@ -29,10 +35,12 @@ struct AddPriceView: View {
             saveButton
         }
         .padding([.horizontal, .bottom], 16)
+        .background(.invoiceBackground)
+        .updateBackButton(color: .beanRed)
         .bind($store.focus, to: $focus)
         .sheet(item: $store.scope(state: \.selectPrice, action: \.selectPrice)) { store in
             SelectPriceView(store: store)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(260)])
         }
     }
 }
@@ -119,7 +127,7 @@ private extension AddPriceView {
     AddPriceView(
         store: Store(
             initialState: AddPriceFeature.State(
-                price: Shared(.calculate(value: 58, count: 2))
+                price: Shared(.doubleCalculate(first: .calculate(value: <#T##Double#>, count: <#T##Int#>), second: <#T##Price#>))
             )
         ) {
             AddPriceFeature()
