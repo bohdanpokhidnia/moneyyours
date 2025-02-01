@@ -11,34 +11,30 @@ import ComposableArchitecture
 struct AddPriceFeature {
     @ObservableState
     struct State: Equatable {
-        var selectedPrice: Price
-        var price: Price?
+        var price: Shared<Price>
         var focus: Field? = .price
         var priceText: String
-        var oldCounterText: String = "0"
-        var newCounterText: String = "0"
+        var previouslyCounterText: String = "0"
+        var currentCounterText: String = "0"
         var currency: Currency = .UAH
         var isDisableSaveButton: Bool = true
+        @Presents var selectPrice: SelectPriceFeature.State?
         
         var priceDouble: Double {
             Double(priceText) ?? .zero
         }
         
         var oldCount: Int {
-            Int(oldCounterText) ?? 0
+            Int(previouslyCounterText) ?? 0
         }
         
         var newCount: Int {
-            Int(newCounterText) ?? 0
+            Int(currentCounterText) ?? 0
         }
         
-        init(selectedPrice: Price) {
-            self.selectedPrice = switch selectedPrice {
-            case .fixed: .fixed(value: .zero)
-            case .calculate: .calculate(value: .zero, count: .zero)
-            case .doubleCalculate: .doubleCalculate(first: .calculate(value: .zero, count: .zero), second: .calculate(value: .zero, count: .zero))
-            }
-            priceText = selectedPrice.sumString
+        init(selectedPrice: Shared<Price>) {
+            self.price = selectedPrice
+            priceText = selectedPrice.wrappedValue.sumString
         }
     }
     
@@ -47,9 +43,12 @@ struct AddPriceFeature {
         case updateSaveButtonState
         case view(View)
         case delegate(Delegate)
+        case selectPrice(PresentationAction<SelectPriceFeature.Action>)
+        case selectFocus(field: Field)
     }
     
     enum View {
+        case priceTapped
         case saveButtonTapped
     }
     
@@ -60,7 +59,7 @@ struct AddPriceFeature {
     }
     
     enum Delegate {
-        case select(price: Price)
+        case pop
     }
     
     var body: some ReducerOf<Self> {
@@ -68,13 +67,13 @@ struct AddPriceFeature {
         Reduce { state, action in
             switch action {
             case .binding:
-                switch state.selectedPrice {
+                switch state.price.wrappedValue {
                 case .fixed:
-                    state.price = .fixed(value: state.priceDouble)
+                    state.price.wrappedValue = .fixed(value: state.priceDouble)
                     
                 case .calculate:
                     let different = state.newCount - state.oldCount
-                    state.price = different > .zero ? .calculate(value: state.priceDouble, count: different) : nil
+                    state.price.wrappedValue = different > .zero ? .calculate(value: state.priceDouble, count: different) : state.price.wrappedValue.zero
                     
                 case .doubleCalculate:
                     break
@@ -82,18 +81,35 @@ struct AddPriceFeature {
                 return .send(.updateSaveButtonState)
                 
             case .updateSaveButtonState:
-                state.isDisableSaveButton = (state.price?.sum ?? .zero) <= .zero
+                state.isDisableSaveButton = state.price.wrappedValue.sum == .zero
+                return .none
+                
+            case .view(.priceTapped):
+                state.selectPrice = SelectPriceFeature.State(selectedPrice: state.price)
                 return .none
                 
             case .view(.saveButtonTapped):
-                guard let price = state.price else {
-                    return .none
-                }
-                return .send(.delegate(.select(price: price)))
+                return .send(.delegate(.pop))
                 
             case .delegate:
                 return .none
+                
+            case .selectPrice(.presented(.select)):
+                state.selectPrice = nil
+                return .run { send in
+                    await send(.selectFocus(field: .price))
+                }
+                
+            case .selectPrice:
+                return .none
+                
+            case let .selectFocus(field):
+                state.focus = field
+                return .none
             }
+        }
+        .ifLet(\.$selectPrice, action: \.selectPrice) {
+            SelectPriceFeature()
         }
     }
 }

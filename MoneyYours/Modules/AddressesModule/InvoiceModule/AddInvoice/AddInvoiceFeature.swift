@@ -13,7 +13,7 @@ struct AddInvoiceFeature {
     struct State: Equatable {
         var name: String = CommunalInvoiceType.electricity.name
         var invoiceType: CommunalInvoiceType = .electricity
-        var price: Price = .calculate(value: 0, count: 0)
+        @Shared(.inMemory("addInvoicePrice")) var price: Price = .calculate(value: 0, count: 0)
         var isSaveButtonDisabled: Bool = false
     }
     
@@ -30,7 +30,7 @@ struct AddInvoiceFeature {
     }
     
     enum Delegate {
-        case priceButtonTapped(price: Price)
+        case priceButtonTapped(price: Shared<Price>)
     }
     
     var body: some ReducerOf<Self> {
@@ -47,7 +47,7 @@ struct AddInvoiceFeature {
                 return .none
                 
             case .view(.priceButtonTapped):
-                return .send(.delegate(.priceButtonTapped(price: state.price)))
+                return .send(.delegate(.priceButtonTapped(price: state.$price)))
                 
             case let .updatePrice(price):
                 state.price = price

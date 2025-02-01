@@ -18,12 +18,9 @@ struct AddPriceView: View {
         VStack(spacing: 32) {
             Spacer()
             
-            Picker("Price type", selection: $store.selectedPrice) {
-                ForEach(Price.allCases, id: \.self) { price in
-                    Text(price.name)
-                }
+            Button("Price type: \(store.price.wrappedValue.name)") {
+                send(.priceTapped)
             }
-            .pickerStyle(.segmented)
             
             priceTextField
             
@@ -31,13 +28,17 @@ struct AddPriceView: View {
             
             saveButton
         }
-        .bind($store.focus, to: $focus)
         .padding([.horizontal, .bottom], 16)
+        .bind($store.focus, to: $focus)
+        .sheet(item: $store.scope(state: \.selectPrice, action: \.selectPrice)) { store in
+            SelectPriceView(store: store)
+                .presentationDetents([.height(200)])
+        }
     }
     
     @ViewBuilder
     private var priceTextField: some View {
-        switch store.selectedPrice {
+        switch store.price.wrappedValue {
         case .fixed:
             fixedPriceTextField
             
@@ -78,7 +79,7 @@ struct AddPriceView: View {
                         .foregroundStyle(.starDust)
                         .font(.system(size: 16, weight: .semibold))
                     
-                    PriceTextField(text: $store.oldCounterText)
+                    PriceTextField(text: $store.previouslyCounterText)
                         .keyboardType(.numberPad)
                         .focused($focus, equals: .oldCounter)
                         .font(.price)
@@ -90,7 +91,7 @@ struct AddPriceView: View {
                         .foregroundStyle(.starDust)
                         .font(.system(size: 16, weight: .semibold))
                     
-                    PriceTextField(text: $store.newCounterText)
+                    PriceTextField(text: $store.currentCounterText)
                         .keyboardType(.numberPad)
                         .focused($focus, equals: .newCounter)
                         .font(.price)
@@ -115,7 +116,7 @@ struct AddPriceView: View {
     AddPriceView(
         store: Store(
             initialState: AddPriceFeature.State(
-                selectedPrice: .fixed(value: .zero)
+                selectedPrice: Shared(.fixed(value: .zero))
             )
         ) {
             AddPriceFeature()
