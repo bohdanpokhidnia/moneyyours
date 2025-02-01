@@ -10,13 +10,13 @@ import Foundation
 indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
     case fixed(value: Double)
     case calculate(value: Double, count: Int)
-    case doubleCalculate(first: Price, second: Price)
+    case multi(first: Price, second: Price)
     
     var name: String {
         switch self {
         case .fixed: "Fixed"
         case .calculate: "Calculate"
-        case .doubleCalculate: "Double calculate"
+        case .multi: "Multi"
         }
     }
     
@@ -24,13 +24,23 @@ indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
         switch self {
             case let .fixed(value): value
             case let .calculate(value, count): value * Double(count)
-            case let .doubleCalculate(first, second): first.sum + second.sum
+            case let .multi(first, second): first.sum + second.sum
         }
     }
     
     var sumString: String {
-        let stringSum = String(format: "%.2f", sum)
-        return stringSum
+        let roundingHandler = NSDecimalNumberHandler(
+            roundingMode: .plain,
+            scale: 2,
+            raiseOnExactness: false,
+            raiseOnOverflow: false,
+            raiseOnUnderflow: false,
+            raiseOnDivideByZero: false
+        )
+        let roundedSum = NSDecimalNumber(value: sum)
+            .rounding(accordingToBehavior: roundingHandler)
+        let string = String(format: "%.2f", roundedSum.doubleValue)
+        return string
     }
     
     var isZero: Bool {
@@ -41,33 +51,19 @@ indirect enum Price: Codable, Equatable, Hashable, CaseIterable {
         switch self {
         case .fixed: "📌"
         case .calculate: "🔢"
-        case .doubleCalculate: "🧮"
+        case .multi: "🧮"
         }
     }
     
     static var allCases: [Price] = [
-        .fixed(value: 0),
+        .fixed(value: .zero),
         .calculate(
-            value: 0,
-            count: 0
+            value: .zero,
+            count: .zero
         ),
-        .doubleCalculate(
-            first: .calculate(
-                value: 0,
-                count: 0
-            ),
-            second: .calculate(
-                value: 0,
-                count: 0
-            )
+        .multi(
+            first: .fixed(value: .zero),
+            second: .fixed(value: .zero)
         )
     ]
-    
-    var zero: Self {
-        switch self {
-        case .fixed: .fixed(value: 0)
-        case .calculate: .calculate(value: 0, count: 0)
-        case .doubleCalculate: .doubleCalculate(first: .calculate(value: 0, count: 0), second: .calculate(value: 0, count: 0))
-        }
-    }
 }

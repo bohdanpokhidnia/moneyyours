@@ -15,7 +15,9 @@ struct AddPriceFeature {
         var focus: Field? = .price
         var priceText: String
         var previouslyCounterText: String = "0"
+        var multiPreviouslyCounterText: String = "0"
         var currentCounterText: String = "0"
+        var multiCurrentCounterText: String = "0"
         var currency: Currency = .UAH
         var isDisableSaveButton: Bool = true
         @Presents var selectPrice: SelectPriceFeature.State?
@@ -32,10 +34,23 @@ struct AddPriceFeature {
             Int(currentCounterText) ?? 0
         }
         
+        var multiPreviouslyCounter: Int {
+            Int(multiPreviouslyCounterText) ?? 0
+        }
+        
+        var multiCurrentCounter: Int {
+            Int(multiCurrentCounterText) ?? 0
+        }
+        
         init(price: Shared<Price>) {
-            let afterDotSum = String(price.wrappedValue.sumString.suffix(2))
-            priceText = afterDotSum == "00" ? String(price.wrappedValue.sumString.split(separator: ".").first ?? "0") : price.wrappedValue.sumString
             self.price = price
+            let afterDotSum = String(price.wrappedValue.sumString.suffix(2))
+            
+            priceText = if afterDotSum == "00" {
+                String(price.wrappedValue.sumString.split(separator: ".").first ?? "0")
+            } else {
+                price.wrappedValue.sumString
+            }
         }
     }
     
@@ -74,10 +89,28 @@ struct AddPriceFeature {
                     
                 case .calculate:
                     let different = state.currentCount - state.previouslyCount
-                    state.price.wrappedValue = different > .zero ? .calculate(value: state.priceDouble, count: different) : state.price.wrappedValue.zero
+                    if different > .zero && state.currentCount > state.previouslyCount {
+                        state.price.wrappedValue = .calculate(value: state.priceDouble, count: different)
+                    } else {
+                        state.price.wrappedValue = .calculate(value: .zero, count: .zero)
+                    }
                     
-                case .doubleCalculate:
-                    break
+                case .multi:
+                    let different = state.currentCount - state.previouslyCount
+                    let multiDifferent = state.multiCurrentCounter - state.multiPreviouslyCounter
+                    
+                    if different > .zero &&
+                        multiDifferent > .zero &&
+                        state.currentCount > state.previouslyCount &&
+                        state.multiCurrentCounter > state.multiPreviouslyCounter
+                    {
+                        state.price.wrappedValue = .multi(
+                            first: .calculate(value: state.priceDouble, count: different),
+                            second: .calculate(value: state.priceDouble, count: multiDifferent)
+                        )
+                    } else {
+                        state.price.wrappedValue = .multi(first: .fixed(value: .zero), second: .fixed(value: .zero))
+                    }
                 }
                 return .send(.updateSaveButtonState)
                 

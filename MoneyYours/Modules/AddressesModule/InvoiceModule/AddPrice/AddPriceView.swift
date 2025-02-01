@@ -18,21 +18,10 @@ struct AddPriceView: View {
         VStack(spacing: 32) {
             Spacer()
             
-            Button {
-                send(.priceTapped)
-            } label: {
-                SelectPriceRow(
-                    emoji: store.price.wrappedValue.emoji,
-                    title: store.price.wrappedValue.name
-                )
-                .frame(height: 56)
-            }
-            
-            priceTextField
-            
-            Spacer(minLength: 24)
-            
             saveButton
+        }
+        .overlay(alignment: .top) {
+            contentView
         }
         .padding([.horizontal, .bottom], 16)
         .background(.invoiceBackground)
@@ -46,21 +35,24 @@ struct AddPriceView: View {
 }
 
 private extension AddPriceView {
-    @ViewBuilder
-    private var priceTextField: some View {
-        switch store.price.wrappedValue {
-        case .fixed:
-            simplePriceTextField
+    private var contentView: some View {
+        VStack(spacing: 32) {
+            Button {
+                send(.priceTapped)
+            } label: {
+                SelectPriceRow(
+                    emoji: store.price.wrappedValue.emoji,
+                    title: store.price.wrappedValue.name
+                )
+            }
             
-        case .calculate:
-            calculatePriceView
+            priceTextField
             
-        case .doubleCalculate:
-            Text("Double")
+            additionalFields
         }
     }
     
-    private var simplePriceTextField: some View {
+    private var priceTextField: some View {
         VStack(spacing: 8) {
             Text("Sum")
                 .foregroundStyle(.slateGrey)
@@ -85,27 +77,66 @@ private extension AddPriceView {
         }
     }
     
+    @ViewBuilder
+    private var additionalFields: some View {
+        switch store.price.wrappedValue {
+        case .fixed:
+            EmptyView()
+            
+        case .calculate:
+            calculatePriceView
+            
+        case .multi:
+            multiPriceView
+        }
+    }
+    
     private var calculatePriceView: some View {
-        VStack(spacing: 32) {
-            simplePriceTextField
+        HStack(spacing: 16) {
+            TitleTextField(
+                title: "Previously count",
+                placeholder: "Value",
+                text: $store.previouslyCounterText
+            )
+            .onChange(of: store.previouslyCounterText) { _, newValue in
+                store.previouslyCounterText = newValue.formatted(.priceInput)
+            }
+            
+            TitleTextField(
+                title: "Current count",
+                placeholder: "Value",
+                text: $store.currentCounterText
+            )
+            .onChange(of: store.currentCounterText) { _, newValue in
+                store.currentCounterText = newValue.formatted(.priceInput)
+            }
+        }
+        .keyboardType(.numberPad)
+    }
+    
+    private var multiPriceView: some View {
+        VStack(spacing: 16) {
+            calculatePriceView
+            
+            Divider()
             
             HStack(spacing: 16) {
                 TitleTextField(
-                    title: "Previously",
+                    title: "Previously count",
                     placeholder: "Value",
-                    text: $store.previouslyCounterText
+                    text: $store.multiPreviouslyCounterText
                 )
-                .onChange(of: store.previouslyCounterText) { _, newValue in
-                    store.previouslyCounterText = newValue.formatted(.priceInput)
+                .onChange(of: store.multiPreviouslyCounterText) { _, newValue in
+                    store.multiPreviouslyCounterText = newValue.formatted(.priceInput)
                 }
                 
                 TitleTextField(
-                    title: "Current",
+                    title: "Current count",
                     placeholder: "Value",
-                    text: $store.currentCounterText
+                    text: $store.multiCurrentCounterText
                 )
-                .onChange(of: store.currentCounterText) { _, newValue in
-                    store.currentCounterText = newValue.formatted(.priceInput)
+                .onChange(of: store.multiCurrentCounterText) { _, newValue in
+                    store.multiCurrentCounterText = newValue.formatted(.priceInput)
                 }
             }
             .keyboardType(.numberPad)
@@ -127,7 +158,12 @@ private extension AddPriceView {
     AddPriceView(
         store: Store(
             initialState: AddPriceFeature.State(
-                price: Shared(.doubleCalculate(first: .calculate(value: <#T##Double#>, count: <#T##Int#>), second: <#T##Price#>))
+                price: Shared(
+                    .multi(
+                        first: .calculate(value: 10, count: 1),
+                        second: .calculate(value: 10, count: 1)
+                    )
+                )
             )
         ) {
             AddPriceFeature()
