@@ -8,9 +8,6 @@
 import Foundation
 
 struct UkrainianHryvniaFormatStyle: FormatStyle {
-    typealias FormatInput = Double
-    typealias FormatOutput = String
-
     func format(_ value: Double) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency

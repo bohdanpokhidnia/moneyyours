@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct PriceInputFormatStyle: FormatStyle {
-    typealias FormatInput = String
-    typealias FormatOutput = String
-    
     func format(_ value: String) -> String {
         var filtered = value.replacingOccurrences(of: ",", with: ".")
         
