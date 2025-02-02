@@ -43,7 +43,7 @@ struct AddInvoiceView: View {
                             title: "Price",
                             emoji: "💵",
                             emojiBackground: Color(hex: "#D4EFDF"),
-                            inputType: .text("\(store.price.sumString)")
+                            inputType: .text(store.price.sum.formatted(.ukrainianHryvnia))
                         )
                     }
                 }
@@ -56,7 +56,7 @@ struct AddInvoiceView: View {
             .buttonStyle(
                 BottomActionButtonStyle(fillColor: .beanRed)
             )
-            .disabled(store.isSaveButtonDisabled)
+            .disabled(store.isDisableSaveButton)
             .padding([.bottom, .horizontal], 16)
         }
         .ignoresSafeArea(edges: [.top])

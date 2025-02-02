@@ -14,13 +14,13 @@ struct AddInvoiceFeature {
         var name: String = CommunalInvoiceType.electricity.name
         var invoiceType: CommunalInvoiceType = .electricity
         @Shared(.inMemory("addInvoicePrice")) var price: Price = .calculate(value: 0, count: 0)
-        var isSaveButtonDisabled: Bool = false
+        var isDisableSaveButton: Bool = true
     }
     
     enum Action: BindableAction, ViewAction {
         case binding(BindingAction<State>)
         case view(View)
-        case updatePrice(_ price: Price)
+        case updateSaveButtonState
         case delegate(Delegate)
     }
     
@@ -38,12 +38,10 @@ struct AddInvoiceFeature {
     
     var body: some ReducerOf<Self> {
         BindingReducer()
-        
         Reduce { state, action in
             switch action {
             case .binding:
-                state.isSaveButtonDisabled = state.name.trimmingCharacters(in: .whitespaces).isEmpty
-                return .none
+                return .send(.updateSaveButtonState)
                 
             case .view(.backButtonTapped):
                 return .run { _ in
@@ -57,8 +55,10 @@ struct AddInvoiceFeature {
             case .view(.priceButtonTapped):
                 return .send(.delegate(.priceButtonTapped(price: state.$price)))
                 
-            case let .updatePrice(price):
-                state.price = price
+            case .updateSaveButtonState:
+                let isEmptyName = state.name.trimmingCharacters(in: .whitespaces).isEmpty
+                let isZeroPrice = state.$price.wrappedValue.isZero
+                state.isDisableSaveButton = isEmptyName || isZeroPrice
                 return .none
                 
             case .delegate:

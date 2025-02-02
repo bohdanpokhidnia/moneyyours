@@ -89,7 +89,17 @@ struct AddressesFeature {
                 
             case let .path(.element(id: id, action: .addPrice(.delegate(.pop)))):
                 state.path.pop(from: id)
-                return .none
+                guard let addInvoiceId = state.path.firstIndex(where: { $0.is(\.addInvoice) }) else {
+                    return .none
+                }
+                return .send(
+                    .path(
+                        .element(
+                            id: state.path.ids[addInvoiceId],
+                            action: .addInvoice(.updateSaveButtonState)
+                        )
+                    )
+                )
                 
             case .path(.element(id: _, action: .addressSettings(.delegate(.popToRoot)))):
                 state.path.removeAll()
