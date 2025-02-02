@@ -25,6 +25,7 @@ struct AddInvoiceFeature {
     }
     
     enum View {
+        case backButtonTapped
         case saveButtonTapped
         case priceButtonTapped
     }
@@ -32,6 +33,8 @@ struct AddInvoiceFeature {
     enum Delegate {
         case priceButtonTapped(price: Shared<Price>)
     }
+    
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -41,6 +44,11 @@ struct AddInvoiceFeature {
             case .binding:
                 state.isSaveButtonDisabled = state.name.trimmingCharacters(in: .whitespaces).isEmpty
                 return .none
+                
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
                 
             case .view(.saveButtonTapped):
                 print("Save: \(state.name)\n\(state.invoiceType.name)\n\(state.price.name)\n\(state.price.sumString)")

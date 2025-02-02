@@ -38,9 +38,19 @@ struct ArchivedAddressesView: View {
         .onAppear {
             send(.onAppear)
         }
-        .updateBackButton(color: .white)
         .ignoresSafeArea(edges: .top)
         .background(.appBackground)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.white)
+                }
+            }
+        }
         .alert($store.scope(state: \.returnAlert, action: \.returnAlert))
     }
 }

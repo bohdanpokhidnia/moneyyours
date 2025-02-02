@@ -61,7 +61,17 @@ struct AddInvoiceView: View {
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
-        .updateBackButton(color: .white)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.white)
+                }
+            }
+        }
     }
 }
 

@@ -25,11 +25,21 @@ struct AddPriceView: View {
         }
         .padding([.horizontal, .bottom], 16)
         .background(.invoiceBackground)
-        .updateBackButton(color: .beanRed)
         .bind($store.focus, to: $focus)
         .sheet(item: $store.scope(state: \.selectPrice, action: \.selectPrice)) { store in
             SelectPriceView(store: store)
                 .presentationDetents([.height(260)])
+        }
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.beanRed)
+                }
+            }
         }
     }
 }

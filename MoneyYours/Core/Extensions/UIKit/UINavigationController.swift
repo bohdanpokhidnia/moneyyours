@@ -8,9 +8,9 @@
 import UIKit
 
 extension UINavigationController {
-    open override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    open override func viewDidLoad() {
+        super.viewDidLoad()
         
-        navigationBar.backItem?.backButtonTitle = ""
+        interactivePopGestureRecognizer?.delegate = nil
     }
 }

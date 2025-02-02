@@ -22,6 +22,7 @@ struct AddAddressFeature {
         case delegate(Delegate)
         
         enum View {
+            case backButtonTapped
             case saveButtonTapped
         }
         
@@ -33,6 +34,7 @@ struct AddAddressFeature {
     
     @Dependency(\.uuid) var uuid
     @Dependency(\.databaseClient) var databaseClient
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -44,6 +46,11 @@ struct AddAddressFeature {
                 
             case .binding:
                 return .none
+                
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
                 
             case .view(.saveButtonTapped):
                 let address = Address(

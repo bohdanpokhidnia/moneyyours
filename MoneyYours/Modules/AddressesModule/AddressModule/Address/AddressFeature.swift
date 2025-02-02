@@ -24,6 +24,7 @@ struct AddressFeature {
         case delegate(Delegate)
         
         enum View {
+            case backButtonTapped
             case settingsButtonTapped
             case addInvoiceButtonTapped
         }
@@ -35,9 +36,16 @@ struct AddressFeature {
         }
     }
     
+    @Dependency(\.dismiss) var dismiss
+    
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
+                
             case .view(.settingsButtonTapped):
                 return .send(.delegate(.settings(address: state.address)))
                 

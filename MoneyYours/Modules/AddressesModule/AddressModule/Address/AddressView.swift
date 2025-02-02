@@ -48,9 +48,18 @@ struct AddressView: View {
             .padding(.bottom, 16)
         }
         .ignoresSafeArea(edges: [.top])
-        .updateBackButton(color: .white)
         .background(.appBackground)
+        .navigationBarBackButtonHidden()
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.white)
+                }
+            }
+            
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     send(.settingsButtonTapped)

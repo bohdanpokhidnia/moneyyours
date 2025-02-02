@@ -46,16 +46,28 @@ struct AddAddressView: View {
             .disabled(store.isDisableSaveButton)
         }
         .background(.appBackgroundSecondary)
-        .updateBackButton(color: .beanRed)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                        .tint(.beanRed)
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    AddAddressView(
-        store: Store(
-            initialState: AddAddressFeature.State()
-        ) {
-            AddAddressFeature()
-        }
-    )
+    NavigationStack {
+        AddAddressView(
+            store: Store(
+                initialState: AddAddressFeature.State()
+            ) {
+                AddAddressFeature()
+            }
+        )
+    }
 }

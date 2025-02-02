@@ -64,6 +64,7 @@ struct AddPriceFeature {
     }
     
     enum View {
+        case backButtonTapped
         case priceTapped
         case saveButtonTapped
     }
@@ -77,6 +78,8 @@ struct AddPriceFeature {
     enum Delegate {
         case pop
     }
+    
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -117,6 +120,11 @@ struct AddPriceFeature {
             case .updateSaveButtonState:
                 state.isDisableSaveButton = state.price.wrappedValue.sum == .zero
                 return .none
+                
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
                 
             case .view(.priceTapped):
                 state.selectPrice = SelectPriceFeature.State(selectedPrice: state.price)

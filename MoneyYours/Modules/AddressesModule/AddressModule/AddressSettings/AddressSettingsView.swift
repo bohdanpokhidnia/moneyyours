@@ -69,7 +69,16 @@ struct AddressSettingsView: View {
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
-        .updateBackButton(color: .white)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    send(.backButtonTapped)
+                } label: {
+                    Image(systemName: "arrow.backward")
+                }
+            }
+        }
         .alert($store.scope(state: \.destination?.removeAlert, action: \.destination.removeAlert))
         .alert($store.scope(state: \.destination?.archiveAlert, action: \.destination.archiveAlert))
     }

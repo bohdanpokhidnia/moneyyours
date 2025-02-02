@@ -15,16 +15,6 @@ extension View {
         return safeArea
     }
     
-    func updateBackButton(color: Color) -> some View {
-        let image = UIImage(systemName: "arrow.backward")?
-            .withRenderingMode(.alwaysOriginal)
-            .withTintColor(UIColor(color))
-        
-        UINavigationBar.appearance().backIndicatorImage = image
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = image
-        return self
-    }
-    
     func setupNavigationTransparent() -> some View {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()

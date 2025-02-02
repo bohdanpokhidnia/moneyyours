@@ -38,7 +38,6 @@ struct InvoiceSelectionListView: View {
             .scrollBounceBehavior(.basedOnSize)
         }
         .ignoresSafeArea(.container, edges: [.top])
-        .updateBackButton(color: .white)
         .background(.appBackground)
         .onAppear {
             store.send(.onAppear)

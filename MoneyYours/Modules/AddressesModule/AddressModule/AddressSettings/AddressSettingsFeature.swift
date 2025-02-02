@@ -22,6 +22,7 @@ struct AddressSettingsFeature {
         case destination(PresentationAction<Destination.Action>)
         
         enum View {
+            case backButtonTapped
             case removeButtonTapped
             case addToArchiveButtonTapped
             case saveButtonTapped
@@ -50,6 +51,7 @@ struct AddressSettingsFeature {
     }
     
     @Dependency(\.databaseClient) var databaseClient
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -58,6 +60,11 @@ struct AddressSettingsFeature {
             case .binding(\.address):
                 state.address.name = state.address.name.trimmingCharacters(in: .whitespaces)
                 return .none
+                
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
                 
             case .view(.removeButtonTapped):
                 let addressName = state.address.name

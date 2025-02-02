@@ -24,6 +24,7 @@ struct ArchivedAddressesFeature {
         
         enum View {
             case onAppear
+            case backButtonTapped
             case addressButtonTapped(address: Address)
         }
         
@@ -38,6 +39,7 @@ struct ArchivedAddressesFeature {
     }
     
     @Dependency(\.databaseClient) var databaseClient
+    @Dependency(\.dismiss) var dismiss
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -57,6 +59,11 @@ struct ArchivedAddressesFeature {
                     print("[dev] \(error.description)")
                 }
                 return .none
+                
+            case .view(.backButtonTapped):
+                return .run { _ in
+                    await dismiss()
+                }
             
             case let .view(.addressButtonTapped(address)):
                 state.returnAlert = .moveFromArchiveAlert(address: address)
