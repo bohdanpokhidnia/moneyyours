@@ -6,14 +6,16 @@
 //
 
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct AddInvoiceFeature {
     @ObservableState
     struct State: Equatable {
         var name: String = CommunalInvoiceType.electricity.name
+        var month: Shared<Month>
         var invoiceType: CommunalInvoiceType = .electricity
-        @Shared(.inMemory("addInvoicePrice")) var price: Price = .calculate(value: 0, count: 0)
+        @Shared(.inMemory("AddInvoicePrice")) var price: Price = .calculate(value: 0, count: 0)
         var isDisableSaveButton: Bool = true
     }
     
@@ -26,11 +28,13 @@ struct AddInvoiceFeature {
     
     enum View {
         case backButtonTapped
-        case saveButtonTapped
+        case monthButtonTapped
         case priceButtonTapped
+        case saveButtonTapped
     }
     
     enum Delegate {
+        case monthButtonTapped(month: Shared<Month>)
         case priceButtonTapped(price: Shared<Price>)
     }
     
@@ -48,12 +52,15 @@ struct AddInvoiceFeature {
                     await dismiss()
                 }
                 
-            case .view(.saveButtonTapped):
-                print("Save: \(state.name)\n\(state.invoiceType.name)\n\(state.price.name)\n\(state.price.sumString)")
-                return .none
+            case .view(.monthButtonTapped):
+                return .send(.delegate(.monthButtonTapped(month: state.month)))
                 
             case .view(.priceButtonTapped):
                 return .send(.delegate(.priceButtonTapped(price: state.$price)))
+                
+            case .view(.saveButtonTapped):
+                print("Save: \(state.name)\n\(state.month.name)\n\(state.invoiceType.name)\n\(state.price.sumString)")
+                return .none
                 
             case .updateSaveButtonState:
                 let isEmptyName = state.name.trimmingCharacters(in: .whitespaces).isEmpty

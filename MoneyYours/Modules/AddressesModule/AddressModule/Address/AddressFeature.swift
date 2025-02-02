@@ -32,11 +32,12 @@ struct AddressFeature {
         @CasePathable
         enum Delegate {
             case settings(address: Address)
-            case addInvoice
+            case addInvoice(month: Month)
         }
     }
     
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.monthService) var monthService
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -50,7 +51,13 @@ struct AddressFeature {
                 return .send(.delegate(.settings(address: state.address)))
                 
             case .view(.addInvoiceButtonTapped):
-                return .send(.delegate(.addInvoice))
+                do throws(MonthServiceError) {
+                    let currentMonth = try monthService.month(Calendar.current, Date.now)
+                    return .send(.delegate(.addInvoice(month: currentMonth)))
+                } catch {
+                    print("[dev] \(error)")
+                    return .none
+                }
                 
             case .delegate:
                 return .none

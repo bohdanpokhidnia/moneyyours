@@ -12,6 +12,9 @@ extension MonthService {
         Self(
             month: { _, _  in
                 return .january
+            },
+            sortedMonthAtCurrent: { _, _ in
+                return Month.allCases
             }
         )
     }

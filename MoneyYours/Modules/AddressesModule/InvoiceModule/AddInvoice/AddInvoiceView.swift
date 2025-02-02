@@ -13,42 +13,49 @@ struct AddInvoiceView: View {
     @Bindable var store: StoreOf<AddInvoiceFeature>
     
     var body: some View {
-        VStack(spacing: 0) {
-            TitleGradientHeaderView(
-                title: "Add invoice",
-                configuration: GradientHeaderConfiguration(presetColors: .addresses)
-            )
-            .frame(height: 147)
-            
-            ScrollView {
-                VStack(spacing: 16) {
+        ScrollableGradientHeaderView(
+            title: "Add invoice",
+            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+        ) {
+            VStack(spacing: 16) {
+                EmojiFieldView(
+                    title: "Invoice name",
+                    emoji: "🧾",
+                    emojiBackground: Color(hex: "#F5F5F5"),
+                    inputType: .textFiled(text: $store.name)
+                )
+                
+                EmojiFieldView(
+                    title: "Invoice type",
+                    emoji: store.invoiceType.emoji,
+                    emojiBackground: store.invoiceType.emojiBackground,
+                    inputType: .text(store.invoiceType.name)
+                )
+                
+                Button {
+                    send(.monthButtonTapped)
+                } label: {
                     EmojiFieldView(
-                        title: "Invoice name",
-                        emoji: "🧾",
-                        emojiBackground: Color(hex: "#F5F5F5"),
-                        inputType: .textFiled(text: $store.name)
+                        title: "Month",
+                        emoji: store.month.wrappedValue.emoji,
+                        emojiBackground: store.month.wrappedValue.color,
+                        inputType: .text(store.month.wrappedValue.name)
                     )
-                    
-                    EmojiFieldView(
-                        title: "Invoice type",
-                        emoji: store.invoiceType.emoji,
-                        emojiBackground: store.invoiceType.emojiBackground,
-                        inputType: .text(store.invoiceType.name)
-                    )
-                    
-                    Button {
-                        send(.priceButtonTapped)
-                    } label: {
-                        EmojiFieldView(
-                            title: "Price",
-                            emoji: "💵",
-                            emojiBackground: Color(hex: "#D4EFDF"),
-                            inputType: .text(store.price.sum.formatted(.ukrainianHryvnia))
-                        )
-                    }
                 }
-                .padding(16)
+                
+                Button {
+                    send(.priceButtonTapped)
+                } label: {
+                    EmojiFieldView(
+                        title: "Price",
+                        emoji: "💵",
+                        emojiBackground: Color(hex: "#D4EFDF"),
+                        inputType: .text(store.price.sum.formatted(.ukrainianHryvnia))
+                    )
+                }
             }
+            .padding(16)
+            .lightThemeShadow()
             
             Button("Save") {
                 send(.saveButtonTapped)
@@ -57,7 +64,8 @@ struct AddInvoiceView: View {
                 BottomActionButtonStyle(fillColor: .beanRed)
             )
             .disabled(store.isDisableSaveButton)
-            .padding([.bottom, .horizontal], 16)
+            .frame(height: 56)
+            .padding(16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
@@ -79,7 +87,7 @@ struct AddInvoiceView: View {
     NavigationStack {
         AddInvoiceView(
             store: Store(
-                initialState: AddInvoiceFeature.State(),
+                initialState: AddInvoiceFeature.State(month: Shared(.january)),
                 reducer: {
                     AddInvoiceFeature()
                 }

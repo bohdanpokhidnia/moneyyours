@@ -37,7 +37,7 @@ struct AddressesFeature {
         case archivedAddresses(ArchivedAddressesFeature)
         case addInvoice(AddInvoiceFeature)
         case addPrice(AddPriceFeature)
-        case monthInvoicesList(MonthInvoicesList)
+        case selectMonth(SelectMonthFeature)
         case invoiceSelectionList(InvoiceSelectionList)
     }
     
@@ -79,12 +79,20 @@ struct AddressesFeature {
                 state.path.append(.addressSettings(AddressSettingsFeature.State(address: address)))
                 return .none
                 
-            case .path(.element(id: _, action: .address(.delegate(.addInvoice)))):
-                state.path.append(.addInvoice(AddInvoiceFeature.State()))
+            case let .path(.element(id: _, action: .address(.delegate(.addInvoice(month))))):
+                state.path.append(.addInvoice(AddInvoiceFeature.State(month: Shared(month))))
+                return .none
+                
+            case let .path(.element(id: _, action: .addInvoice(.delegate(.monthButtonTapped(month))))):
+                state.path.append(.selectMonth(SelectMonthFeature.State(selectedMonth: month)))
                 return .none
                 
             case let .path(.element(id: _, action: .addInvoice(.delegate(.priceButtonTapped(price))))):
                 state.path.append(.addPrice(AddPriceFeature.State(price: price)))
+                return .none
+                
+            case let .path(.element(id: id, action: .selectMonth(.delegate(.pop)))):
+                state.path.pop(from: id)
                 return .none
                 
             case let .path(.element(id: id, action: .addPrice(.delegate(.pop)))):

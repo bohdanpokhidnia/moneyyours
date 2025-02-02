@@ -9,4 +9,5 @@ import Foundation
 
 struct MonthService {
     var month: (Calendar, Date) throws(MonthServiceError) -> Month
+    var sortedMonthAtCurrent: (Calendar, Date) throws(MonthServiceError) -> [Month]
 }

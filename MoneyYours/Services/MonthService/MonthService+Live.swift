@@ -16,6 +16,15 @@ extension MonthService: DependencyKey {
                     throw .invalidMonthNumber
                 }
                 return month
+            },
+            sortedMonthAtCurrent: { calendar, date throws(MonthServiceError) in
+                let allMonths = Month.allCases
+                let currentMonth = try Self.liveValue.month(calendar, date)
+                guard let startIndex = allMonths.firstIndex(of: currentMonth) else {
+                    return allMonths
+                }
+                let sortedMonths = Array(allMonths[startIndex...]) + Array(allMonths[..<startIndex])
+                return sortedMonths
             }
         )
     }

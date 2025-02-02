@@ -87,5 +87,4 @@ struct EmojiFieldView: View {
         )
     }
     .padding(.horizontal, 16)
-    .background(.gray)
 }

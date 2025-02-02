@@ -59,8 +59,8 @@ struct AddressesView: View {
             case let .addPrice(store):
                 AddPriceView(store: store)
                 
-            case let .monthInvoicesList(store):
-                MonthInvoicesListView(store: store)
+            case let .selectMonth(store):
+                SelectMonthView(store: store)
                 
             case let .invoiceSelectionList(store):
                 InvoiceSelectionListView(store: store)
@@ -112,7 +112,9 @@ struct AddressesView: View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
                 ForEach(store.addresses) { address in
-                    NavigationLink(state: AddressesFeature.Path.State.address(AddressFeature.State(address: address))) {
+                    NavigationLink(
+                        state: AddressesFeature.Path.State.address(AddressFeature.State(address: address))
+                    ) {
                         Text(address.name)
                     }
                     .buttonStyle(
