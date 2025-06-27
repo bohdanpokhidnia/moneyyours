@@ -6,10 +6,6 @@
 	objectVersion = 70;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		F7907E282D07823600B59A8E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = F7907E272D07823600B59A8E /* ComposableArchitecture */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		F708116A2C198AC700257CFE /* MoneyYours.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoneyYours.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,7 +19,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7907E282D07823600B59A8E /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,7 +61,6 @@
 			);
 			name = MoneyYours;
 			packageProductDependencies = (
-				F7907E272D07823600B59A8E /* ComposableArchitecture */,
 			);
 			productName = MoneyYours;
 			productReference = F708116A2C198AC700257CFE /* MoneyYours.app */;
@@ -97,7 +91,6 @@
 			);
 			mainGroup = F70811612C198AC700257CFE;
 			packageReferences = (
-				F7907E262D07823600B59A8E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = F708116B2C198AC700257CFE /* Products */;
 			projectDirPath = "";
@@ -340,25 +333,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F7907E262D07823600B59A8E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = exactVersion;
-				version = 1.16.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F7907E272D07823600B59A8E /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F7907E262D07823600B59A8E /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F70811622C198AC700257CFE /* Project object */;
 }

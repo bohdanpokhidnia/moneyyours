@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct DatabaseClient {
-    let addressDatabase: AddressDatabase
-}
+//struct DatabaseClient {
+//    let addressDatabase: AddressDatabase
+//}

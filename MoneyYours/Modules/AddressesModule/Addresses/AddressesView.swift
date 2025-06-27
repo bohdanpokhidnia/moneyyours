@@ -6,14 +6,10 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
 
-@ViewAction(for: AddressesFeature.self)
 struct AddressesView: View {
-    @Bindable var store: StoreOf<AddressesFeature>
-    
     var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+        NavigationStack {
             VStack(alignment: .leading, spacing: 0) {
                 GradientHeaderView(
                     configuration: GradientHeaderConfiguration(presetColors: .addresses)
@@ -37,34 +33,35 @@ struct AddressesView: View {
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
             .onAppear {
-                send(.onAppear)
+                
             }
-        } destination: { (store) in
-            switch store.case {
-            case let .addAddress(store):
-                AddAddressView(store: store)
-                
-            case let .address(store):
-                AddressView(store: store)
-                
-            case let .addressSettings(store):
-                AddressSettingsView(store: store)
-                
-            case let .archivedAddresses(store):
-                ArchivedAddressesView(store: store)
-                
-            case let .addInvoice(store):
-                AddInvoiceView(store: store)
-                
-            case let .addPrice(store):
-                AddPriceView(store: store)
-                
-            case let .selectMonth(store):
-                SelectMonthView(store: store)
-                
-            case let .invoiceSelectionList(store):
-                InvoiceSelectionListView(store: store)
-            }
+        }
+//        destination: { (store) in
+//            switch store.case {
+//            case let .addAddress(store):
+//                AddAddressView(store: store)
+//                
+//            case let .address(store):
+//                AddressView(store: store)
+//                
+//            case let .addressSettings(store):
+//                AddressSettingsView(store: store)
+//                
+//            case let .archivedAddresses(store):
+//                ArchivedAddressesView(store: store)
+//                
+//            case let .addInvoice(store):
+//                AddInvoiceView(store: store)
+//                
+//            case let .addPrice(store):
+//                AddPriceView(store: store)
+//                
+//            case let .selectMonth(store):
+//                SelectMonthView(store: store)
+//                
+//            case let .invoiceSelectionList(store):
+//                InvoiceSelectionListView(store: store)
+//            }
         }
     }
     
@@ -78,7 +75,7 @@ struct AddressesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 Button("Add address") {
-                    send(.addButtonTapped)
+                    
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -88,7 +85,7 @@ struct AddressesView: View {
                 )
                 
                 Button("Archive") {
-                    send(.archiveButtonTapped)
+                    
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -111,33 +108,33 @@ struct AddressesView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-                ForEach(store.addresses) { address in
-                    NavigationLink(
-                        state: AddressesFeature.Path.State.address(AddressFeature.State(address: address))
-                    ) {
-                        Text(address.name)
-                    }
-                    .buttonStyle(
-                        EmojiRowButtonStyle(
-                            emoji: "🗂️",
-                            emojiBackground: .paleBlueLily
-                        )
-                    )
-                }
-            }
-            .padding(.horizontal, 16)
+//                ForEach(store.addresses) { address in
+//                    NavigationLink(
+//                       
+//                    ) {
+//                        Text(address.name)
+//                    }
+//                    .buttonStyle(
+//                        EmojiRowButtonStyle(
+//                            emoji: "🗂️",
+//                            emojiBackground: .paleBlueLily
+//                        )
+//                    )
+//                }
+//            }
+//            .padding(.horizontal, 16)
         }
         .scrollBounceBehavior(.basedOnSize)
         .lightThemeShadow()
     }
 }
-
-#Preview {
-    NavigationStack {
-        AddressesView(
-            store: Store(initialState: AddressesFeature.State(addresses: .preview)) {
-                AddressesFeature()
-            }
-        )
-    }
-}
+//
+//#Preview {
+//    NavigationStack {
+//        AddressesView(
+//            store: Store(initialState: AddressesFeature.State(addresses: .preview)) {
+//                AddressesFeature()
+//            }
+//        )
+//    }
+//}

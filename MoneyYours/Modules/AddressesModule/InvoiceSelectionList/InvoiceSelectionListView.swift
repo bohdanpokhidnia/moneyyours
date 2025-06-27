@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
 
 struct InvoiceSelectionListView: View {
-    @Bindable var store: StoreOf<InvoiceSelectionList>
-    
     var body: some View {
         VStack(spacing: 0) {
             TitleGradientHeaderView(
@@ -21,17 +18,17 @@ struct InvoiceSelectionListView: View {
             
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 16) {
-                    ForEach(store.invoices) { (invoice) in
-                        Button(invoice.type.name) {
-                            store.send(.select(invoice))
-                        }
-                        .buttonStyle(
-                            SelectInvoiceButtonStyle(
-                                emoji: invoice.type.emoji,
-                                emojiBackground: invoice.type.emojiBackground
-                            )
-                        )
-                    }
+//                    ForEach(store.invoices) { (invoice) in
+//                        Button(invoice.type.name) {
+//                            store.send(.select(invoice))
+//                        }
+//                        .buttonStyle(
+//                            SelectInvoiceButtonStyle(
+//                                emoji: invoice.type.emoji,
+//                                emojiBackground: invoice.type.emojiBackground
+//                            )
+//                        )
+//                    }
                 }
                 .padding(16)
             }
@@ -40,7 +37,7 @@ struct InvoiceSelectionListView: View {
         .ignoresSafeArea(.container, edges: [.top])
         .background(.appBackground)
         .onAppear {
-            store.send(.onAppear)
+//            store.send(.onAppear)
         }
     }
 }

@@ -5,7 +5,6 @@
 //  Created by Bohdan Pokhidnia on 16.06.2024.
 //
 
-import ComposableArchitecture
 import Foundation
 
 struct CommunalInvoice: Identifiable, Equatable, Codable {
@@ -24,8 +23,8 @@ struct CommunalInvoice: Identifiable, Equatable, Codable {
     )
 }
 
-extension IdentifiedArrayOf where Element == CommunalInvoice {
-    static var preview: IdentifiedArrayOf<CommunalInvoice> {
+extension Array where Element == CommunalInvoice {
+    static var preview: [CommunalInvoice] {
         [
             .preview
         ]

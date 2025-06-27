@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension DatabaseClient {
-    static var previewValue = DatabaseClient(
-        addressDatabase: try! AddressDatabase(useInMemoryStore: true)
-    )
-}
+//extension DatabaseClient {
+//    static var previewValue = DatabaseClient(
+//        addressDatabase: try! AddressDatabase(useInMemoryStore: true)
+//    )
+//}

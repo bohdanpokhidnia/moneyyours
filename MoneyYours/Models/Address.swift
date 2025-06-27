@@ -5,31 +5,31 @@
 //  Created by Bohdan Pokhidnia on 12.06.2024.
 //
 
-import ComposableArchitecture
-import Foundation
-import SwiftData
 
-@Model
-class Address: Identifiable, Equatable {
-    @Attribute(.unique)
+import Foundation
+//import SwiftData
+
+//@Model
+struct Address: Identifiable, Equatable {
+//    @Attribute(.unique)
     var id: UUID
     var name: String
-    var communalInvoices: IdentifiedArrayOf<CommunalInvoice>
+    var communalInvoices: [CommunalInvoice]
     var state: AddressState
     
-    init(
-        id: UUID,
-        name: String,
-        communalInvoices: IdentifiedArrayOf<CommunalInvoice>,
-        state: AddressState
-    ) {
-        self.id = id
-        self.name = name
-        self.communalInvoices = communalInvoices
-        self.state = state
-    }
+//    init(
+//        id: UUID,
+//        name: String,
+//        communalInvoices: IdentifiedArrayOf<CommunalInvoice>,
+//        state: AddressState
+//    ) {
+//        self.id = id
+//        self.name = name
+//        self.communalInvoices = communalInvoices
+//        self.state = state
+//    }
     
-    @Transient
+//    @Transient
     static let preview = Address(
         id: UUID(),
         name: "Preview Address",
@@ -37,7 +37,7 @@ class Address: Identifiable, Equatable {
         state: .active
     )
     
-    @Transient
+//    @Transient
     static let archivedAddress = Address(
         id: UUID(),
         name: "Archived Address",
@@ -46,8 +46,8 @@ class Address: Identifiable, Equatable {
     )
 }
 
-extension IdentifiedArrayOf where Element == Address {
-    static var preview: IdentifiedArrayOf<Address> {
+extension Array where Element == Address {
+    static var preview: [Address] {
         [
             .preview
         ]
