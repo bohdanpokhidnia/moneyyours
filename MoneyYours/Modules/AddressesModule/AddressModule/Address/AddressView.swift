@@ -19,25 +19,25 @@ struct AddressView: View {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
                 
-                Button("Add invoice") {
-                    viewModel.addInvoiceButtonTapped()
-                }
-                .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
-                .tint(.black)
-                .padding(16)
+//                Button("Add month") {
+////                    viewModel.addInvoiceButtonTapped()
+//                }
+//                .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
+//                .tint(.black)
+//                .padding(16)
                 
-                ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
-                    Text(communalInvoiceList.year.description)
+                ForEach(viewModel.monthLists) { monthList in
+                    Text(monthList.year.description)
                         .frame(maxWidth: .infinity)
                     
-                    ForEach(communalInvoiceList.communalInvoices) { communalInvoice in
-                        Button(communalInvoice.month.name) {
-                            print("[dev] tapped at \(communalInvoice)")
+                    ForEach(monthList.months) { month in
+                        Button(month.name) {
+                            print("[dev] tapped at \(month.name)")
                         }
                         .buttonStyle(
                             EmojiRowButtonStyle(
-                                emoji: communalInvoice.month.emoji,
-                                emojiBackground: communalInvoice.month.color
+                                emoji: month.emoji,
+                                emojiBackground: month.color
                             )
                         )
                     }
@@ -60,10 +60,20 @@ struct AddressView: View {
             }
             
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundStyle(.white)
+                HStack(spacing: 8) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                            .foregroundStyle(.white)
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundStyle(.white)
+                    }
                 }
             }
         }
@@ -76,11 +86,11 @@ private extension AddressView {
     private var subtitleText: some View {
         HStack {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Invoices")
+                Text("Months")
                     .font(.system(size: 19, weight: .bold))
                     .foregroundStyle(.primaryText)
                 
-                Text("Add invoices for billing")
+                Text("Add month for billing")
                     .foregroundStyle(.starDust)
                     .font(.system(size: 14, weight: .regular))
             }

@@ -9,10 +9,10 @@ import SharingGRDB
 import SwiftUI
 
 final class AddressViewModel: ObservableObject {
-    struct CommunalInvoiceList: Identifiable {
+    struct MonthList: Identifiable {
         var id: Int { year }
         let year: Int
-        let communalInvoices: [CommunalInvoice]
+        let months: [Month]
     }
     
     @ObservedObject private var coordinator: Coordinator
@@ -23,7 +23,7 @@ final class AddressViewModel: ObservableObject {
     @FetchAll
     private var years: [Int]
     
-    @Published private(set) var communalInvoiceLists: [CommunalInvoiceList] = []
+    @Published private(set) var monthLists: [MonthList] = []
     
     init(coordinator: Coordinator, address: Address) {
         self.coordinator = coordinator
@@ -49,15 +49,15 @@ final class AddressViewModel: ObservableObject {
         let uniqueYears = Set(years)
         
         for year in uniqueYears {
-            let invoices = communalInvoices
+            let months = communalInvoices
                 .filter({ $0.year == year })
-                .sorted(by: { $0.month.rawValue < $1.month.rawValue })
-            communalInvoiceLists.append(
-                CommunalInvoiceList(
-                    year: year,
-                    communalInvoices: invoices
-                )
-            )
+                .map(\.month)
+            
+            let uniqueMonths = Set(months)
+                .map { $0 }
+                .sorted(by: { $0.rawValue < $1.rawValue })
+            
+            monthLists.append(MonthList(year: year, months: uniqueMonths))
         }
     }
     
