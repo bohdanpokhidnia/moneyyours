@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import SharingGRDB
 
-enum CommunalInvoiceType: Int, FallbackCase {
+enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
+    var id: Int { rawValue }
     static var fallbackCase: CommunalInvoiceType { .unknown }
     
     case electricity

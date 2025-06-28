@@ -6,12 +6,33 @@
 //
 
 import SwiftUI
+import SharingGRDB
 
-enum Month: Int, Identifiable, CaseIterable, Codable {
-    var id: Int {
-        rawValue
+enum Month: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
+    var id: Int { rawValue }
+    static var fallbackCase: Month { .unknown }
+    static var allCases: [Month] {
+        [
+            .january,
+            .february,
+            .march,
+            .april,
+            .may,
+            .june,
+            .july,
+            .august,
+            .september,
+            .october,
+            .november,
+            .december
+        ]
     }
     
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue == rhs.rawValue
+    }
+    
+    case unknown
     case january = 1
     case february
     case march
@@ -27,6 +48,7 @@ enum Month: Int, Identifiable, CaseIterable, Codable {
     
     var name: String {
         switch self {
+        case .unknown: "Unknown"
         case .january: "January"
         case .february: "February"
         case .march: "March"
@@ -44,6 +66,7 @@ enum Month: Int, Identifiable, CaseIterable, Codable {
     
     var emoji: String {
         switch self {
+        case .unknown: "🥲"
         case .january: "🥂"
         case .february: "❤️"
         case .march: "🍀"
@@ -61,6 +84,7 @@ enum Month: Int, Identifiable, CaseIterable, Codable {
     
     var color: Color {
         switch self {
+        case .unknown: Color.gray
         case .january: Color(hex: "#ADD8E6")
         case .february: Color(hex: "#FFC0CB")
         case .march: Color(hex: "#98FB98")

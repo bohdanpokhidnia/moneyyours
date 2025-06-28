@@ -8,15 +8,19 @@
 import SwiftUI
 
 struct AddressesView: View {
+    @ObservedObject var viewModel: AddressesViewModel
+    @State private var communalInvoiceType: CommunalInvoiceType = .unknown
+    @State private var month: Month = .unknown
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $viewModel.coordinator.path) {
             VStack(alignment: .leading, spacing: 0) {
                 GradientHeaderView(
                     configuration: GradientHeaderConfiguration(presetColors: .addresses)
                 )
                 .frame(height: safeArea.bottom == .zero ? 147 : 187)
                 .padding(.bottom, -111)
-                    
+                
                 titleText
                     .padding(.leading, 16)
                 
@@ -32,37 +36,77 @@ struct AddressesView: View {
             }
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
-            .onAppear {
-                
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .addAddress:
+                    AddAddressView(
+                        viewModel: AddAddressViewModel(
+                            coordinator: viewModel.coordinator
+                        )
+                    )
+                    
+                case let .addressDetails(address):
+                    AddressView(
+                        viewModel: AddressViewModel(
+                            coordinator: viewModel.coordinator,
+                            address: address
+                        )
+                    )
+                    
+                case let .addInvoice(addressId):
+                    AddInvoiceView(
+                        viewModel: AddInvoiceViewModel(
+                            coordinator: viewModel.coordinator,
+                            addressId: addressId,
+                            invoiceType: $communalInvoiceType,
+                            month: $month
+                        )
+                    )
+                    
+                case .selectCommunalInvoice:
+                    SelectCommunalInvoiceTypeView(
+                        viewModel: SelectCommunalInvoiceTypeViewModel(
+                            coordinator: viewModel.coordinator,
+                            selectedInvoiceType: $communalInvoiceType
+                        )
+                    )
+                    
+                case .selectMonth:
+                    SelectMonthView(
+                        viewModel: SelectMonthViewModel(
+                            coordinator: viewModel.coordinator,
+                            selectedMonth: $month
+                        )
+                    )
+                }
             }
         }
-//        destination: { (store) in
-//            switch store.case {
-//            case let .addAddress(store):
-//                AddAddressView(store: store)
-//                
-//            case let .address(store):
-//                AddressView(store: store)
-//                
-//            case let .addressSettings(store):
-//                AddressSettingsView(store: store)
-//                
-//            case let .archivedAddresses(store):
-//                ArchivedAddressesView(store: store)
-//                
-//            case let .addInvoice(store):
-//                AddInvoiceView(store: store)
-//                
-//            case let .addPrice(store):
-//                AddPriceView(store: store)
-//                
-//            case let .selectMonth(store):
-//                SelectMonthView(store: store)
-//                
-//            case let .invoiceSelectionList(store):
-//                InvoiceSelectionListView(store: store)
-//            }
-        }
+        //        destination: { (store) in
+        //            switch store.case {
+        //            case let .addAddress(store):
+        //                AddAddressView(store: store)
+        //
+        //            case let .address(store):
+        //                AddressView(store: store)
+        //
+        //            case let .addressSettings(store):
+        //                AddressSettingsView(store: store)
+        //
+        //            case let .archivedAddresses(store):
+        //                ArchivedAddressesView(store: store)
+        //
+        //            case let .addInvoice(store):
+        //                AddInvoiceView(store: store)
+        //
+        //            case let .addPrice(store):
+        //                AddPriceView(store: store)
+        //
+        //            case let .selectMonth(store):
+        //                SelectMonthView(store: store)
+        //
+        //            case let .invoiceSelectionList(store):
+        //                InvoiceSelectionListView(store: store)
+        //            }
     }
     
     private var titleText: some View {
@@ -75,7 +119,7 @@ struct AddressesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 Button("Add address") {
-                    
+                    viewModel.addAddressButtonTapped()
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -108,33 +152,29 @@ struct AddressesView: View {
     private var addressesList: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
-//                ForEach(store.addresses) { address in
-//                    NavigationLink(
-//                       
-//                    ) {
-//                        Text(address.name)
-//                    }
-//                    .buttonStyle(
-//                        EmojiRowButtonStyle(
-//                            emoji: "🗂️",
-//                            emojiBackground: .paleBlueLily
-//                        )
-//                    )
-//                }
-//            }
-//            .padding(.horizontal, 16)
+                ForEach(viewModel.addresses) { address in
+                    //                    NavigationLink(
+                    //                        Text(address.name)
+                    //                    ) {
+                    //                        Text(address.name)
+                    //                    }
+                    
+                    Button {
+                        viewModel.tappedAt(address: address)
+                    } label: {
+                        Text(address.name)
+                    }
+                    .buttonStyle(
+                        EmojiRowButtonStyle(
+                            emoji: "🗂️",
+                            emojiBackground: .paleBlueLily
+                        )
+                    )
+                }
+            }
+            .padding(.horizontal, 16)
         }
         .scrollBounceBehavior(.basedOnSize)
         .lightThemeShadow()
     }
 }
-//
-//#Preview {
-//    NavigationStack {
-//        AddressesView(
-//            store: Store(initialState: AddressesFeature.State(addresses: .preview)) {
-//                AddressesFeature()
-//            }
-//        )
-//    }
-//}

@@ -25,11 +25,11 @@ struct SelectPriceRow: View {
     }
 }
 
-#Preview(traits: .sizeThatFitsLayout) {
-    @Previewable let price: Price = .fixed(value: .zero)
-    
-    SelectPriceRow(
-        emoji: price.emoji,
-        title: price.name
-    )
-}
+//#Preview(traits: .sizeThatFitsLayout) {
+//    @Previewable let price: Price = .fixed(value: .zero)
+//    
+//    SelectPriceRow(
+//        emoji: price.emoji,
+//        title: price.name
+//    )
+//}

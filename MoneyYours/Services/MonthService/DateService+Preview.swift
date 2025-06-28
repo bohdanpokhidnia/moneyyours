@@ -1,5 +1,5 @@
 //
-//  MonthService+Preview.swift
+//  DateService+Preview.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 18.12.2024.
@@ -7,14 +7,17 @@
 
 import Foundation
 
-extension MonthService {
-    static var previewValue: MonthService {
+extension DateService {
+    static var previewValue: DateService {
         Self(
-            month: { _, _  in
+            currentMonth: { _, _  in
                 return .january
             },
             sortedMonthAtCurrent: { _, _ in
                 return Month.allCases
+            },
+            currentYear: { _, _ in
+                return 2025
             }
         )
     }

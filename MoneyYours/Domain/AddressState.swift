@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SharingGRDB
 
-enum AddressState: String, Codable {
+enum AddressState: String, Codable, QueryBindable {
     case active
     case archived
 }

@@ -8,36 +8,35 @@
 import SwiftUI
 
 struct SelectMonthView: View {
+    @ObservedObject var viewModel: SelectMonthViewModel
+    
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Select month",
             configuration: GradientHeaderConfiguration(presetColors: .addresses)
         ) {
             VStack(spacing: 16) {
-//                ForEach(store.months) { month in
-//                    Button(month.name) {
-//                        store.send(.select(month: month))
-//                    }
-//                    .buttonStyle(
-//                        EmojiRowButtonStyle(
-//                            emoji: month.emoji,
-//                            emojiBackground: month.color
-//                        )
-//                    )
-//                }
+                ForEach(viewModel.months) { month in
+                    Button(month.name) {
+                        viewModel.select(month: month)
+                    }
+                    .buttonStyle(
+                        EmojiRowButtonStyle(
+                            emoji: month.emoji,
+                            emojiBackground: month.color
+                        )
+                    )
+                }
             }
             .padding([.top, .horizontal], 16)
         }
         .ignoresSafeArea(edges: .top)
         .background(.appBackground)
-        .onAppear {
-//            store.send(.onAppear)
-        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-//                    store.send(.backButtonTapped)
+                    viewModel.backButtonTapped()
                 } label: {
                     Image(systemName: "arrow.backward")
                         .tint(.white)
@@ -49,6 +48,11 @@ struct SelectMonthView: View {
 
 #Preview {
     NavigationStack {
-        SelectMonthView()
+        SelectMonthView(
+            viewModel: SelectMonthViewModel(
+                coordinator: .preview,
+                selectedMonth: .constant(.january)
+            )
+        )
     }
 }

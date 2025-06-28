@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension FormatStyle where Self == UkrainianHryvniaFormatStyle {
-    static var ukrainianHryvnia: UkrainianHryvniaFormatStyle {
+    static var ua: UkrainianHryvniaFormatStyle {
         UkrainianHryvniaFormatStyle()
     }
 }
