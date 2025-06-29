@@ -31,7 +31,7 @@ struct MonthView: View {
                     
                 }
                 .onDelete { indexSet in
-                    
+                    viewModel.deleteMonthInvoice(at: indexSet)
                 }
                 .listRowSeparator(.hidden)
                 .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))

@@ -28,6 +28,8 @@ final class MonthViewModel: ObservableObject {
     
     @Published private(set) var communalInvoiceLists: [CommunalInvoiceList] = []
     
+    @Dependency(\.defaultDatabase) private var database
+    
     init(
         coordinator: Coordinator,
         monthInvoice: MonthInvoice
@@ -44,6 +46,24 @@ final class MonthViewModel: ObservableObject {
     
     func addInvoiceButtonTapped() {
         coordinator.push(screen: .addInvoice(monthInvoice: monthInvoice))
+    }
+    
+    func deleteMonthInvoice(at indexSet: IndexSet) {
+        guard let element = indexSet.first else {
+            return
+        }
+        let list = communalInvoiceLists[element]
+        let invoice = list.invoice
+        
+        do {
+            try database.write { db in
+                try CommunalInvoice
+                    .delete(invoice)
+                    .execute(db)
+            }
+        } catch {
+            print("[dev] Failed to delete monthInvoice: \(error)")
+        }
     }
 }
 
