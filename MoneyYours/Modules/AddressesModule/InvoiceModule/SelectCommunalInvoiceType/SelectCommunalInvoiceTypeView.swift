@@ -12,11 +12,10 @@ struct SelectCommunalInvoiceTypeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            TitleGradientHeaderView(
+            DynamicTitleGradientHeaderView(
                 title: "Invoices",
                 configuration: GradientHeaderConfiguration(presetColors: .addresses)
             )
-            .frame(height: 147)
             
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 16) {

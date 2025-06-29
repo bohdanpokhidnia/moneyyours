@@ -11,11 +11,13 @@ struct MonthView: View {
     @ObservedObject var viewModel: MonthViewModel
     
     var body: some View {
-        ScrollableGradientHeaderView(
-            title: viewModel.monthInvoice.month.title,
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
-        ) {
-            VStack(alignment: .leading, spacing: 16) {
+        VStack(spacing: 16) {
+            DynamicTitleGradientHeaderView(
+                title: viewModel.monthInvoice.month.title,
+                configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            )
+            
+            List {
                 ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
                     Button(communalInvoiceList.title) {
                         print("[dev] tapped at \(communalInvoiceList)")
@@ -26,10 +28,17 @@ struct MonthView: View {
                             emojiBackground: communalInvoiceList.invoice.type.emojiBackground
                         )
                     )
+                    
                 }
-                .padding(.horizontal, 16)
+                .onDelete { indexSet in
+                    
+                }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowBackground(Color.clear)
             }
-            .padding(.top, 16)
+            .listStyle(.plain)
+            .listRowSpacing(16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
