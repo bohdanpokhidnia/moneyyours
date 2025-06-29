@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddressesView: View {
     @ObservedObject var viewModel: AddressesViewModel
+    @State private var invoiceName: String = "Name"
     @State private var communalInvoiceType: CommunalInvoiceType = .unknown
     @State private var month: Month = .unknown
     
@@ -53,13 +54,13 @@ struct AddressesView: View {
                         )
                     )
                     
-                case let .addInvoice(addressId):
+                case let .addInvoice(monthInvoice):
                     AddInvoiceView(
                         viewModel: AddInvoiceViewModel(
                             coordinator: viewModel.coordinator,
-                            addressId: addressId,
-                            invoiceType: $communalInvoiceType,
-                            month: $month
+                            monthInvoice: monthInvoice,
+                            name: $invoiceName,
+                            invoiceType: $communalInvoiceType
                         )
                     )
                     
@@ -71,42 +72,24 @@ struct AddressesView: View {
                         )
                     )
                     
-                case .selectMonth:
-                    SelectMonthView(
-                        viewModel: SelectMonthViewModel(
+                case let .addMonth(addressId):
+                    AddMonthView(
+                        viewModel: AddMonthViewModel(
                             coordinator: viewModel.coordinator,
-                            selectedMonth: $month
+                            addressId: addressId
+                        )
+                    )
+                    
+                case let .month(monthInvoice):
+                    MonthView(
+                        viewModel: MonthViewModel(
+                            coordinator: viewModel.coordinator,
+                            monthInvoice: monthInvoice
                         )
                     )
                 }
             }
         }
-        //        destination: { (store) in
-        //            switch store.case {
-        //            case let .addAddress(store):
-        //                AddAddressView(store: store)
-        //
-        //            case let .address(store):
-        //                AddressView(store: store)
-        //
-        //            case let .addressSettings(store):
-        //                AddressSettingsView(store: store)
-        //
-        //            case let .archivedAddresses(store):
-        //                ArchivedAddressesView(store: store)
-        //
-        //            case let .addInvoice(store):
-        //                AddInvoiceView(store: store)
-        //
-        //            case let .addPrice(store):
-        //                AddPriceView(store: store)
-        //
-        //            case let .selectMonth(store):
-        //                SelectMonthView(store: store)
-        //
-        //            case let .invoiceSelectionList(store):
-        //                InvoiceSelectionListView(store: store)
-        //            }
     }
     
     private var titleText: some View {
@@ -153,12 +136,6 @@ struct AddressesView: View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 16) {
                 ForEach(viewModel.addresses) { address in
-                    //                    NavigationLink(
-                    //                        Text(address.name)
-                    //                    ) {
-                    //                        Text(address.name)
-                    //                    }
-                    
                     Button {
                         viewModel.tappedAt(address: address)
                     } label: {

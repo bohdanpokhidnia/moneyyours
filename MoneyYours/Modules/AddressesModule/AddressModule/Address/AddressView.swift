@@ -26,18 +26,18 @@ struct AddressView: View {
 //                .tint(.black)
 //                .padding(16)
                 
-                ForEach(viewModel.monthLists) { monthList in
-                    Text(monthList.year.description)
+                ForEach(viewModel.monthInvoiceLists) { monthInvoiceList in
+                    Text(monthInvoiceList.year.description)
                         .frame(maxWidth: .infinity)
                     
-                    ForEach(monthList.months) { month in
-                        Button(month.name) {
-                            print("[dev] tapped at \(month.name)")
+                    ForEach(monthInvoiceList.monthInvoices) { monthInvoice in
+                        Button(monthInvoice.month.name) {
+                            viewModel.monthButtonTapped(monthInvoice: monthInvoice)
                         }
                         .buttonStyle(
                             EmojiRowButtonStyle(
-                                emoji: month.emoji,
-                                emojiBackground: month.color
+                                emoji: monthInvoice.month.emoji,
+                                emojiBackground: monthInvoice.month.color
                             )
                         )
                     }
@@ -62,7 +62,7 @@ struct AddressView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack(spacing: 8) {
                     Button {
-                        
+                        viewModel.addMonthButtonTapped()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.white)

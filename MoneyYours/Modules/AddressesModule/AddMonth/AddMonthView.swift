@@ -1,5 +1,5 @@
 //
-//  SelectMonthView.swift
+//  AddMonthView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 30.06.2024.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct SelectMonthView: View {
-    @ObservedObject var viewModel: SelectMonthViewModel
+struct AddMonthView: View {
+    @ObservedObject var viewModel: AddMonthViewModel
     
     var body: some View {
         ScrollableGradientHeaderView(
-            title: "Select month",
+            title: "Add month",
             configuration: GradientHeaderConfiguration(presetColors: .addresses)
         ) {
             VStack(spacing: 16) {
@@ -48,10 +48,10 @@ struct SelectMonthView: View {
 
 #Preview {
     NavigationStack {
-        SelectMonthView(
-            viewModel: SelectMonthViewModel(
+        AddMonthView(
+            viewModel: AddMonthViewModel(
                 coordinator: .preview,
-                selectedMonth: .constant(.january)
+                addressId: UUID(1)
             )
         )
     }

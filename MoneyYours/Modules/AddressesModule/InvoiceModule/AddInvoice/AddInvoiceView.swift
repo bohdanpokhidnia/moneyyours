@@ -20,7 +20,7 @@ struct AddInvoiceView: View {
                     title: "Invoice name",
                     emoji: "🧾",
                     emojiBackground: Color(hex: "#F5F5F5"),
-                    inputType: .textFiled(text: $viewModel.name)
+                    inputType: .textFiled(text: viewModel.name)
                 )
                 
                 Button {
@@ -31,17 +31,6 @@ struct AddInvoiceView: View {
                         emoji: viewModel.invoiceType.wrappedValue.emoji,
                         emojiBackground: viewModel.invoiceType.wrappedValue.emojiBackground,
                         inputType: .text(viewModel.invoiceType.wrappedValue.name)
-                    )
-                }
-                
-                Button {
-                    viewModel.monthButtonTapped()
-                } label: {
-                    EmojiFieldView(
-                        title: "Month",
-                        emoji: viewModel.month.wrappedValue.emoji,
-                        emojiBackground: viewModel.month.wrappedValue.color,
-                        inputType: .text(viewModel.month.wrappedValue.name)
                     )
                 }
                 
@@ -90,9 +79,9 @@ struct AddInvoiceView: View {
         AddInvoiceView(
             viewModel: AddInvoiceViewModel(
                 coordinator: .preview,
-                addressId: UUID(2),
+                monthInvoice: .preview,
+                name: .constant("Name"),
                 invoiceType: .constant(.unknown),
-                month: .constant(.unknown)
             )
         )
     }

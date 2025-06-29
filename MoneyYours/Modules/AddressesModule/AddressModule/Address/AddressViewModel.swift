@@ -9,63 +9,58 @@ import SharingGRDB
 import SwiftUI
 
 final class AddressViewModel: ObservableObject {
-    struct MonthList: Identifiable {
+    struct MonthInvoiceList: Identifiable {
         var id: Int { year }
         let year: Int
-        let months: [Month]
+        let monthInvoices: [MonthInvoice]
     }
     
     @ObservedObject private var coordinator: Coordinator
     let address: Address
     
     @FetchAll
-    private var communalInvoices: [CommunalInvoice]
-    @FetchAll
-    private var years: [Int]
+    private var monthInvoices: [MonthInvoice]
     
-    @Published private(set) var monthLists: [MonthList] = []
+    @Published private(set) var monthInvoiceLists: [MonthInvoiceList] = []
     
     init(coordinator: Coordinator, address: Address) {
         self.coordinator = coordinator
         self.address = address
-        
-        _communalInvoices = FetchAll(
-            wrappedValue: communalInvoices,
-            CommunalInvoice
-                .where{ $0.addressId == address.id }
-                .order(by: \.year)
-            ,
-            animation: .easeInOut
-        )
-        
-        _years = FetchAll(
-            wrappedValue: years,
-            CommunalInvoice
-                .where{ $0.addressId == address.id }
-                .select(\.year),
-            animation: .easeInOut
-        )
-        
-        let uniqueYears = Set(years)
-        
-        for year in uniqueYears {
-            let months = communalInvoices
-                .filter({ $0.year == year })
-                .map(\.month)
-            
-            let uniqueMonths = Set(months)
-                .map { $0 }
-                .sorted(by: { $0.rawValue < $1.rawValue })
-            
-            monthLists.append(MonthList(year: year, months: uniqueMonths))
-        }
+
+        fetchMonths()
     }
     
     func backButtonTapped() {
         coordinator.dismiss()
     }
     
-    func addInvoiceButtonTapped() {
-        coordinator.push(screen: .addInvoice(addressId: address.id))
+    func addMonthButtonTapped() {
+        coordinator.push(screen: .addMonth(addressId: address.id))
+    }
+    
+    func monthButtonTapped(monthInvoice: MonthInvoice) {
+        coordinator.push(screen: .month(monthInvoice: monthInvoice))
+    }
+}
+
+private extension AddressViewModel {
+    func fetchMonths() {
+        let invoicesForAddress = monthInvoices
+            .filter { $0.addressId == address.id }
+            .sorted { $0.year < $1.year }
+
+        let groupedByYear = Dictionary(grouping: invoicesForAddress, by: \.year)
+        
+        monthInvoiceLists = groupedByYear
+            .map { year, invoices in
+                let uniqueInvoicesByMonth = Dictionary(grouping: invoices, by: \.month)
+                    .compactMap { $0.value.first }
+                    .sorted(by: { $0.month.rawValue > $1.month.rawValue })
+                
+                return MonthInvoiceList(
+                    year: year,
+                    monthInvoices: uniqueInvoicesByMonth
+                )
+            }
     }
 }

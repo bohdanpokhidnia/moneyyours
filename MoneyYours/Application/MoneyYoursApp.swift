@@ -34,33 +34,7 @@ enum Table: String {
     case addresses
     case communalInvoices
     case prices
-}
-
-func createAddressTable(for queue: DatabaseQueue) throws {
-    try queue.write { db in
-        try db.create(table: Table.addresses.rawValue, ifNotExists: true) { t in
-            t.column("id", .text).primaryKey()
-            t.column("name", .text).notNull()
-            t.column("state", .text).notNull()
-        }
-    }
-}
-
-func createCommunalInvoiceTable(for queue: DatabaseQueue) throws {
-    try queue.write { db in
-        try db.create(table: Table.communalInvoices.rawValue, ifNotExists: true) { t in
-            t.column("id", .text).primaryKey()
-            t.column("addressId", .text)
-                .notNull()
-                .references(Table.addresses.rawValue, onDelete: .cascade)
-            t.column("year", .integer).notNull()
-            t.column("month", .text).notNull()
-            t.column("type", .text).notNull()
-            t.column("priceId", .text)
-                .notNull()
-                .references(Table.prices.rawValue, onDelete: .setNull)
-        }
-    }
+    case monthInvoices
 }
 
 func createPriceTable(for queue: DatabaseQueue) throws {
@@ -74,6 +48,49 @@ func createPriceTable(for queue: DatabaseQueue) throws {
     }
 }
 
+func createAddressTable(for queue: DatabaseQueue) throws {
+    try queue.write { db in
+        try db.create(table: Table.addresses.rawValue, ifNotExists: true) { t in
+            t.column("id", .text).primaryKey()
+            t.column("name", .text).notNull()
+            t.column("state", .text).notNull()
+        }
+    }
+}
+
+func createMonthInvoicesTable(for queue: DatabaseQueue) throws {
+    try queue.write { db in
+        try db.create(table: Table.monthInvoices.rawValue, ifNotExists: true) { t in
+            t.column("id", .text).primaryKey()
+            t.column("addressId", .text)
+                .notNull()
+                .references(Table.addresses.rawValue, onDelete: .cascade)
+            t.column("year", .text)
+            t.column("month", .text)
+        }
+    }
+}
+
+func createCommunalInvoiceTable(for queue: DatabaseQueue) throws {
+    try queue.write { db in
+        try db.create(table: Table.communalInvoices.rawValue, ifNotExists: true) { t in
+            t.column("id", .text).primaryKey()
+            t.column("addressId", .text)
+                .notNull()
+                .references(Table.addresses.rawValue, onDelete: .cascade)
+            t.column("year", .integer).notNull()
+            t.column("name", .text).notNull()
+            t.column("monthInvoiceId", .text)
+                .notNull()
+                .references(Table.monthInvoices.rawValue, onDelete: .cascade)
+            t.column("type", .text).notNull()
+            t.column("priceId", .text)
+                .notNull()
+                .references(Table.prices.rawValue, onDelete: .cascade)
+        }
+    }
+}
+
 @main
 struct MoneyYoursApp: App {
     @ObservedObject private var coordinator = Coordinator()
@@ -83,6 +100,7 @@ struct MoneyYoursApp: App {
             let databaseQueue = try! DatabaseQueue(path: dbURL().path)
             try! createPriceTable(for: databaseQueue)
             try! createAddressTable(for: databaseQueue)
+            try! createMonthInvoicesTable(for: databaseQueue)
             try! createCommunalInvoiceTable(for: databaseQueue)
             
             $0.defaultDatabase = databaseQueue

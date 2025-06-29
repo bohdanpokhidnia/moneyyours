@@ -10,36 +10,30 @@ import SharingGRDB
 
 final class AddInvoiceViewModel: ObservableObject {
     @ObservedObject private var coordinator: Coordinator
-    private let addressId: Address.ID
     
-    @Published var name: String
+    var name: Binding<String>
     var invoiceType: Binding<CommunalInvoiceType>
-    var month: Binding<Month>
+    private var monthInvoice: MonthInvoice
     @Published var price: Price
     
     var isDisableSaveButton: Bool {
-        name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || invoiceType.wrappedValue == .unknown
+        name.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || invoiceType.wrappedValue == .unknown
     }
     
-    @Dependency(\.dateService) private var dateService
     @Dependency(\.defaultDatabase) private var database
     
     init(
         coordinator: Coordinator,
-        addressId: Address.ID,
-        name: String = "Name",
+        monthInvoice: MonthInvoice,
+        name: Binding<String>,
         invoiceType: Binding<CommunalInvoiceType>,
-        month: Binding<Month>,
         price: Price = .fixed(id: UUID(), value: .zero)
     ) {
         self.coordinator = coordinator
-        self.addressId = addressId
+        self.monthInvoice = monthInvoice
         self.name = name
         self.invoiceType = invoiceType
-        self.month = month
         self.price = price
-        
-        fetchCurrentMonth()
     }
     
     func onDisappear() {
@@ -55,17 +49,13 @@ final class AddInvoiceViewModel: ObservableObject {
         coordinator.push(screen: .selectCommunalInvoice)
     }
     
-    func monthButtonTapped() {
-        coordinator.push(screen: .selectMonth)
-    }
-    
     func saveButtonTapped() {
-        let year = dateService.currentYear(.current, .now)
         let invoice = CommunalInvoice(
             id: UUID(),
-            addressId: addressId,
-            year: year,
-            month: month.wrappedValue,
+            addressId: monthInvoice.addressId,
+            year: monthInvoice.year,
+            name: name.wrappedValue,
+            monthInvoiceId: monthInvoice.id,
             type: invoiceType.wrappedValue,
             priceId: price.id
         )
@@ -81,19 +71,6 @@ final class AddInvoiceViewModel: ObservableObject {
 }
 
 private extension AddInvoiceViewModel {
-    func fetchCurrentMonth() {
-        guard month.wrappedValue == .unknown else { return }
-        do throws(DateServiceError) {
-            let currentMonth = try dateService.currentMonth(.current, .now)
-            month.wrappedValue = currentMonth
-        } catch {
-            switch error {
-            case .invalidMonthNumber:
-                print("[dev] Failed to fetch current month number")
-            }
-        }
-    }
-    
     func save(price: Price, invoice: CommunalInvoice) throws {
         try database.write { db in
             try Price
@@ -107,7 +84,7 @@ private extension AddInvoiceViewModel {
     }
     
     func resetFields() {
+        name.wrappedValue = "Name"
         invoiceType.wrappedValue = .unknown
-        month.wrappedValue = .unknown
     }
 }

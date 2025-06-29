@@ -82,6 +82,10 @@ enum Month: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
         }
     }
     
+    var title: String {
+        [name, emoji].joined(separator: " ")
+    }
+    
     var color: Color {
         switch self {
         case .unknown: Color.gray
