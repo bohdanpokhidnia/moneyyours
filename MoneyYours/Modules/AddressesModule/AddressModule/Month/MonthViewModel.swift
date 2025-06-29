@@ -54,6 +54,7 @@ private extension MonthViewModel {
             CommunalInvoice
                 .where { $0.addressId == monthInvoice.addressId }
                 .where { $0.year == monthInvoice.year }
+                .where { $0.monthInvoiceId == monthInvoice.id }
                 .order(by: \.type)
             ,
             animation: .easeInOut
