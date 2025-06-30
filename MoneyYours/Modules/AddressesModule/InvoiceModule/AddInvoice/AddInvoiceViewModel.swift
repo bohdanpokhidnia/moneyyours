@@ -17,7 +17,19 @@ final class AddInvoiceViewModel: ObservableObject {
     @Published var price: Price
     
     var isDisableSaveButton: Bool {
-        name.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || invoiceType.wrappedValue == .unknown
+         isFailedName || isFailedInvoiceType || isFailedPrice
+    }
+    
+    private var isFailedName: Bool {
+        name.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    
+    private var isFailedInvoiceType: Bool {
+        invoiceType.wrappedValue == .unknown
+    }
+    
+    private var isFailedPrice: Bool {
+        price.sum == .zero
     }
     
     @Dependency(\.defaultDatabase) private var database
