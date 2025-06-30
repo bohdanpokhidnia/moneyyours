@@ -102,5 +102,6 @@ private extension AddInvoiceViewModel {
     func resetFields() {
         name.wrappedValue = "Name"
         invoiceType.wrappedValue = .unknown
+        price.wrappedValue = .fixed(id: UUID(), value: .zero)
     }
 }

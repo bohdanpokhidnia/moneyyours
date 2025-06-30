@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct SelectPriceView: View {
-    @FocusState private var isFocusedTextField: Bool
     @State private var priceText: String = ""
+    @State private var valueText: String = "0"
+    @State private var countText: String = "0"
     @ObservedObject var viewModel: SelectPriceViewModel
     
     var body: some View {
@@ -35,7 +36,7 @@ struct SelectPriceView: View {
             }
         }
         .onAppear {
-            priceText = viewModel.price.wrappedValue.sumString
+            updateSumText()
         }
     }
 }
@@ -72,15 +73,8 @@ private extension SelectPriceView {
                     .fixedSize()
                     .tint(.beanRed)
                     .keyboardType(.decimalPad)
-                    .focused($isFocusedTextField)
-                    .onChange(of: priceText) { oldValue, newValue in
-                        viewModel.updatePrice(text: newValue)
-                    }
-                    .onReceive(viewModel.$isTextFieldFocused) { newValue in
-                        // прокидаємо назад у View, коли ViewModel вирішив змінити фокус
-                        if isFocusedTextField != newValue {
-                            isFocusedTextField = newValue
-                        }
+                    .onChange(of: priceText) { _, newValue in
+                        viewModel.updateFixedPrice(text: newValue)
                     }
                 
                 Text(viewModel.currency.string)
@@ -106,24 +100,27 @@ private extension SelectPriceView {
     private var calculatePriceView: some View {
         HStack(spacing: 16) {
             TitleTextField(
-                title: "Previously count",
-                placeholder: "Value",
-                text: $viewModel.oldCounterText
+                title: "Enter sum at 1",
+                placeholder: "Sum",
+                text: $valueText
             )
-//            .onChange(of: store.previouslyCounterText) { _, newValue in
-//                store.previouslyCounterText = newValue.formatted(.priceInput)
-//            }
+            .keyboardType(.decimalPad)
+            .onChange(of: valueText) { _, newValue in
+                viewModel.updatedCalculatedPrice(value: newValue, count: countText)
+                priceText = viewModel.price.wrappedValue.sumString
+            }
             
             TitleTextField(
-                title: "Current count",
-                placeholder: "Value",
-                text: $viewModel.newCounterText
+                title: "Enter count",
+                placeholder: "Count",
+                text: $countText
             )
-//            .onChange(of: store.currentCounterText) { _, newValue in
-//                store.currentCounterText = newValue.formatted(.priceInput)
-//            }
+            .keyboardType(.numberPad)
+            .onChange(of: countText) { _, newValue in
+                viewModel.updatedCalculatedPrice(value: valueText, count: newValue)
+                priceText = viewModel.price.wrappedValue.sumString
+            }
         }
-        .keyboardType(.numberPad)
     }
     
 //    private var multiPriceView: some View {
@@ -164,13 +161,28 @@ private extension SelectPriceView {
         )
         .disabled(viewModel.isDisableSaveButton)
     }
+    
+    private func updateSumText() {
+        let price = viewModel.price.wrappedValue
+        
+        switch price.kind {
+        case .fixed:
+            break
+            
+        case .calculate:
+            valueText = price.value?.formatted(.ua) ?? "0"
+            countText = price.count?.description ?? "0"
+        }
+        
+        priceText = price.sumString
+    }
 }
 
 #Preview {
     SelectPriceView(
         viewModel: SelectPriceViewModel(
             coordinator: .preview,
-            price: .constant(.fixed(id: UUID(5), value: .zero))
+            price: .constant(.calculate(id: UUID(5), value: .zero, count: .zero))
         )
     )
 }
