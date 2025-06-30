@@ -10,7 +10,7 @@ import SharingGRDB
 
 @Table
 struct Price: Identifiable, Codable, Equatable, Hashable {
-    enum Kind: String, Codable, Equatable, Hashable, QueryBindable {
+    enum Kind: String, Codable, Equatable, Hashable, CaseIterable, QueryBindable {
         case fixed
         case calculate
         

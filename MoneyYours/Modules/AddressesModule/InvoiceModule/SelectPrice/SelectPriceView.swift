@@ -20,17 +20,9 @@ struct SelectPriceView: View {
         }
         .overlay(alignment: .top) {
             contentView
-                .onAppear {
-                    isFocusedTextField = true
-                }
         }
         .padding([.horizontal, .bottom], 16)
         .background(.invoiceBackground)
-//        .bind($store.focus, to: $focus)
-//        .sheet(item: $store.scope(state: \.selectPrice, action: \.selectPrice)) { store in
-//            SelectPriceView(store: store)
-//                .presentationDetents([.height(260)])
-//        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -52,12 +44,9 @@ private extension SelectPriceView {
     private var contentView: some View {
         VStack(spacing: 32) {
             Button {
-                
+                viewModel.priceTypeButtonTapped()
             } label: {
-                SelectPriceRow(
-                    emoji: viewModel.priceKind.emoji,
-                    title: viewModel.priceKind.name
-                )
+                SelectPriceRow(priceKind: viewModel.price.wrappedValue.kind)
             }
             
             priceTextField
@@ -87,6 +76,12 @@ private extension SelectPriceView {
                     .onChange(of: priceText) { oldValue, newValue in
                         viewModel.updatePrice(text: newValue)
                     }
+                    .onReceive(viewModel.$isTextFieldFocused) { newValue in
+                        // прокидаємо назад у View, коли ViewModel вирішив змінити фокус
+                        if isFocusedTextField != newValue {
+                            isFocusedTextField = newValue
+                        }
+                    }
                 
                 Text(viewModel.currency.string)
             }
@@ -96,7 +91,7 @@ private extension SelectPriceView {
     
     @ViewBuilder
     private var additionalFields: some View {
-        switch viewModel.priceKind {
+        switch viewModel.price.wrappedValue.kind {
         case .fixed:
             EmptyView()
             

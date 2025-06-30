@@ -99,6 +99,23 @@ struct AddressesView: View {
                     )
                 }
             }
+            .sheet(
+                item: viewModel.$coordinator.presentedSheet,
+                onDismiss: {
+                    viewModel.coordinator.onDismiss?(viewModel.coordinator.lastPresentedSheet)
+                }
+            ) { sheet in
+                switch sheet {
+                case .selectPriceType:
+                    SelectPriceTypeView(
+                        viewModel: SelectPriceTypeViewModel(
+                            coordinator: viewModel.coordinator,
+                            priceKind: $price.kind
+                        )
+                    )
+                    .presentationDetents([.height(260)])
+                }
+            }
         }
     }
     

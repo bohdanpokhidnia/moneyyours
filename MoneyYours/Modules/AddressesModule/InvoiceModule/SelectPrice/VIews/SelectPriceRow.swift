@@ -8,17 +8,11 @@
 import SwiftUI
 
 struct SelectPriceRow: View {
-    let emoji: String
-    let title: String
-    
-    init(emoji: String, title: String) {
-        self.emoji = emoji
-        self.title = title
-    }
+    var priceKind: Price.Kind
     
     var body: some View {
         HStack(spacing: 16) {
-            Text("\(emoji) \(title)")
+            Text("\(priceKind.emoji) \(priceKind.name)")
                 .foregroundStyle(.primaryText)
                 .font(.headline)
         }
@@ -28,8 +22,5 @@ struct SelectPriceRow: View {
 #Preview(traits: .sizeThatFitsLayout) {
     @Previewable let price: Price = .fixed(id: UUID(5), value: 1005)
     
-    SelectPriceRow(
-        emoji: price.kind.emoji,
-        title: price.kind.name
-    )
+    SelectPriceRow(priceKind: .fixed)
 }

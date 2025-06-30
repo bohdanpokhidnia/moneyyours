@@ -11,7 +11,7 @@ final class SelectPriceViewModel: ObservableObject {
     @ObservedObject private var coordinator: Coordinator
     var price: Binding<Price>
     
-    @Published var priceKind: Price.Kind
+    @Published var isTextFieldFocused: Bool = true
     @Published var oldCounterText: String = "0"
     @Published var newCounterText: String = "0"
     let currency: Currency = .UAH
@@ -26,12 +26,24 @@ final class SelectPriceViewModel: ObservableObject {
     ) {
         self.coordinator = coordinator
         self.price = price
-
-        self.priceKind = price.wrappedValue.kind
+        
+        coordinator.onDismiss = { sheet in
+            switch sheet {
+            case .selectPriceType:
+                break
+                
+            default:
+                break
+            }
+        }
     }
     
     func backButtonTapped() {
         coordinator.dismiss()
+    }
+    
+    func priceTypeButtonTapped() {
+        coordinator.present(sheet: .selectPriceType)
     }
     
     func updatePrice(text: String) {

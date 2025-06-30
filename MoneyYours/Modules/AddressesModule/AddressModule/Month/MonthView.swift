@@ -28,7 +28,6 @@ struct MonthView: View {
                             emojiBackground: communalInvoiceList.invoice.type.emojiBackground
                         )
                     )
-                    
                 }
                 .onDelete { indexSet in
                     viewModel.deleteMonthInvoice(at: indexSet)

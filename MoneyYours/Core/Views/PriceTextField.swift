@@ -13,8 +13,12 @@ struct PriceTextField: View {
     var body: some View {
         TextField("", text: $text)
             .multilineTextAlignment(.center)
-            .onChange(of: text) { _, newValue in
-                text = newValue.formatted(.priceInput)
+            .onChange(of: text) { oldValue, newValue in
+                if newValue.count == 3, oldValue == "0.00" {
+                    text = "0"
+                } else {
+                    text = newValue.formatted(.priceInput)
+                }
             }
     }
 }
