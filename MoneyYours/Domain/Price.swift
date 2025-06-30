@@ -13,6 +13,22 @@ struct Price: Identifiable, Codable, Equatable, Hashable {
     enum Kind: String, Codable, Equatable, Hashable, QueryBindable {
         case fixed
         case calculate
+        
+        var name: String {
+            switch self {
+            case .fixed: "Fixed"
+            case .calculate: "Calculate"
+    //        case .multi: "Multi"
+            }
+        }
+        
+        var emoji: String {
+            switch self {
+            case .fixed: "📌"
+            case .calculate: "🔢"
+    //        case .multi: "🧮"
+            }
+        }
     }
     
     var id: UUID
@@ -59,14 +75,6 @@ struct Price: Identifiable, Codable, Equatable, Hashable {
 
 // MARK: - Computed Properties
 extension Price {
-    var name: String {
-        switch kind {
-        case .fixed: "Fixed"
-        case .calculate: "Calculate"
-//        case .multi: "Multi"
-        }
-    }
-
     var sum: Double {
         switch kind {
         case .fixed:
@@ -94,13 +102,5 @@ extension Price {
 
     var isZero: Bool {
         sum == .zero
-    }
-
-    var emoji: String {
-        switch kind {
-        case .fixed: "📌"
-        case .calculate: "🔢"
-//        case .multi: "🧮"
-        }
     }
 }

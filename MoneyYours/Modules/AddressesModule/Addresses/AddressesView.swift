@@ -12,6 +12,7 @@ struct AddressesView: View {
     @State private var invoiceName: String = "Name"
     @State private var communalInvoiceType: CommunalInvoiceType = .unknown
     @State private var month: Month = .unknown
+    @State private var price: Price = .fixed(id: UUID(), value: .zero)
     
     var body: some View {
         NavigationStack(path: $viewModel.coordinator.path) {
@@ -60,7 +61,8 @@ struct AddressesView: View {
                             coordinator: viewModel.coordinator,
                             monthInvoice: monthInvoice,
                             name: $invoiceName,
-                            invoiceType: $communalInvoiceType
+                            invoiceType: $communalInvoiceType,
+                            price: $price
                         )
                     )
                     
@@ -69,6 +71,14 @@ struct AddressesView: View {
                         viewModel: SelectCommunalInvoiceTypeViewModel(
                             coordinator: viewModel.coordinator,
                             selectedInvoiceType: $communalInvoiceType
+                        )
+                    )
+                    
+                case .selectPrice:
+                    SelectPriceView(
+                        viewModel: SelectPriceViewModel(
+                            coordinator: viewModel.coordinator,
+                            price: $price
                         )
                     )
                     

@@ -35,13 +35,13 @@ struct AddInvoiceView: View {
                 }
                 
                 Button {
-//                    send(.priceButtonTapped)
+                    viewModel.priceButtonTapped()
                 } label: {
                     EmojiFieldView(
                         title: "Price",
                         emoji: "💵",
                         emojiBackground: Color(hex: "#D4EFDF"),
-                        inputType: .text(viewModel.price.sum.formatted(.ua))
+                        inputType: .text(viewModel.price.wrappedValue.sum.formatted(.ua))
                     )
                 }
             }
@@ -82,6 +82,7 @@ struct AddInvoiceView: View {
                 monthInvoice: .preview,
                 name: .constant("Name"),
                 invoiceType: .constant(.unknown),
+                price: .constant(.fixed(id: UUID(5), value: .zero))
             )
         )
     }

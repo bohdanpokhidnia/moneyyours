@@ -12,6 +12,7 @@ enum Screen: Hashable {
     case addressDetails(address: Address)
     case addInvoice(monthInvoice: MonthInvoice)
     case selectCommunalInvoice
+    case selectPrice
     case addMonth(addressId: Address.ID)
     case month(monthInvoice: MonthInvoice)
 }

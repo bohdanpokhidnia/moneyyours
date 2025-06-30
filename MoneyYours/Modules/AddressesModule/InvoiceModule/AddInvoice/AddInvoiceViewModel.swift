@@ -14,7 +14,7 @@ final class AddInvoiceViewModel: ObservableObject {
     var name: Binding<String>
     var invoiceType: Binding<CommunalInvoiceType>
     private var monthInvoice: MonthInvoice
-    @Published var price: Price
+    var price: Binding<Price>
     
     var isDisableSaveButton: Bool {
          isFailedName || isFailedInvoiceType || isFailedPrice
@@ -29,7 +29,7 @@ final class AddInvoiceViewModel: ObservableObject {
     }
     
     private var isFailedPrice: Bool {
-        price.sum == .zero
+        price.wrappedValue.sum == .zero
     }
     
     @Dependency(\.defaultDatabase) private var database
@@ -39,7 +39,7 @@ final class AddInvoiceViewModel: ObservableObject {
         monthInvoice: MonthInvoice,
         name: Binding<String>,
         invoiceType: Binding<CommunalInvoiceType>,
-        price: Price = .fixed(id: UUID(), value: .zero)
+        price: Binding<Price>
     ) {
         self.coordinator = coordinator
         self.monthInvoice = monthInvoice
@@ -61,6 +61,10 @@ final class AddInvoiceViewModel: ObservableObject {
         coordinator.push(screen: .selectCommunalInvoice)
     }
     
+    func priceButtonTapped() {
+        coordinator.push(screen: .selectPrice)
+    }
+    
     func saveButtonTapped() {
         let invoice = CommunalInvoice(
             id: UUID(),
@@ -73,7 +77,7 @@ final class AddInvoiceViewModel: ObservableObject {
         )
         
         do {
-            try save(price: price, invoice: invoice)
+            try save(price: price.wrappedValue, invoice: invoice)
             resetFields()
             coordinator.dismiss()
         } catch {
