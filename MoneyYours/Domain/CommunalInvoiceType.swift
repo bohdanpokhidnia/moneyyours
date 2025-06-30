@@ -12,6 +12,17 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBi
     var id: Int { rawValue }
     static var fallbackCase: CommunalInvoiceType { .unknown }
     
+    static var allCases: [CommunalInvoiceType] {
+        [
+            .electricity,
+            .water,
+            .heating,
+            .gas,
+            .gasDelivery,
+            .garbageDisposal
+        ]
+    }
+    
     case electricity
     case water
     case heating
