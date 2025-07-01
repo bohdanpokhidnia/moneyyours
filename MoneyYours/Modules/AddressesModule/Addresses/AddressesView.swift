@@ -10,18 +10,16 @@ import SwiftUI
 struct AddressesView: View {
     @ObservedObject var viewModel: AddressesViewModel
     @State private var invoiceName: String = "Name"
-    @State private var communalInvoiceType: CommunalInvoiceType = .unknown
+    @State private var communalInvoiceType: CommunalInvoiceType = .notSelected
     @State private var month: Month = .unknown
     @State private var price: Price = .fixed(id: UUID(), value: .zero)
     
     var body: some View {
         NavigationStack(path: $viewModel.coordinator.path) {
             VStack(alignment: .leading, spacing: 0) {
-                GradientHeaderView(
-                    configuration: GradientHeaderConfiguration(presetColors: .addresses)
-                )
-                .frame(height: safeArea.bottom == .zero ? 147 : 187)
-                .padding(.bottom, -111)
+                GradientHeaderView(configuration: .addresses)
+                    .frame(height: safeArea.bottom == .zero ? 147 : 187)
+                    .padding(.bottom, -111)
                 
                 titleText
                     .padding(.leading, 16)
@@ -95,6 +93,14 @@ struct AddressesView: View {
                         viewModel: MonthViewModel(
                             coordinator: viewModel.coordinator,
                             monthInvoice: monthInvoice
+                        )
+                    )
+                    
+                case let .summary(communalInvoiceLists):
+                    SummaryView(
+                        viewModel: SummaryViewModel(
+                            coordinator: viewModel.coordinator,
+                            communalInvoiceLists: communalInvoiceLists
                         )
                     )
                 }

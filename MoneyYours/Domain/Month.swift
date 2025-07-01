@@ -8,7 +8,7 @@
 import SwiftUI
 import SharingGRDB
 
-enum Month: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
+enum Month: Int, Identifiable, FallbackCase, CaseIterable, EmojiAvailable, QueryBindable {
     var id: Int { rawValue }
     static var fallbackCase: Month { .unknown }
     static var allCases: [Month] {
@@ -80,10 +80,6 @@ enum Month: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
         case .november: "🦃"
         case .december: "🎄"
         }
-    }
-    
-    var title: String {
-        [name, emoji].joined(separator: " ")
     }
     
     var color: Color {

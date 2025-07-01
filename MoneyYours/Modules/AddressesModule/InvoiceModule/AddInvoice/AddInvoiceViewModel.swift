@@ -25,7 +25,7 @@ final class AddInvoiceViewModel: ObservableObject {
     }
     
     private var isFailedInvoiceType: Bool {
-        invoiceType.wrappedValue == .unknown
+        invoiceType.wrappedValue == .notSelected
     }
     
     private var isFailedPrice: Bool {
@@ -101,7 +101,7 @@ private extension AddInvoiceViewModel {
     
     func resetFields() {
         name.wrappedValue = "Name"
-        invoiceType.wrappedValue = .unknown
+        invoiceType.wrappedValue = .notSelected
         price.wrappedValue = .fixed(id: UUID(), value: .zero)
     }
 }

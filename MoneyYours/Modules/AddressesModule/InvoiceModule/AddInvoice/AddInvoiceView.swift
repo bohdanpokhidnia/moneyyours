@@ -13,7 +13,7 @@ struct AddInvoiceView: View {
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Add invoice",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: .addresses
         ) {
             VStack(spacing: 16) {
                 EmojiFieldView(
@@ -29,7 +29,7 @@ struct AddInvoiceView: View {
                     EmojiFieldView(
                         title: "Invoice type",
                         emoji: viewModel.invoiceType.wrappedValue.emoji,
-                        emojiBackground: viewModel.invoiceType.wrappedValue.emojiBackground,
+                        emojiBackground: viewModel.invoiceType.wrappedValue.color,
                         inputType: .text(viewModel.invoiceType.wrappedValue.name)
                     )
                 }
@@ -81,7 +81,7 @@ struct AddInvoiceView: View {
                 coordinator: .preview,
                 monthInvoice: .preview,
                 name: .constant("Name"),
-                invoiceType: .constant(.unknown),
+                invoiceType: .constant(.notSelected),
                 price: .constant(.fixed(id: UUID(5), value: .zero))
             )
         )

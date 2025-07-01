@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DynamicTitleGradientHeaderView: View {
     let title: String
+    var titleColor: Color = .white
     var titleAlignment: Alignment = .bottomLeading
     let configuration: GradientHeaderConfiguration
     
@@ -17,6 +18,7 @@ struct DynamicTitleGradientHeaderView: View {
     var body: some View {
         TitleGradientHeaderView(
             title: title,
+            titleColor: titleColor,
             titleAlignment: titleAlignment,
             configuration: configuration
         )

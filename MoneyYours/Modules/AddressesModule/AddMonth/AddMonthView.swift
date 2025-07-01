@@ -13,7 +13,7 @@ struct AddMonthView: View {
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Add month",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: .addresses
         ) {
             VStack(spacing: 16) {
                 ForEach(viewModel.months) { month in
@@ -21,10 +21,7 @@ struct AddMonthView: View {
                         viewModel.select(month: month)
                     }
                     .buttonStyle(
-                        EmojiRowButtonStyle(
-                            emoji: month.emoji,
-                            emojiBackground: month.color
-                        )
+                        EmojiRowButtonStyle(item: month)
                     )
                 }
             }

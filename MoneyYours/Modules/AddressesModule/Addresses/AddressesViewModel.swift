@@ -10,7 +10,7 @@ import SharingGRDB
 
 final class AddressesViewModel: ObservableObject {
     @ObservedObject var coordinator: Coordinator
-    @Published var communalInvoiceType: CommunalInvoiceType = .unknown
+    @Published var communalInvoiceType: CommunalInvoiceType = .notSelected
     @Published var month: Month = .unknown
     
     @FetchAll(

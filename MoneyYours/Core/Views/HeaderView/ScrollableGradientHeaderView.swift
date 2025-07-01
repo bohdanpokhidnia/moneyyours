@@ -88,7 +88,7 @@ private extension ScrollableGradientHeaderView {
     NavigationStack {
         ScrollableGradientHeaderView(
             title: "District",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: .addresses
         ) {
             VStack(spacing: 8) {
                 ForEach(0...25, id: \.self) { (number) in

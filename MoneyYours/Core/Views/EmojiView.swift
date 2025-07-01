@@ -28,6 +28,6 @@ struct EmojiView: View {
 #Preview("EmojiView", traits: .sizeThatFitsLayout) {
     EmojiView(
         emoji: "⚙️",
-        emojiBackground: .slateGrey
+        emojiBackground: .lightGreyGreen
     )
 }

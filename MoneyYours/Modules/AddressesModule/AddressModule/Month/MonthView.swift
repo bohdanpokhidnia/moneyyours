@@ -14,30 +14,36 @@ struct MonthView: View {
         VStack(spacing: 16) {
             DynamicTitleGradientHeaderView(
                 title: viewModel.monthInvoice.month.title,
-                configuration: GradientHeaderConfiguration(presetColors: .addresses)
+                configuration: .addresses
             )
             
-            List {
-                ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
-                    Button(communalInvoiceList.title) {
-                        print("[dev] tapped at \(communalInvoiceList)")
+            if viewModel.communalInvoiceLists.isEmpty {
+                EmptyView()
+            } else {
+                Button("Summary") {
+                    viewModel.summaryButtonTapped()
+                }
+                .buttonStyle(ImageButtonStyle(image: Image(systemName: "hryvniasign.ring")))
+                .tint(.black)
+                .padding(.horizontal, 16)
+                
+                List {
+                    ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
+                        Button(communalInvoiceList.title) {
+                            print("[dev] tapped at \(communalInvoiceList)")
+                        }
+                        .buttonStyle(EmojiRowButtonStyle(item: communalInvoiceList.invoice.type))
                     }
-                    .buttonStyle(
-                        EmojiRowButtonStyle(
-                            emoji: communalInvoiceList.invoice.type.emoji,
-                            emojiBackground: communalInvoiceList.invoice.type.emojiBackground
-                        )
-                    )
+                    .onDelete { indexSet in
+                        viewModel.deleteMonthInvoice(at: indexSet)
+                    }
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    .listRowBackground(Color.clear)
                 }
-                .onDelete { indexSet in
-                    viewModel.deleteMonthInvoice(at: indexSet)
-                }
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                .listRowBackground(Color.clear)
+                .listStyle(.plain)
+                .listRowSpacing(16)
             }
-            .listStyle(.plain)
-            .listRowSpacing(16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)

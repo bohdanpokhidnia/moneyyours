@@ -9,14 +9,6 @@ import SwiftUI
 import SharingGRDB
 
 final class MonthViewModel: ObservableObject {
-    struct CommunalInvoiceList: Identifiable {
-        var id: UUID { invoice.id }
-        
-        let title: String
-        let invoice: CommunalInvoice
-        let price: Double
-    }
-    
     @ObservedObject var coordinator: Coordinator
     let monthInvoice: MonthInvoice
     
@@ -46,6 +38,10 @@ final class MonthViewModel: ObservableObject {
     
     func addInvoiceButtonTapped() {
         coordinator.push(screen: .addInvoice(monthInvoice: monthInvoice))
+    }
+    
+    func summaryButtonTapped() {
+        coordinator.push(screen: .summary(communalInvoiceLists: communalInvoiceLists))
     }
     
     func deleteMonthInvoice(at indexSet: IndexSet) {

@@ -59,7 +59,7 @@ private extension SelectPriceView {
     private var priceTextField: some View {
         VStack(spacing: 8) {
             Text("Sum")
-                .foregroundStyle(.slateGrey)
+                .foregroundStyle(.lightGreyGreen)
                 .font(.footnote)
             
             HStack(spacing: 8) {

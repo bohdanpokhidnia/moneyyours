@@ -11,6 +11,16 @@ struct EmojiRowButtonStyle: ButtonStyle {
     let emoji: String
     let emojiBackground: Color
     
+    init(item: EmojiAvailable) {
+        self.emoji = item.emoji
+        self.emojiBackground = item.color
+    }
+    
+    init(emoji: String, emojiBackground: Color) {
+        self.emoji = emoji
+        self.emojiBackground = emojiBackground
+    }
+    
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 18) {
             EmojiView(

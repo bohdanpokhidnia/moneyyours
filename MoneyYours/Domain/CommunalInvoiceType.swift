@@ -8,9 +8,9 @@
 import SwiftUI
 import SharingGRDB
 
-enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBindable {
+enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAvailable, QueryBindable {
     var id: Int { rawValue }
-    static var fallbackCase: CommunalInvoiceType { .unknown }
+    static var fallbackCase: CommunalInvoiceType { .notSelected }
     
     static var allCases: [CommunalInvoiceType] {
         [
@@ -29,7 +29,7 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBi
     case gas
     case gasDelivery
     case garbageDisposal
-    case unknown
+    case notSelected
     
     var name: String {
         switch self {
@@ -39,7 +39,7 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBi
         case .gas: "Gas"
         case .gasDelivery: "Gas Delivery"
         case .garbageDisposal: "Garbage Disposal"
-        case .unknown: "Unknown"
+        case .notSelected: "Not selected"
         }
     }
     
@@ -50,20 +50,20 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, QueryBi
         case .heating: "🌡️"
         case .gas: "🔥"
         case .gasDelivery: "🚚"
-        case .garbageDisposal: "🗑️"
-        case .unknown: "⚙️"
+        case .garbageDisposal: "♻️"
+        case .notSelected: "❓"
         }
     }
     
-    var emojiBackground: Color {
+    var color: Color {
         switch self {
         case .electricity: .rubberDuckyYellow
         case .water: .artyClickSkyBlue
         case .heating: .artyClickWarmRed
         case .gas: .tomato
         case .gasDelivery: .yellowGreen
-        case .garbageDisposal: .slateGrey
-        case .unknown: .slateGrey
+        case .garbageDisposal: .lightGreyGreen
+        case .notSelected: .pastelGrey
         }
     }
 }

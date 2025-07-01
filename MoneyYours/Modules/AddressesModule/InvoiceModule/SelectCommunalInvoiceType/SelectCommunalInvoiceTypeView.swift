@@ -14,7 +14,7 @@ struct SelectCommunalInvoiceTypeView: View {
         VStack(spacing: 0) {
             DynamicTitleGradientHeaderView(
                 title: "Invoices",
-                configuration: GradientHeaderConfiguration(presetColors: .addresses)
+                configuration: .addresses
             )
             
             ScrollView {
@@ -26,7 +26,7 @@ struct SelectCommunalInvoiceTypeView: View {
                         .buttonStyle(
                             SelectInvoiceButtonStyle(
                                 emoji: invoiceType.emoji,
-                                emojiBackground: invoiceType.emojiBackground
+                                emojiBackground: invoiceType.color
                             )
                         )
                     }

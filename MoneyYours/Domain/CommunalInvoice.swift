@@ -9,7 +9,7 @@ import Foundation
 import SharingGRDB
 
 @Table
-struct CommunalInvoice: Identifiable, Equatable, Codable {
+struct CommunalInvoice: Identifiable, Hashable, Equatable, Codable {
     let id: UUID
     let addressId: Address.ID
     let year: Int
@@ -17,4 +17,14 @@ struct CommunalInvoice: Identifiable, Equatable, Codable {
     let monthInvoiceId: MonthInvoice.ID
     let type: CommunalInvoiceType
     let priceId: Price.ID
+    
+    static let preview = CommunalInvoice(
+        id: .init(),
+        addressId: .init(),
+        year: 2024,
+        name: "Preview",
+        monthInvoiceId: .init(),
+        type: .electricity,
+        priceId: .init()
+    )
 }

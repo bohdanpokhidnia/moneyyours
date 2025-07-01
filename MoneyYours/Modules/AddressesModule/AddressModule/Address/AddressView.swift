@@ -14,17 +14,10 @@ struct AddressView: View {
     var body: some View {
         ScrollableGradientHeaderView(
             title: viewModel.address.name,
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: .addresses
         ) {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
-                
-//                Button("Add month") {
-////                    viewModel.addInvoiceButtonTapped()
-//                }
-//                .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
-//                .tint(.black)
-//                .padding(16)
                 
                 ForEach(viewModel.monthInvoiceLists) { monthInvoiceList in
                     Text(monthInvoiceList.year.description)
@@ -34,12 +27,7 @@ struct AddressView: View {
                         Button(monthInvoice.month.name) {
                             viewModel.monthButtonTapped(monthInvoice: monthInvoice)
                         }
-                        .buttonStyle(
-                            EmojiRowButtonStyle(
-                                emoji: monthInvoice.month.emoji,
-                                emojiBackground: monthInvoice.month.color
-                            )
-                        )
+                        .buttonStyle(EmojiRowButtonStyle(item: monthInvoice.month))
                     }
                     .padding(.horizontal, 16)
                 }
