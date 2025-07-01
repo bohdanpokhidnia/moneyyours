@@ -9,9 +9,8 @@ import SharingGRDB
 import SwiftUI
 
 final class AddAddressViewModel: ObservableObject {
-    @Published var addressName: String = ""
-    
     @ObservedObject private var coordinator: Coordinator
+    @Published var addressName: String = ""
     @Dependency(\.defaultDatabase) private var database
     
     var isDisableSaveButton: Bool {

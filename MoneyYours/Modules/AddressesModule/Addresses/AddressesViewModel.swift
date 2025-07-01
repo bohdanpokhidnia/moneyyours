@@ -19,6 +19,8 @@ final class AddressesViewModel: ObservableObject {
     )
     var addresses: [Address]
     
+    @Dependency(\.defaultDatabase) private var database
+    
     init(coordinator: Coordinator) {
         self.coordinator = coordinator
     }
@@ -29,5 +31,22 @@ final class AddressesViewModel: ObservableObject {
     
     func tappedAt(address: Address) {
         coordinator.push(screen: .addressDetails(address: address))
+    }
+    
+    func deleteAddress(at indexSet: IndexSet) {
+        guard let element = indexSet.first else {
+            return
+        }
+        let address = addresses[element]
+        
+        do {
+            try database.write { db in
+                try Address
+                    .delete(address)
+                    .execute(db)
+            }
+        } catch {
+            print("[dev] Failed to delete monthInvoice: \(error)")
+        }
     }
 }

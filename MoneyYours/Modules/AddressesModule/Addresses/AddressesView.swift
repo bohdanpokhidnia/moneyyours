@@ -166,8 +166,8 @@ struct AddressesView: View {
     }
     
     private var addressesList: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
+        VStack(spacing: 16) {
+            List {
                 ForEach(viewModel.addresses) { address in
                     Button {
                         viewModel.tappedAt(address: address)
@@ -181,10 +181,36 @@ struct AddressesView: View {
                         )
                     )
                 }
+                .onDelete { indexSet in
+                    viewModel.deleteAddress(at: indexSet)
+                }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowBackground(Color.clear)
             }
-            .padding(.horizontal, 16)
         }
+        .listStyle(.plain)
+        .listRowSpacing(16)
         .scrollBounceBehavior(.basedOnSize)
         .lightThemeShadow()
     }
+}
+
+import SharingGRDB
+
+#Preview {
+    @Previewable @ObservedObject var coordinator  = Coordinator()
+    
+    let _ = prepareDependencies {
+        let databaseQueue = try! DatabaseQueue(path: mockDBURL().path)
+        try! createPriceTable(for: databaseQueue)
+        try! createAddressTable(for: databaseQueue)
+        try! createMonthInvoicesTable(for: databaseQueue)
+        try! createCommunalInvoiceTable(for: databaseQueue)
+        $0.defaultDatabase = databaseQueue
+    }
+    
+    AddressesView(
+        viewModel: AddressesViewModel(coordinator: coordinator)
+    )
 }
