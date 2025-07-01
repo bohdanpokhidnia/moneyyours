@@ -17,36 +17,45 @@ struct MonthView: View {
                 configuration: .addresses
             )
             
-            if viewModel.communalInvoiceLists.isEmpty {
-                EmptyView()
-            } else {
+            if !viewModel.communalInvoiceLists.isEmpty {
                 Button("Summary") {
                     viewModel.summaryButtonTapped()
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "hryvniasign.ring")))
                 .tint(.black)
                 .padding(.horizontal, 16)
-                
-                List {
-                    ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
-                        Button(communalInvoiceList.title) {
-                            print("[dev] tapped at \(communalInvoiceList)")
-                        }
-                        .buttonStyle(EmojiRowButtonStyle(item: communalInvoiceList.invoice.type))
-                    }
-                    .onDelete { indexSet in
-                        viewModel.deleteMonthInvoice(at: indexSet)
-                    }
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                    .listRowBackground(Color.clear)
-                }
-                .listStyle(.plain)
-                .listRowSpacing(16)
             }
+            
+            List {
+                ForEach(viewModel.communalInvoiceLists) { communalInvoiceList in
+                    Button(communalInvoiceList.title) {
+                        print("[dev] tapped at \(communalInvoiceList)")
+                    }
+                    .buttonStyle(EmojiRowButtonStyle(item: communalInvoiceList.invoice.type))
+                }
+                .onDelete { indexSet in
+                    viewModel.deleteMonthInvoice(at: indexSet)
+                }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowBackground(Color.clear)
+            }
+            .listStyle(.plain)
+            .listRowSpacing(16)
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
+        .overlay {
+            if viewModel.communalInvoiceLists.isEmpty {
+                EmptyStateView(
+                    state: EmptyStateView.State(
+                        image: Image(systemName: "doc.text.fill"),
+                        title: "No bills for \(viewModel.monthInvoice.month.title)",
+                        description: "Add your first bill for this month to easily track your expenses"
+                    )
+                )
+            }
+        }
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

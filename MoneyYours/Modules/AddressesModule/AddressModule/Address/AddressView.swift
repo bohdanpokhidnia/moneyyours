@@ -33,6 +33,7 @@ struct AddressView: View {
                 }
             }
             .padding(.bottom, 16)
+            .lightThemeShadow()
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)

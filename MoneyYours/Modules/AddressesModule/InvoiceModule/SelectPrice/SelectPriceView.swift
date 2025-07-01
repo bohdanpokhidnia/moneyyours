@@ -59,7 +59,7 @@ private extension SelectPriceView {
     private var priceTextField: some View {
         VStack(spacing: 8) {
             Text("Sum")
-                .foregroundStyle(.lightGreyGreen)
+                .foregroundStyle(.starDust)
                 .font(.footnote)
             
             HStack(spacing: 8) {
@@ -179,10 +179,12 @@ private extension SelectPriceView {
 }
 
 #Preview {
-    SelectPriceView(
-        viewModel: SelectPriceViewModel(
-            coordinator: .preview,
-            price: .constant(.calculate(id: UUID(5), value: .zero, count: .zero))
+    NavigationStack {
+        SelectPriceView(
+            viewModel: SelectPriceViewModel(
+                coordinator: .preview,
+                price: .constant(.calculate(id: UUID(5), value: .zero, count: .zero))
+            )
         )
-    )
+    }
 }

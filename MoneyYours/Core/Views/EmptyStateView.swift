@@ -1,5 +1,5 @@
 //
-//  TextEmptyStateView.swift
+//  EmptyStateView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 05.12.2024.
@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct TextEmptyStateView: View {
+struct EmptyStateView: View {
     struct State: Equatable {
+        var image: Image?
+        var imageColor: Color = .blue.opacity(0.7)
         let title: String
         let description: String
     }
@@ -16,7 +18,15 @@ struct TextEmptyStateView: View {
     let state: State
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 24) {
+            if let image = state.image {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .foregroundColor(state.imageColor)
+            }
+            
             Text(state.title)
                 .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(.textEmpyState)
@@ -30,8 +40,8 @@ struct TextEmptyStateView: View {
 }
 
 #Preview {
-    TextEmptyStateView(
-        state: TextEmptyStateView.State(
+    EmptyStateView(
+        state: EmptyStateView.State(
             title: "You’re offline",
             description: "There’s no internet connection right now. There’s no internet connection right now."
         )
