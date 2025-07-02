@@ -19,7 +19,9 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAv
             .heating,
             .gas,
             .gasDelivery,
-            .garbageDisposal
+            .garbageDisposal,
+            .rent,
+            .internet
         ]
     }
     
@@ -29,6 +31,8 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAv
     case gas
     case gasDelivery
     case garbageDisposal
+    case rent
+    case internet
     case notSelected
     
     var name: String {
@@ -39,6 +43,8 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAv
         case .gas: "Gas"
         case .gasDelivery: "Gas Delivery"
         case .garbageDisposal: "Garbage Disposal"
+        case .rent: "Rent"
+        case .internet: "Internet"
         case .notSelected: "Not selected"
         }
     }
@@ -51,6 +57,8 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAv
         case .gas: "🔥"
         case .gasDelivery: "🚚"
         case .garbageDisposal: "♻️"
+        case .rent: "🏡"
+        case .internet: "🌐"
         case .notSelected: "❓"
         }
     }
@@ -63,7 +71,20 @@ enum CommunalInvoiceType: Int, Identifiable, FallbackCase, CaseIterable, EmojiAv
         case .gas: .tomato
         case .gasDelivery: .yellowGreen
         case .garbageDisposal: .lightGreyGreen
+        case .rent: Color(hex: "#D5F5E3")
+        case .internet: Color(hex: "#EBF5FB")
         case .notSelected: .pastelGrey
+        }
+    }
+}
+
+#Preview {
+    VStack(spacing: 8) {
+        ForEach(CommunalInvoiceType.allCases) { type in
+            EmojiView(
+                emoji: type.emoji,
+                emojiBackground: type.color
+            )
         }
     }
 }
