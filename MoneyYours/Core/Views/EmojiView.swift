@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EmojiView: View {
     let emoji: String
-    var emojiFontSize: CGFloat = 20
+    var emojiFontSize: CGFloat = 28
     let emojiBackground: Color
     var size = CGSize(width: 48, height: 48)
     
@@ -28,6 +28,6 @@ struct EmojiView: View {
 #Preview("EmojiView", traits: .sizeThatFitsLayout) {
     EmojiView(
         emoji: "⚙️",
-        emojiBackground: .lightGreyGreen
+        emojiBackground: .artyClickSkyBlue
     )
 }
