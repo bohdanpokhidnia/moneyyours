@@ -6,54 +6,42 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
 
-@ViewAction(for: AddressFeature.self)
+
 struct AddressView: View {
-    @Bindable var store: StoreOf<AddressFeature>
+    @ObservedObject var viewModel: AddressViewModel
     
     var body: some View {
         ScrollableGradientHeaderView(
-            title: store.address.name,
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            title: viewModel.address.name,
+            configuration: .addresses
         ) {
             VStack(alignment: .leading, spacing: 16) {
                 subtitleText
                 
-                Button("Add invoice") {
-                    send(.addInvoiceButtonTapped)
-                }
-                .buttonStyle(ImageButtonStyle(image: Image(systemName: "plus.circle.fill")))
-                .tint(.black)
-                .padding(16)
-                
-                ForEach(store.yeas, id: \.self) { year in
-                    Text(year.description)
+                ForEach(viewModel.monthInvoiceLists) { monthInvoiceList in
+                    Text(monthInvoiceList.year.description)
                         .frame(maxWidth: .infinity)
                     
-                    ForEach(store.address.communalInvoices.filter({ $0.year == year })) { communalInvoice in
-                        Button(communalInvoice.month.name) {
-                            
+                    ForEach(monthInvoiceList.monthInvoices) { monthInvoice in
+                        Button(monthInvoice.month.name) {
+                            viewModel.monthButtonTapped(monthInvoice: monthInvoice)
                         }
-                        .buttonStyle(
-                            EmojiRowButtonStyle(
-                                emoji: communalInvoice.month.emoji,
-                                emojiBackground: communalInvoice.month.color
-                            )
-                        )
+                        .buttonStyle(EmojiRowButtonStyle(item: monthInvoice.month))
                     }
                     .padding(.horizontal, 16)
                 }
             }
             .padding(.bottom, 16)
+            .lightThemeShadow()
         }
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    send(.backButtonTapped)
+                Button{
+                    viewModel.backButtonTapped()
                 } label: {
                     Image(systemName: "arrow.backward")
                         .tint(.white)
@@ -61,11 +49,20 @@ struct AddressView: View {
             }
             
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    send(.settingsButtonTapped)
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .foregroundStyle(.white)
+                HStack(spacing: 8) {
+                    Button {
+                        viewModel.addMonthButtonTapped()
+                    } label: {
+                        Image(systemName: "plus")
+                            .foregroundStyle(.white)
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .foregroundStyle(.white)
+                    }
                 }
             }
         }
@@ -78,11 +75,11 @@ private extension AddressView {
     private var subtitleText: some View {
         HStack {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Invoices")
+                Text("Months")
                     .font(.system(size: 19, weight: .bold))
                     .foregroundStyle(.primaryText)
                 
-                Text("Add invoices for billing")
+                Text("Add month for billing")
                     .foregroundStyle(.starDust)
                     .font(.system(size: 14, weight: .regular))
             }
@@ -96,11 +93,10 @@ private extension AddressView {
 #Preview {
     NavigationStack {
         AddressView(
-            store: Store(
-                initialState: AddressFeature.State(address: .preview)
-            ) {
-                AddressFeature()
-            }
+            viewModel: AddressViewModel(
+                coordinator: .preview,
+                address: .activeAddress
+            )
         )
         .setupNavigationTransparent()
     }

@@ -5,52 +5,43 @@
 //  Created by Bohdan Pokhidnia on 17.12.2024.
 //
 
-import ComposableArchitecture
 import SwiftUI
 
-@ViewAction(for: AddInvoiceFeature.self)
 struct AddInvoiceView: View {
-    @Bindable var store: StoreOf<AddInvoiceFeature>
+    @ObservedObject var viewModel: AddInvoiceViewModel
     
     var body: some View {
         ScrollableGradientHeaderView(
             title: "Add invoice",
-            configuration: GradientHeaderConfiguration(presetColors: .addresses)
+            configuration: .addresses
         ) {
             VStack(spacing: 16) {
                 EmojiFieldView(
                     title: "Invoice name",
                     emoji: "🧾",
                     emojiBackground: Color(hex: "#F5F5F5"),
-                    inputType: .textFiled(text: $store.name)
-                )
-                
-                EmojiFieldView(
-                    title: "Invoice type",
-                    emoji: store.invoiceType.emoji,
-                    emojiBackground: store.invoiceType.emojiBackground,
-                    inputType: .text(store.invoiceType.name)
+                    inputType: .textFiled(text: viewModel.name)
                 )
                 
                 Button {
-                    send(.monthButtonTapped)
+                    viewModel.invoiceTypeButtonTapped()
                 } label: {
                     EmojiFieldView(
-                        title: "Month",
-                        emoji: store.month.wrappedValue.emoji,
-                        emojiBackground: store.month.wrappedValue.color,
-                        inputType: .text(store.month.wrappedValue.name)
+                        title: "Invoice type",
+                        emoji: viewModel.invoiceType.wrappedValue.emoji,
+                        emojiBackground: viewModel.invoiceType.wrappedValue.color,
+                        inputType: .text(viewModel.invoiceType.wrappedValue.name)
                     )
                 }
                 
                 Button {
-                    send(.priceButtonTapped)
+                    viewModel.priceButtonTapped()
                 } label: {
                     EmojiFieldView(
                         title: "Price",
                         emoji: "💵",
                         emojiBackground: Color(hex: "#D4EFDF"),
-                        inputType: .text(store.price.sum.formatted(.ukrainianHryvnia))
+                        inputType: .text(viewModel.price.wrappedValue.sum.formatted(.ua))
                     )
                 }
             }
@@ -58,12 +49,12 @@ struct AddInvoiceView: View {
             .lightThemeShadow()
             
             Button("Save") {
-                send(.saveButtonTapped)
+                viewModel.saveButtonTapped()
             }
             .buttonStyle(
                 BottomActionButtonStyle(fillColor: .beanRed)
             )
-            .disabled(store.isDisableSaveButton)
+            .disabled(viewModel.isDisableSaveButton)
             .frame(height: 56)
             .padding(16)
         }
@@ -73,7 +64,7 @@ struct AddInvoiceView: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    send(.backButtonTapped)
+                    viewModel.backButtonTapped()
                 } label: {
                     Image(systemName: "arrow.backward")
                         .tint(.white)
@@ -86,11 +77,12 @@ struct AddInvoiceView: View {
 #Preview {
     NavigationStack {
         AddInvoiceView(
-            store: Store(
-                initialState: AddInvoiceFeature.State(month: Shared(.january)),
-                reducer: {
-                    AddInvoiceFeature()
-                }
+            viewModel: AddInvoiceViewModel(
+                coordinator: .preview,
+                monthInvoice: .preview,
+                name: .constant("Name"),
+                invoiceType: .constant(.notSelected),
+                price: .constant(.fixed(id: UUID(5), value: .zero))
             )
         )
     }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TitleGradientHeaderView: View {
     let title: String
+    var titleColor: Color = .white
     var titleAlignment: Alignment = .bottomLeading
     let configuration: GradientHeaderConfiguration
 
@@ -26,7 +27,7 @@ private extension TitleGradientHeaderView {
     var titleText: some View {
         Text(title)
             .font(.screenTitle)
-            .foregroundStyle(.white)
+            .foregroundStyle(titleColor)
             .lineLimit(1)
             .padding([.horizontal, .bottom], 16)
     }
@@ -35,6 +36,6 @@ private extension TitleGradientHeaderView {
 #Preview {
     TitleGradientHeaderView(
         title: "Title",
-        configuration: GradientHeaderConfiguration(presetColors: .addresses)
+        configuration: .addresses
     )
 }

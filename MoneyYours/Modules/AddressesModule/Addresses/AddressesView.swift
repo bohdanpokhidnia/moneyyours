@@ -6,21 +6,21 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
 
-@ViewAction(for: AddressesFeature.self)
 struct AddressesView: View {
-    @Bindable var store: StoreOf<AddressesFeature>
+    @ObservedObject var viewModel: AddressesViewModel
+    @State private var invoiceName: String = "Name"
+    @State private var communalInvoiceType: CommunalInvoiceType = .notSelected
+    @State private var month: Month = .unknown
+    @State private var price: Price = .fixed(id: UUID(), value: .zero)
     
     var body: some View {
-        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+        NavigationStack(path: $viewModel.coordinator.path) {
             VStack(alignment: .leading, spacing: 0) {
-                GradientHeaderView(
-                    configuration: GradientHeaderConfiguration(presetColors: .addresses)
-                )
-                .frame(height: safeArea.bottom == .zero ? 147 : 187)
-                .padding(.bottom, -111)
-                    
+                GradientHeaderView(configuration: .addresses)
+                    .frame(height: safeArea.bottom == .zero ? 147 : 187)
+                    .padding(.bottom, -111)
+                
                 titleText
                     .padding(.leading, 16)
                 
@@ -36,34 +36,91 @@ struct AddressesView: View {
             }
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
-            .onAppear {
-                send(.onAppear)
+            .navigationDestination(for: Screen.self) { screen in
+                switch screen {
+                case .addAddress:
+                    AddAddressView(
+                        viewModel: AddAddressViewModel(
+                            coordinator: viewModel.coordinator
+                        )
+                    )
+                    
+                case let .addressDetails(address):
+                    AddressView(
+                        viewModel: AddressViewModel(
+                            coordinator: viewModel.coordinator,
+                            address: address
+                        )
+                    )
+                    
+                case let .addInvoice(monthInvoice):
+                    AddInvoiceView(
+                        viewModel: AddInvoiceViewModel(
+                            coordinator: viewModel.coordinator,
+                            monthInvoice: monthInvoice,
+                            name: $invoiceName,
+                            invoiceType: $communalInvoiceType,
+                            price: $price
+                        )
+                    )
+                    
+                case .selectCommunalInvoice:
+                    SelectCommunalInvoiceTypeView(
+                        viewModel: SelectCommunalInvoiceTypeViewModel(
+                            coordinator: viewModel.coordinator,
+                            selectedInvoiceType: $communalInvoiceType
+                        )
+                    )
+                    
+                case .selectPrice:
+                    SelectPriceView(
+                        viewModel: SelectPriceViewModel(
+                            coordinator: viewModel.coordinator,
+                            price: $price
+                        )
+                    )
+                    
+                case let .addMonth(addressId):
+                    AddMonthView(
+                        viewModel: AddMonthViewModel(
+                            coordinator: viewModel.coordinator,
+                            addressId: addressId
+                        )
+                    )
+                    
+                case let .month(monthInvoice):
+                    MonthView(
+                        viewModel: MonthViewModel(
+                            coordinator: viewModel.coordinator,
+                            monthInvoice: monthInvoice
+                        )
+                    )
+                    
+                case let .summary(communalInvoiceLists):
+                    SummaryView(
+                        viewModel: SummaryViewModel(
+                            coordinator: viewModel.coordinator,
+                            communalInvoiceLists: communalInvoiceLists
+                        )
+                    )
+                }
             }
-        } destination: { (store) in
-            switch store.case {
-            case let .addAddress(store):
-                AddAddressView(store: store)
-                
-            case let .address(store):
-                AddressView(store: store)
-                
-            case let .addressSettings(store):
-                AddressSettingsView(store: store)
-                
-            case let .archivedAddresses(store):
-                ArchivedAddressesView(store: store)
-                
-            case let .addInvoice(store):
-                AddInvoiceView(store: store)
-                
-            case let .addPrice(store):
-                AddPriceView(store: store)
-                
-            case let .selectMonth(store):
-                SelectMonthView(store: store)
-                
-            case let .invoiceSelectionList(store):
-                InvoiceSelectionListView(store: store)
+            .sheet(
+                item: viewModel.$coordinator.presentedSheet,
+                onDismiss: {
+                    viewModel.coordinator.onDismiss?(viewModel.coordinator.lastPresentedSheet)
+                }
+            ) { sheet in
+                switch sheet {
+                case .selectPriceType:
+                    SelectPriceTypeView(
+                        viewModel: SelectPriceTypeViewModel(
+                            coordinator: viewModel.coordinator,
+                            priceKind: $price.kind
+                        )
+                    )
+                    .presentationDetents([.height(260)])
+                }
             }
         }
     }
@@ -78,7 +135,7 @@ struct AddressesView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 24) {
                 Button("Add address") {
-                    send(.addButtonTapped)
+                    viewModel.addAddressButtonTapped()
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -88,7 +145,7 @@ struct AddressesView: View {
                 )
                 
                 Button("Archive") {
-                    send(.archiveButtonTapped)
+                    
                 }
                 .buttonStyle(
                     ActionAddressesButtonStyle(
@@ -109,12 +166,12 @@ struct AddressesView: View {
     }
     
     private var addressesList: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            LazyVStack(spacing: 16) {
-                ForEach(store.addresses) { address in
-                    NavigationLink(
-                        state: AddressesFeature.Path.State.address(AddressFeature.State(address: address))
-                    ) {
+        VStack(spacing: 16) {
+            List {
+                ForEach(viewModel.addresses) { address in
+                    Button {
+                        viewModel.tappedAt(address: address)
+                    } label: {
                         Text(address.name)
                     }
                     .buttonStyle(
@@ -124,20 +181,36 @@ struct AddressesView: View {
                         )
                     )
                 }
+                .onDelete { indexSet in
+                    viewModel.deleteAddress(at: indexSet)
+                }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowBackground(Color.clear)
             }
-            .padding(.horizontal, 16)
         }
+        .listStyle(.plain)
+        .listRowSpacing(16)
         .scrollBounceBehavior(.basedOnSize)
         .lightThemeShadow()
     }
 }
 
+import SharingGRDB
+
 #Preview {
-    NavigationStack {
-        AddressesView(
-            store: Store(initialState: AddressesFeature.State(addresses: .preview)) {
-                AddressesFeature()
-            }
-        )
+    @Previewable @ObservedObject var coordinator  = Coordinator()
+    
+    let _ = prepareDependencies {
+        let databaseQueue = try! DatabaseQueue(path: mockDBURL().path)
+        try! createPriceTable(for: databaseQueue)
+        try! createAddressTable(for: databaseQueue)
+        try! createMonthInvoicesTable(for: databaseQueue)
+        try! createCommunalInvoiceTable(for: databaseQueue)
+        $0.defaultDatabase = databaseQueue
     }
+    
+    AddressesView(
+        viewModel: AddressesViewModel(coordinator: coordinator)
+    )
 }

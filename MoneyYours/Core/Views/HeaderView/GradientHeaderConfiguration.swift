@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct GradientHeaderConfiguration {
-    var colors: [Color]? = nil
-    var presetColors: GradientHeaderView.PresetColors? = nil
+    var colors: [Color]
+}
+
+extension GradientHeaderConfiguration {
+    static let addresses = GradientHeaderConfiguration(colors: [.cerulean, .richElectricBlue, .frenchBlue])
+    static let clear = GradientHeaderConfiguration(colors: [])
 }

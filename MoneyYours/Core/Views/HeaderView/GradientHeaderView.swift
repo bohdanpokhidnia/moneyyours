@@ -8,42 +8,22 @@
 import SwiftUI
 
 struct GradientHeaderView: View {
-    let colors: [Color]
+    let configuration: GradientHeaderConfiguration
     
     init(configuration: GradientHeaderConfiguration) {
-        if let colors = configuration.colors {
-            self.colors = colors
-        } else if let presetColors = configuration.presetColors {
-            self.colors = presetColors.colors
-        } else {
-            self.colors = []
-        }
+        self.configuration = configuration
     }
     
     var body: some View {
         LinearGradient(
-            gradient: Gradient(colors: colors),
+            gradient: Gradient(colors: configuration.colors),
             startPoint: UnitPoint(x: 0.11966469444160704, y: 8.33727533122719e-8),
             endPoint: UnitPoint(x: 0.8125000346174127, y: 0.9733925237930536)
         )
     }
 }
 
-extension GradientHeaderView {
-    enum PresetColors {
-        case addresses
-        
-        var colors: [Color] {
-            switch self {
-            case .addresses: [.cerulean, .richElectricBlue, .frenchBlue]
-            }
-        }
-    }
-}
-
 #Preview("GradientHeaderView", traits: .sizeThatFitsLayout) {
-    GradientHeaderView(
-        configuration: GradientHeaderConfiguration(presetColors: .addresses)
-    )
-    .frame(height: 147)
+    GradientHeaderView(configuration: .addresses)
+        .frame(height: 147)
 }

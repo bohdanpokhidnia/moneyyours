@@ -1,0 +1,30 @@
+//
+//  CommunalInvoice.swift
+//  MoneyYours
+//
+//  Created by Bohdan Pokhidnia on 16.06.2024.
+//
+
+import Foundation
+import SharingGRDB
+
+@Table
+struct CommunalInvoice: Identifiable, Hashable, Equatable, Codable {
+    let id: UUID
+    let addressId: Address.ID
+    let year: Int
+    let name: String
+    let monthInvoiceId: MonthInvoice.ID
+    let type: CommunalInvoiceType
+    let priceId: Price.ID
+    
+    static let preview = CommunalInvoice(
+        id: .init(),
+        addressId: .init(),
+        year: 2024,
+        name: "Preview",
+        monthInvoiceId: .init(),
+        type: .electricity,
+        priceId: .init()
+    )
+}
