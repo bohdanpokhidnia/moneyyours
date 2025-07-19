@@ -40,6 +40,9 @@ struct AddMonthView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 

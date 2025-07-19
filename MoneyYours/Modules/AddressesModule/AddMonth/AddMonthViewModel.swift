@@ -14,12 +14,15 @@ final class AddMonthViewModel: ObservableObject {
     
     @Dependency(\.dateService) private var dateService
     @Dependency(\.defaultDatabase) private var database
-    
-    let months = Month.allCases
+    @Published private(set) var months: [Month] = []
     
     init(coordinator: Coordinator, addressId: Address.ID) {
         self.coordinator = coordinator
         self.addressId = addressId
+    }
+    
+    func onAppear() {
+        fetchMonths()
     }
     
     func backButtonTapped() {
@@ -32,6 +35,14 @@ final class AddMonthViewModel: ObservableObject {
 }
 
 private extension AddMonthViewModel {
+    func fetchMonths() {
+        do throws(DateServiceError) {
+            months = try dateService.sortedMonthAtCurrent(.current, .now)
+        } catch {
+            print("[dev] Failed fetch months: \(error)")
+        }
+    }
+    
     func save(month: Month) {
         let year = dateService.currentYear(.current, .now)
         let monthInvoice = MonthInvoice(
