@@ -13,7 +13,7 @@ struct AddressView: View {
     
     var body: some View {
         ScrollableGradientHeaderView(
-            title: viewModel.address.name,
+            title: viewModel.address?.name ?? "Unknown",
             configuration: .addresses
         ) {
             VStack(alignment: .leading, spacing: 16) {
@@ -58,7 +58,7 @@ struct AddressView: View {
                     }
                     
                     Button {
-                        
+                        viewModel.settingsButtonTapped()
                     } label: {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(.white)
@@ -95,7 +95,7 @@ private extension AddressView {
         AddressView(
             viewModel: AddressViewModel(
                 coordinator: .preview,
-                address: .activeAddress
+                addressId: UUID(1)
             )
         )
         .setupNavigationTransparent()

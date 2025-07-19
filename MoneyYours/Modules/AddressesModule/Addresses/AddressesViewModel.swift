@@ -30,7 +30,7 @@ final class AddressesViewModel: ObservableObject {
     }
     
     func tappedAt(address: Address) {
-        coordinator.push(screen: .addressDetails(address: address))
+        coordinator.push(screen: .addressDetails(addressId: address.id))
     }
     
     func deleteAddress(at indexSet: IndexSet) {

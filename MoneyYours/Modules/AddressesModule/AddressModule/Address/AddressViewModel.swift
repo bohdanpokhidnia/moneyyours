@@ -16,17 +16,17 @@ final class AddressViewModel: ObservableObject {
     }
     
     @ObservedObject private var coordinator: Coordinator
-    let address: Address
+    @FetchOne var address: Address?
     
     @FetchAll
     private var monthInvoices: [MonthInvoice]
     
     @Published private(set) var monthInvoiceLists: [MonthInvoiceList] = []
     
-    init(coordinator: Coordinator, address: Address) {
+    init(coordinator: Coordinator, addressId: Address.ID) {
         self.coordinator = coordinator
-        self.address = address
 
+        fetchAddress(at: addressId)
         fetchMonths()
     }
     
@@ -35,7 +35,17 @@ final class AddressViewModel: ObservableObject {
     }
     
     func addMonthButtonTapped() {
+        guard let address else {
+            return
+        }
         coordinator.push(screen: .addMonth(addressId: address.id))
+    }
+    
+    func settingsButtonTapped() {
+        guard let address else {
+            return
+        }
+        coordinator.push(screen: .addressSettings(address: address))
     }
     
     func monthButtonTapped(monthInvoice: MonthInvoice) {
@@ -44,7 +54,15 @@ final class AddressViewModel: ObservableObject {
 }
 
 private extension AddressViewModel {
+    func fetchAddress(at addressId: Address.ID) {
+        _address = FetchOne(wrappedValue: address, Address.where { $0.id == addressId })
+    }
+    
     func fetchMonths() {
+        guard let address else {
+            return
+        }
+        
         let invoicesForAddress = monthInvoices
             .filter { $0.addressId == address.id }
             .sorted { $0.year < $1.year }

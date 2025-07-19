@@ -9,8 +9,9 @@ import SwiftUI
 
 enum Screen: Hashable {
     case addAddress
-    case addressDetails(address: Address)
+    case addressDetails(addressId: Address.ID)
     case addInvoice(monthInvoice: MonthInvoice)
+    case addressSettings(address: Address)
     case selectCommunalInvoice
     case selectPrice
     case addMonth(addressId: Address.ID)

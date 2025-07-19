@@ -45,11 +45,11 @@ struct AddressesView: View {
                         )
                     )
                     
-                case let .addressDetails(address):
+                case let .addressDetails(addressId):
                     AddressView(
                         viewModel: AddressViewModel(
                             coordinator: viewModel.coordinator,
-                            address: address
+                            addressId: addressId
                         )
                     )
                     
@@ -61,6 +61,14 @@ struct AddressesView: View {
                             name: $invoiceName,
                             invoiceType: $communalInvoiceType,
                             price: $price
+                        )
+                    )
+                    
+                case let .addressSettings(address):
+                    AddressSettingsView(
+                        viewModel: AddressSettingsViewModel(
+                            coordinator: viewModel.coordinator,
+                            address: address
                         )
                     )
                     
