@@ -51,7 +51,7 @@ private extension AddressSettingsViewModel {
     func archivedAddress() {
         address.state = .archived
         updateAddress()
-        coordinator.dismiss()
+        coordinator.toRoot()
     }
     
     func updateAddress() {
