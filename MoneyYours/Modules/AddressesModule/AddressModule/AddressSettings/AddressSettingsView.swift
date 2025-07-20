@@ -50,7 +50,7 @@ struct AddressSettingsView: View {
                 .tint(.gray)
                 
                 Button("Remove address") {
-
+                    viewModel.removeAddressButtonTapped()
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "trash")))
                 .tint(.beanRed)

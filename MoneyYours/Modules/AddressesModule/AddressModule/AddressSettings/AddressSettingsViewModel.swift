@@ -31,11 +31,27 @@ final class AddressSettingsViewModel: ObservableObject {
                 actions: {
                     AlertAction(
                         title: "Confirm",
-                        role: .destructive,
-                        action: { [weak self] in
-                            self?.archivedAddress()
-                        }
-                    )
+                        role: .destructive
+                    ) { [weak self] in
+                        self?.archivedAddress()
+                    }
+                }
+            )
+        )
+    }
+    
+    func removeAddressButtonTapped() {
+        coordinator.present(
+            alert: Alert(
+                title: "Do yo want remove?",
+                message: address.name,
+                actions: {
+                    AlertAction(
+                        title: "Confirm",
+                        role: .destructive
+                    ) { [weak self] in
+                        self?.removeAddress()
+                    }
                 }
             )
         )
@@ -63,6 +79,21 @@ private extension AddressSettingsViewModel {
             }
         } catch {
             print("[dev] Failed to update address: \(error)")
+        }
+    }
+    
+    func removeAddress() {
+        do {
+            try database.write { db in
+                try Address
+                    .where { $0.id == address.id }
+                    .delete()
+                    .execute(db)
+                
+                coordinator.toRoot()
+            }
+        } catch {
+            print("[dev] Failed to remove address: \(error)")
         }
     }
 }
