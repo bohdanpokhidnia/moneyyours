@@ -14,7 +14,9 @@ final class AddressesViewModel: ObservableObject {
     @Published var month: Month = .unknown
     
     @FetchAll(
-        Address.order(by: \.name),
+        Address
+            .where { $0.state == AddressState.active }
+            .order(by: \.name),
         animation: .easeIn
     )
     var addresses: [Address]
