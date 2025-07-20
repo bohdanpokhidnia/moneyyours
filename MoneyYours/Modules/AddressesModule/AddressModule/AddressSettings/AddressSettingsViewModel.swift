@@ -23,14 +23,37 @@ final class AddressSettingsViewModel: ObservableObject {
         coordinator.dismiss()
     }
     
+    func addToArchiveButtonTapped() {
+        coordinator.present(
+            alert: Alert(
+                title: "Do yo want move to archive?",
+                message: address.name,
+                actions: {
+                    AlertAction(
+                        title: "Confirm",
+                        role: .destructive,
+                        action: { [weak self] in
+                            self?.archivedAddress()
+                        }
+                    )
+                }
+            )
+        )
+    }
+    
     func saveButtonTapped() {
-        print("[dev] \(address)")
         updateAddress()
         coordinator.dismiss()
     }
 }
 
 private extension AddressSettingsViewModel {
+    func archivedAddress() {
+        address.state = .archived
+        updateAddress()
+        coordinator.dismiss()
+    }
+    
     func updateAddress() {
         do {
             try database.write { db in

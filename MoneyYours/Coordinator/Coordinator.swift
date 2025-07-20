@@ -5,12 +5,25 @@
 //  Created by Bohdan Pokhidnia on 27.06.2025.
 //
 
-import Foundation
+import SwiftUI
 
 final class Coordinator: ObservableObject {
     @Published var path: [Screen] = []
     @Published var presentedSheet: Sheet?
+    @Published var presentedAlert: Alert?
     private(set) var lastPresentedSheet: Sheet?
+    
+    var isPresentedAlert: Binding<Bool> {
+        Binding(
+            get: { [weak self] in
+                self?.presentedAlert != nil
+            },
+            set: { [weak self] newValue in
+                guard !newValue else { return }
+                self?.presentedAlert = nil
+            }
+        )
+    }
     
     var onDismiss: ((Sheet?) -> Void)?
     
@@ -21,6 +34,10 @@ final class Coordinator: ObservableObject {
     func present(sheet: Sheet) {
         presentedSheet = sheet
         lastPresentedSheet = sheet
+    }
+    
+    func present(alert: Alert) {
+        presentedAlert = alert
     }
     
     func dismiss() {

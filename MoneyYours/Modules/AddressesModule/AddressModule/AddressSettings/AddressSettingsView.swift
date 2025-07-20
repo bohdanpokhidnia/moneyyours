@@ -44,7 +44,7 @@ struct AddressSettingsView: View {
             
             VStack(spacing: 16) {
                 Button("Add to archive") {
-
+                    viewModel.addToArchiveButtonTapped()
                 }
                 .buttonStyle(ImageButtonStyle(image: Image(systemName: "archivebox")))
                 .tint(.gray)

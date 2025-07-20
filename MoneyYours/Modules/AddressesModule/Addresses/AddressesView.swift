@@ -130,6 +130,20 @@ struct AddressesView: View {
                     .presentationDetents([.height(260)])
                 }
             }
+            .alert(
+                viewModel.coordinator.presentedAlert?.title ?? "Unknown title",
+                isPresented: viewModel.coordinator.isPresentedAlert,
+            ) {
+                if let actions = viewModel.coordinator.presentedAlert?.actions {
+                    ForEach(actions) { a in
+                        Button(a.title, role: a.role, action: a.action)
+                    }
+                }
+            } message: {
+                if let message = viewModel.coordinator.presentedAlert?.message {
+                    Text(message)
+                }
+            }
         }
     }
     
