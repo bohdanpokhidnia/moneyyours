@@ -40,9 +40,8 @@ struct AddressesView: View {
                 switch screen {
                 case .addAddress:
                     AddAddressView(
-                        viewModel: AddAddressViewModel(
-                            coordinator: viewModel.coordinator
-                        )
+//                        viewModel: AddAddressViewModel(coordinator: viewModel.coordinator)
+                        viewModel: AddAddressViewModel1(coordinator: viewModel.coordinator)
                     )
                     
                 case let .addressDetails(addressId):

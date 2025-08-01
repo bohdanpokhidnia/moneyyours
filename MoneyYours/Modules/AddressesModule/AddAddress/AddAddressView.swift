@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct AddAddressView: View {
-    @ObservedObject var viewModel: AddAddressViewModel
+//    @ObservedObject var viewModel: AddAddressViewModel
+    @ObservedObject var viewModel: AddAddressViewModel1
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,6 +31,10 @@ struct AddAddressView: View {
             )
             .textFieldStyle(GrayTextField())
             .padding(16)
+            
+//            if viewModel.isLoading {
+//                ProgressView()
+//            }
             
             Spacer()
             
@@ -60,6 +65,13 @@ struct AddAddressView: View {
 
 #Preview {
     NavigationStack {
-        AddAddressView(viewModel: AddAddressViewModel(coordinator: .preview))
+        AddAddressView(
+//            viewModel: AddAddressViewModel(
+//                coordinator: .preview
+//            )
+            viewModel: AddAddressViewModel1(
+                coordinator: .preview
+            )
+        )
     }
 }
