@@ -8,44 +8,6 @@
 import SharingGRDB
 import SwiftUI
 
-//final class AddAddressViewModel: ObservableObject {
-//    @ObservedObject private var coordinator: Coordinator
-//    @Published var addressName: String = ""
-//    @Dependency(\.defaultDatabase) private var database
-//    
-//    var isDisableSaveButton: Bool {
-//        addressName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-//    }
-//    
-//    init(coordinator: Coordinator) {
-//        self.coordinator = coordinator
-//    }
-//    
-//    func backButtonTapped() {
-//        coordinator.dismiss()
-//    }
-//    
-//    func saveButtonTapped() {
-//        let address = Address(
-//            id: UUID(),
-//            name: addressName,
-//            state: .active
-//        )
-//        
-//        do {
-//            try database.write { db in
-//                try Address
-//                    .insert { address }
-//                    .execute(db)
-//            }
-//            
-//            coordinator.dismiss()
-//        } catch {
-//            print("[dev] Failed to save address: \(error)")
-//        }
-//    }
-//}
-
 final class NetworkClient {
     func post(addressName: String) async throws -> Address {
         try await Task.sleep(nanoseconds: 3_000_000_000)
@@ -57,6 +19,51 @@ final class NetworkClient {
         return address
     }
 }
+
+//final class AddAddressViewModel: ObservableObject {
+//    @ObservedObject private var coordinator: Coordinator
+//    @Published var addressName: String = ""
+//    @Dependency(\.defaultDatabase) private var database
+//    
+//    var isDisableSaveButton: Bool {
+//        addressName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+//    }
+//    
+//    @Published private(set) var isLoading: Bool = false
+//    
+//    init(coordinator: Coordinator) {
+//        self.coordinator = coordinator
+//    }
+//    
+//    func backButtonTapped() {
+//        coordinator.dismiss()
+//    }
+//    
+//    func saveButtonTapped() {
+//        isLoading = true
+//        
+//        Task {
+//            do {
+//                let address = try await NetworkClient().post(addressName: addressName)
+//                print("Fetched Address: \(address)")
+//                await MainActor.run {
+//                    isLoading = false
+//                    backButtonTapped()
+//                }
+//            } catch {
+//                print("Failed send address: \(error)")
+//                await MainActor.run {
+//                    isLoading = false
+//                    showFailureToast(text: error.localizedDescription)
+//                }
+//            }
+//        }
+//    }
+//    
+//    private func showFailureToast(text: String) {
+//        print("[dev] Failure: \(text)")
+//    }
+//}
 
 import Combine
 
@@ -95,20 +102,20 @@ final class AddAddressViewModel1: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func update(name: String) {
-        let actions = updateAddress(name: name)
-        
-        for action in actions {
-            perform(action: action)
-        }
-    }
-    
     func updateAddress(name: String) -> [Action] {
         let actions: [Action] = [
             .setAddress(name: name),
             .setSaveButton(disabled: name.isEmpty)
         ]
         return actions
+    }
+    
+    func update(name: String) {
+        let actions = updateAddress(name: name)
+        
+        for action in actions {
+            perform(action: action)
+        }
     }
     
     func perform(action: Action) {
@@ -128,9 +135,10 @@ final class AddAddressViewModel1: ObservableObject {
         case let .send(name, onSuccess, onFailure):
             Task {
                 do {
-                    let _ = try await NetworkClient().post(addressName: name)
+                    let address = try await NetworkClient().post(addressName: name)
                     await MainActor.run {
-                        perform(action: onSuccess)
+//                        perform(action: onSuccess)
+                        parse(address: address)
                     }
                 } catch {
                     await MainActor.run {
@@ -140,8 +148,24 @@ final class AddAddressViewModel1: ObservableObject {
             }
             
         case let .showFailureToast(text):
-            print("[dev] Failure: \(text)")
+            showFailureToast(text: text)
         }
+    }
+    
+    func parse(address: Address) {
+//        let actions = savingAddress(name: formattedAddressName)
+//
+        if isLoading {
+            if isDisableSaveButton {
+                ///
+            } else {
+                ///
+            }
+        }
+        
+//        for action in actions {
+//            perform(action: action)
+//        }
     }
     
     func backButtonTapped() {
@@ -166,5 +190,9 @@ final class AddAddressViewModel1: ObservableObject {
             )
         ]
         return actions
+    }
+    
+    private func showFailureToast(text: String) {
+        print("[dev] Failure: \(text)")
     }
 }
