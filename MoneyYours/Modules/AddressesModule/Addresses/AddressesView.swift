@@ -135,8 +135,12 @@ struct AddressesView: View {
                 isPresented: viewModel.coordinator.isPresentedAlert,
             ) {
                 if let actions = viewModel.coordinator.presentedAlert?.actions {
-                    ForEach(actions) { a in
-                        Button(a.title, role: a.role, action: a.action)
+                    ForEach(actions) { action in
+                        Button(
+                            action.title,
+                            role: action.role,
+                            action: action.action
+                        )
                     }
                 }
             } message: {
@@ -214,7 +218,6 @@ struct AddressesView: View {
         .listStyle(.plain)
         .listRowSpacing(16)
         .scrollBounceBehavior(.basedOnSize)
-        .lightThemeShadow()
     }
 }
 
