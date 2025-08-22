@@ -5,13 +5,13 @@
 //  Created by Bohdan Pokhidnia on 22.08.2025.
 //
 
-import SwiftUI
 import SharingGRDB
+import SwiftUI
 
 struct PreviewDatabaseDependencies<Content: View>: View {
-    var content: (() -> Content)
+    var content: () -> Content
     
-    init(content: @escaping (() -> Content)) {
+    init(content: @escaping () -> Content) {
         self.content = content
         
         let _ = prepareDependencies {

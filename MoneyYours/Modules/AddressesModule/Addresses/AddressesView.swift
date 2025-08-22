@@ -9,13 +9,9 @@ import SwiftUI
 
 struct AddressesView: View {
     @ObservedObject var viewModel: AddressesViewModel
-    @State private var invoiceName: String = "Name"
-    @State private var communalInvoiceType: CommunalInvoiceType = .notSelected
-    @State private var month: Month = .unknown
-    @State private var price: Price = .fixed(id: UUID(), value: .zero)
     
     var body: some View {
-        NavigationStack(path: $viewModel.coordinator.path) {
+        CoordinatorNavigationStack(coordinator: viewModel.coordinator) {
             VStack(alignment: .leading, spacing: 0) {
                 GradientHeaderView(configuration: .addresses)
                     .frame(height: safeArea.bottom == .zero ? 147 : 187)
@@ -36,118 +32,6 @@ struct AddressesView: View {
             }
             .ignoresSafeArea(.container, edges: [.top])
             .background(.appBackground)
-            .navigationDestination(for: Screen.self) { screen in
-                switch screen {
-                case .addAddress:
-                    AddAddressView(
-                        viewModel: AddAddressViewModel(
-                            coordinator: viewModel.coordinator
-                        )
-                    )
-                    
-                case let .addressDetails(addressId):
-                    AddressView(
-                        viewModel: AddressViewModel(
-                            coordinator: viewModel.coordinator,
-                            addressId: addressId
-                        )
-                    )
-                    
-                case let .addInvoice(monthInvoice):
-                    AddInvoiceView(
-                        viewModel: AddInvoiceViewModel(
-                            coordinator: viewModel.coordinator,
-                            monthInvoice: monthInvoice,
-                            name: $invoiceName,
-                            invoiceType: $communalInvoiceType,
-                            price: $price
-                        )
-                    )
-                    
-                case let .addressSettings(address):
-                    AddressSettingsView(
-                        viewModel: AddressSettingsViewModel(
-                            coordinator: viewModel.coordinator,
-                            address: address
-                        )
-                    )
-                    
-                case .selectCommunalInvoice:
-                    SelectCommunalInvoiceTypeView(
-                        viewModel: SelectCommunalInvoiceTypeViewModel(
-                            coordinator: viewModel.coordinator,
-                            selectedInvoiceType: $communalInvoiceType
-                        )
-                    )
-                    
-                case .selectPrice:
-                    SelectPriceView(
-                        viewModel: SelectPriceViewModel(
-                            coordinator: viewModel.coordinator,
-                            price: $price
-                        )
-                    )
-                    
-                case let .addMonth(addressId):
-                    AddMonthView(
-                        viewModel: AddMonthViewModel(
-                            coordinator: viewModel.coordinator,
-                            addressId: addressId
-                        )
-                    )
-                    
-                case let .month(monthInvoice):
-                    MonthView(
-                        viewModel: MonthViewModel(
-                            coordinator: viewModel.coordinator,
-                            monthInvoice: monthInvoice
-                        )
-                    )
-                    
-                case let .summary(communalInvoiceLists):
-                    SummaryView(
-                        viewModel: SummaryViewModel(
-                            coordinator: viewModel.coordinator,
-                            communalInvoiceLists: communalInvoiceLists
-                        )
-                    )
-                }
-            }
-            .sheet(
-                item: viewModel.$coordinator.presentedSheet,
-                onDismiss: {
-                    viewModel.coordinator.onDismiss?(viewModel.coordinator.lastPresentedSheet)
-                }
-            ) { sheet in
-                switch sheet {
-                case .selectPriceType:
-                    SelectPriceTypeView(
-                        viewModel: SelectPriceTypeViewModel(
-                            coordinator: viewModel.coordinator,
-                            priceKind: $price.kind
-                        )
-                    )
-                    .presentationDetents([.height(260)])
-                }
-            }
-            .alert(
-                viewModel.coordinator.presentedAlert?.title ?? "Unknown title",
-                isPresented: viewModel.coordinator.isPresentedAlert,
-            ) {
-                if let actions = viewModel.coordinator.presentedAlert?.actions {
-                    ForEach(actions) { action in
-                        Button(
-                            action.title,
-                            role: action.role,
-                            action: action.action
-                        )
-                    }
-                }
-            } message: {
-                if let message = viewModel.coordinator.presentedAlert?.message {
-                    Text(message)
-                }
-            }
         }
     }
     
@@ -222,13 +106,11 @@ struct AddressesView: View {
 }
 
 #Preview {
-    @Previewable @ObservedObject var coordinator  = Coordinator()
+    @Previewable var coordinator = Coordinator()
     
     PreviewDatabaseDependencies {
-        NavigationStack(path: $coordinator.path) {
-            AddressesView(
-                viewModel: AddressesViewModel(coordinator: coordinator)
-            )
-        }
+        AddressesView(
+            viewModel: AddressesViewModel(coordinator: coordinator)
+        )
     }
 }

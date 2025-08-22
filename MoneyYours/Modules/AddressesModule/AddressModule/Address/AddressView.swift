@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct AddressView: View {
     @ObservedObject var viewModel: AddressViewModel
     
@@ -99,41 +98,17 @@ private extension AddressView {
 }
 
 #Preview {
-    @Previewable var viewModel = AddressViewModel(
-        coordinator: .preview,
-        addressId: UUID(1),
-        monthInvoiceLists: [
-            .init(
-                year: 2025,
-                monthInvoices: [
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                ]
-            ),
-            .init(
-                year: 2024,
-                monthInvoices: [
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                    .preview,
-                ]
-            )
-        ]
-    )
+    @Previewable @ObservedObject var coordinator = Coordinator()
     
-    PreviewDatabaseDependencies {
-        NavigationStack {
-            AddressView(viewModel: viewModel)
-                .setupNavigationTransparent()
+    CoordinatorNavigationStack(coordinator: coordinator) {        
+        PreviewDatabaseDependencies {
+            AddressView(
+                viewModel: AddressViewModel(
+                    coordinator: coordinator,
+                    addressId: UUID(1),
+                    address: Address(id: UUID(1), name: "Preview", state: .active)
+                )
+            )
         }
     }
 }

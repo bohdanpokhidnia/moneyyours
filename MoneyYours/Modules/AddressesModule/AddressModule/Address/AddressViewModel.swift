@@ -15,7 +15,7 @@ final class AddressViewModel: ObservableObject {
         let monthInvoices: [MonthInvoice]
     }
     
-    @ObservedObject private var coordinator: Coordinator
+    @ObservedObject var coordinator: Coordinator
     @FetchOne var address: Address?
     
     @Published var monthInvoiceLists: [MonthInvoiceList] = []
@@ -26,15 +26,16 @@ final class AddressViewModel: ObservableObject {
     init(
         coordinator: Coordinator,
         addressId: Address.ID,
-        monthInvoiceLists: [MonthInvoiceList] = []
+        address: Address? = nil
     ) {
         self.coordinator = coordinator
-        
-        if !monthInvoiceLists.isEmpty {
-            self.monthInvoiceLists = monthInvoiceLists
-        }
 
-        fetchAddress(at: addressId)
+        if let address {
+            _address = FetchOne(wrappedValue: address)
+        } else {
+            fetchAddress(at: addressId)
+        }
+        
         fetchMonths()
     }
     
