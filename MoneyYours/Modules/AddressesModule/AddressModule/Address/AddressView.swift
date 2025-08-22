@@ -33,7 +33,7 @@ struct AddressView: View {
                         .buttonStyle(EmojiRowButtonStyle(item: monthInvoice.month))
                     }
                     .onDelete { indexSet in
-                        print("[dev] delete \(indexSet)")
+                        viewModel.deleteMonth(at: indexSet)
                     }
                 }
                 .listRowSeparator(.hidden)

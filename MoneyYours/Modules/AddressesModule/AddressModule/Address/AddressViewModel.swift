@@ -15,13 +15,20 @@ final class AddressViewModel: ObservableObject {
         let monthInvoices: [MonthInvoice]
     }
     
-    @ObservedObject private var coordinator: Coordinator
-    @FetchOne var address: Address?
+    @ObservedObject
+    private var coordinator: Coordinator
     
-    @FetchAll
+    @FetchOne
+    var address: Address?
+    
+    @FetchAll(animation: .easeIn)
     private var monthInvoices: [MonthInvoice]
     
-    @Published var monthInvoiceLists: [MonthInvoiceList] = []
+    @Dependency(\.defaultDatabase)
+    private var database
+    
+    @Published
+    var monthInvoiceLists: [MonthInvoiceList] = []
     
     init(
         coordinator: Coordinator,
@@ -58,6 +65,23 @@ final class AddressViewModel: ObservableObject {
     
     func monthButtonTapped(monthInvoice: MonthInvoice) {
         coordinator.push(screen: .month(monthInvoice: monthInvoice))
+    }
+    
+    func deleteMonth(at indexSet: IndexSet) {
+        guard let element = indexSet.first else {
+            return
+        }
+        let monthInvoice = monthInvoices[element]
+        
+        do {
+            try database.write { db in
+                try MonthInvoice
+                    .delete(monthInvoice)
+                    .execute(db)
+            }
+        } catch {
+            print("[dev] Failed to delete month invoice: \(error)")
+        }
     }
 }
 
