@@ -21,10 +21,18 @@ final class AddressViewModel: ObservableObject {
     @FetchAll
     private var monthInvoices: [MonthInvoice]
     
-    @Published private(set) var monthInvoiceLists: [MonthInvoiceList] = []
+    @Published var monthInvoiceLists: [MonthInvoiceList] = []
     
-    init(coordinator: Coordinator, addressId: Address.ID) {
+    init(
+        coordinator: Coordinator,
+        addressId: Address.ID,
+        monthInvoiceLists: [MonthInvoiceList] = []
+    ) {
         self.coordinator = coordinator
+        
+        if !monthInvoiceLists.isEmpty {
+            self.monthInvoiceLists = monthInvoiceLists
+        }
 
         fetchAddress(at: addressId)
         fetchMonths()

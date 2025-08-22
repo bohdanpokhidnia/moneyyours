@@ -12,13 +12,16 @@ struct AddressView: View {
     @ObservedObject var viewModel: AddressViewModel
     
     var body: some View {
-        ScrollableGradientHeaderView(
-            title: viewModel.address?.name ?? "Unknown",
-            configuration: .addresses
-        ) {
-            VStack(alignment: .leading, spacing: 16) {
-                subtitleText
-                
+        VStack(alignment: .leading, spacing: 16) {
+            DynamicTitleGradientHeaderView(
+                title: viewModel.address?.name ?? "Address",
+                configuration: .addresses
+            )
+            
+            subtitleText
+                .padding(.leading, 16)
+            
+            List {
                 ForEach(viewModel.monthInvoiceLists) { monthInvoiceList in
                     Text(monthInvoiceList.year.description)
                         .frame(maxWidth: .infinity)
@@ -29,12 +32,18 @@ struct AddressView: View {
                         }
                         .buttonStyle(EmojiRowButtonStyle(item: monthInvoice.month))
                     }
-                    .padding(.horizontal, 16)
+                    .onDelete { indexSet in
+                        print("[dev] delete \(indexSet)")
+                    }
                 }
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                .listRowBackground(Color.clear)
             }
-            .padding(.bottom, 16)
-            .lightThemeShadow()
         }
+        .listStyle(.plain)
+        .listRowSpacing(16)
+        .scrollBounceBehavior(.basedOnSize)
         .ignoresSafeArea(edges: [.top])
         .background(.appBackground)
         .navigationBarBackButtonHidden()
@@ -86,18 +95,43 @@ private extension AddressView {
             
             Spacer()
         }
-        .padding([.top, .leading], 16)
     }
 }
 
 #Preview {
-    NavigationStack {
-        AddressView(
-            viewModel: AddressViewModel(
-                coordinator: .preview,
-                addressId: UUID(1)
+    @Previewable var viewModel = AddressViewModel(
+        coordinator: .preview,
+        addressId: UUID(1),
+        monthInvoiceLists: [
+            .init(
+                year: 2025,
+                monthInvoices: [
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                ]
+            ),
+            .init(
+                year: 2024,
+                monthInvoices: [
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                    .preview,
+                ]
             )
-        )
-        .setupNavigationTransparent()
+        ]
+    )
+    
+    NavigationStack {
+        AddressView(viewModel: viewModel)
+            .setupNavigationTransparent()
     }
 }
