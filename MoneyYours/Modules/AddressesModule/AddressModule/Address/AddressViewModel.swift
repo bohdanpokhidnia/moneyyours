@@ -64,6 +64,7 @@ final class AddressViewModel: ObservableObject {
         guard let element = indexSet.first else {
             return
         }
+        let monthInvoices = monthInvoiceLists.flatMap(\.monthInvoices)
         let monthInvoice = monthInvoices[element]
         
         do {
