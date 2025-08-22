@@ -130,8 +130,10 @@ private extension AddressView {
         ]
     )
     
-    NavigationStack {
-        AddressView(viewModel: viewModel)
-            .setupNavigationTransparent()
+    PreviewDatabaseDependencies {
+        NavigationStack {
+            AddressView(viewModel: viewModel)
+                .setupNavigationTransparent()
+        }
     }
 }

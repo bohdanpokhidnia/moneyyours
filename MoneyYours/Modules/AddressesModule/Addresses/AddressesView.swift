@@ -221,21 +221,14 @@ struct AddressesView: View {
     }
 }
 
-import SharingGRDB
-
 #Preview {
     @Previewable @ObservedObject var coordinator  = Coordinator()
     
-    let _ = prepareDependencies {
-        let databaseQueue = try! DatabaseQueue(path: mockDBURL().path)
-        try! createPriceTable(for: databaseQueue)
-        try! createAddressTable(for: databaseQueue)
-        try! createMonthInvoicesTable(for: databaseQueue)
-        try! createCommunalInvoiceTable(for: databaseQueue)
-        $0.defaultDatabase = databaseQueue
+    PreviewDatabaseDependencies {
+        NavigationStack(path: $coordinator.path) {
+            AddressesView(
+                viewModel: AddressesViewModel(coordinator: coordinator)
+            )
+        }
     }
-    
-    AddressesView(
-        viewModel: AddressesViewModel(coordinator: coordinator)
-    )
 }
