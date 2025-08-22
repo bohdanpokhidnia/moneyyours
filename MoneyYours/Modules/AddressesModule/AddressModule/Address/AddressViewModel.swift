@@ -15,20 +15,13 @@ final class AddressViewModel: ObservableObject {
         let monthInvoices: [MonthInvoice]
     }
     
-    @ObservedObject
-    private var coordinator: Coordinator
+    @ObservedObject private var coordinator: Coordinator
+    @FetchOne var address: Address?
     
-    @FetchOne
-    var address: Address?
+    @Published var monthInvoiceLists: [MonthInvoiceList] = []
     
-    @FetchAll(animation: .easeIn)
-    private var monthInvoices: [MonthInvoice]
-    
-    @Dependency(\.defaultDatabase)
-    private var database
-    
-    @Published
-    var monthInvoiceLists: [MonthInvoiceList] = []
+    @FetchAll(animation: .easeIn) private var monthInvoices: [MonthInvoice]
+    @Dependency(\.defaultDatabase)private var database
     
     init(
         coordinator: Coordinator,

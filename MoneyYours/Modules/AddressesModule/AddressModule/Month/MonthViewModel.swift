@@ -12,14 +12,9 @@ final class MonthViewModel: ObservableObject {
     @ObservedObject var coordinator: Coordinator
     let monthInvoice: MonthInvoice
     
-    @FetchAll
-    private var communalInvoices: [CommunalInvoice]
-    
-    @FetchAll
-    private var prices: [Price]
-    
+    @FetchAll private var communalInvoices: [CommunalInvoice]
+    @FetchAll private var prices: [Price]
     @Published private(set) var communalInvoiceLists: [CommunalInvoiceList] = []
-    
     @Dependency(\.defaultDatabase) private var database
     
     init(
