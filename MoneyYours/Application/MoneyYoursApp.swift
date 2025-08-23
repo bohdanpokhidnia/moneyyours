@@ -44,6 +44,8 @@ func createPriceTable(for queue: DatabaseQueue) throws {
             t.column("kind", .text).notNull()
             t.column("value", .double)
             t.column("count", .integer)
+            t.column("secondValue", .double)
+            t.column("secondCount", .integer)
         }
     }
 }
