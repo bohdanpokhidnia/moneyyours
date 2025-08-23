@@ -12,9 +12,13 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
     @ObservedObject private var coordinator: Coordinator
     
     var name: Binding<String>
-    var invoiceType: Binding<CommunalInvoiceType>
+    var communalInvoiceType: Binding<CommunalInvoiceType>
     private var monthInvoice: MonthInvoice
     var price: Binding<Price>
+    
+    var isDisablePriceButton: Bool {
+        isFailedInvoiceType
+    }
     
     var isDisableSaveButton: Bool {
          isFailedName || isFailedInvoiceType || isFailedPrice
@@ -25,7 +29,7 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
     }
     
     private var isFailedInvoiceType: Bool {
-        invoiceType.wrappedValue == .notSelected
+        communalInvoiceType.wrappedValue == .notSelected
     }
     
     private var isFailedPrice: Bool {
@@ -38,13 +42,13 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
         coordinator: Coordinator,
         monthInvoice: MonthInvoice,
         name: Binding<String>,
-        invoiceType: Binding<CommunalInvoiceType>,
+        communalInvoiceType: Binding<CommunalInvoiceType>,
         price: Binding<Price>
     ) {
         self.coordinator = coordinator
         self.monthInvoice = monthInvoice
         self.name = name
-        self.invoiceType = invoiceType
+        self.communalInvoiceType = communalInvoiceType
         self.price = price
     }
     
@@ -72,7 +76,7 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
             year: monthInvoice.year,
             name: name.wrappedValue,
             monthInvoiceId: monthInvoice.id,
-            type: invoiceType.wrappedValue,
+            type: communalInvoiceType.wrappedValue,
             priceId: price.id
         )
         
@@ -101,7 +105,7 @@ private extension AddCommunalInvoiceViewModel {
     
     func resetFields() {
         name.wrappedValue = "Name"
-        invoiceType.wrappedValue = .notSelected
+        communalInvoiceType.wrappedValue = .notSelected
         price.wrappedValue = .fixed(id: UUID(), value: .zero)
     }
 }
