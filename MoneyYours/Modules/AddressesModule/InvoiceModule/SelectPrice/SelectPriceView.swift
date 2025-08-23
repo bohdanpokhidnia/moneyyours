@@ -11,6 +11,8 @@ struct SelectPriceView: View {
     @State private var priceText: String = ""
     @State private var valueText: String = "0"
     @State private var countText: String = "0"
+    @State private var secondValueText: String = "0"
+    @State private var secondCountText: String = "0"
     @ObservedObject var viewModel: SelectPriceViewModel
     
     var body: some View {
@@ -92,65 +94,128 @@ private extension SelectPriceView {
         case .calculate:
             calculatePriceView
             
-//        case .multi:
-//            multiPriceView
+        case .multi:
+            multiPriceView
         }
     }
     
     private var calculatePriceView: some View {
         HStack(spacing: 16) {
-            TitleTextField(
+            textField(
                 title: "Enter sum at 1",
                 placeholder: "Sum",
-                text: $valueText
-            )
-            .keyboardType(.decimalPad)
-            .onChange(of: valueText) { _, newValue in
+                text: $valueText,
+                keyboardType: .decimalPad,
+                updatedText: valueText
+            ) { newValue in
                 viewModel.updatedCalculatedPrice(value: newValue, count: countText)
-                priceText = viewModel.price.wrappedValue.sumString
             }
             
-            TitleTextField(
+            textField(
                 title: "Enter count",
                 placeholder: "Count",
-                text: $countText
-            )
-            .keyboardType(.numberPad)
-            .onChange(of: countText) { _, newValue in
+                text: $countText,
+                keyboardType: .numberPad,
+                updatedText: countText
+            ) { newValue in
                 viewModel.updatedCalculatedPrice(value: valueText, count: newValue)
-                priceText = viewModel.price.wrappedValue.sumString
             }
         }
     }
     
-//    private var multiPriceView: some View {
-//        VStack(spacing: 16) {
-//            calculatePriceView
-//            
-//            Divider()
+    private var multiPriceView: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 16) {
+                textField(
+                    title: "Enter sum at 1",
+                    placeholder: "Sum",
+                    text: $valueText,
+                    keyboardType: .decimalPad,
+                    updatedText: valueText
+                ) { newValue in
+                    viewModel.updateMultiPrice(
+                        value: newValue,
+                        count: countText,
+                        secondVale: secondValueText,
+                        secondCount: secondCountText
+                    )
+                }
+                
+                textField(
+                    title: "Enter count",
+                    placeholder: "Count",
+                    text: $countText,
+                    keyboardType: .numberPad,
+                    updatedText: countText
+                ) { newValue in
+                    viewModel.updateMultiPrice(
+                        value: valueText,
+                        count: newValue,
+                        secondVale: secondValueText,
+                        secondCount: secondCountText
+                    )
+                }
+            }
             
-//            HStack(spacing: 16) {
-//                TitleTextField(
-//                    title: "Previously count",
-//                    placeholder: "Value",
-//                    text: $store.multiPreviouslyCounterText
-//                )
-//                .onChange(of: store.multiPreviouslyCounterText) { _, newValue in
-//                    store.multiPreviouslyCounterText = newValue.formatted(.priceInput)
-//                }
-//                
-//                TitleTextField(
-//                    title: "Current count",
-//                    placeholder: "Value",
-//                    text: $store.multiCurrentCounterText
-//                )
-//                .onChange(of: store.multiCurrentCounterText) { _, newValue in
-//                    store.multiCurrentCounterText = newValue.formatted(.priceInput)
-//                }
-//            }
-//            .keyboardType(.numberPad)
-//        }
-//    }
+            Divider()
+            
+            HStack(spacing: 16) {
+                textField(
+                    title: "Enter sum at 1",
+                    placeholder: "Sum",
+                    text: $secondValueText,
+                    keyboardType: .decimalPad,
+                    updatedText: secondValueText
+                ) { newValue in
+                    viewModel.updateMultiPrice(
+                        value: valueText,
+                        count: countText,
+                        secondVale: newValue,
+                        secondCount: secondCountText
+                    )
+                }
+                
+                textField(
+                    title: "Enter count",
+                    placeholder: "Count",
+                    text: $secondCountText,
+                    keyboardType: .numberPad,
+                    updatedText: secondCountText
+                ) { newValue in
+                    viewModel.updateMultiPrice(
+                        value: valueText,
+                        count: countText,
+                        secondVale: secondValueText,
+                        secondCount: newValue
+                    )
+                }
+            }
+        }
+    }
+    
+    private func textField(
+        title: String,
+        placeholder: String,
+        text: Binding<String>,
+        keyboardType: UIKeyboardType,
+        updatedText: String,
+        onChange: @escaping (String) -> Void
+    ) -> some View {
+        TitleTextField(
+            title: title,
+            placeholder: placeholder,
+            text: text
+        )
+        .keyboardType(keyboardType)
+        .onChange(of: updatedText) { _, newValue in
+            onChange(newValue)
+            updatePriceText()
+        }
+    }
+    
+    private func updatePriceText() {
+        priceText = viewModel.price.wrappedValue.sumString
+    }
     
     private var saveButton: some View {
         Button("Save") {
@@ -170,8 +235,14 @@ private extension SelectPriceView {
             break
             
         case .calculate:
-            valueText = price.value?.formatted(.ua) ?? "0"
+            valueText = price.value?.formatted(viewModel.currencyFormatStyle) ?? "0"
             countText = price.count?.description ?? "0"
+            
+        case .multi:
+            valueText = price.value?.formatted(viewModel.currencyFormatStyle) ?? "0"
+            countText = price.count?.description ?? "0"
+            secondValueText = price.secondValue?.formatted(viewModel.currencyFormatStyle) ?? "0"
+            secondCountText = price.secondCount?.description ?? "0"
         }
         
         priceText = price.sumString
@@ -179,11 +250,13 @@ private extension SelectPriceView {
 }
 
 #Preview {
-    NavigationStack {
+    @Previewable @State var price: Price = .calculate(id: UUID(5), value: 5.0, count: 1)
+
+    PreviewCoordinatorNavigationStack {
         SelectPriceView(
             viewModel: SelectPriceViewModel(
                 coordinator: .preview,
-                price: .constant(.calculate(id: UUID(5), value: .zero, count: .zero))
+                price: $price
             )
         )
     }

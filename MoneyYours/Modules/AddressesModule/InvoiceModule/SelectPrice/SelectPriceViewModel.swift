@@ -11,6 +11,7 @@ final class SelectPriceViewModel: ObservableObject {
     @ObservedObject private var coordinator: Coordinator
     var price: Binding<Price>
     let currency: Currency = .UAH
+    let currencyFormatStyle = UkrainianHryvniaFormatStyle()
     
     var isDisableSaveButton: Bool {
         price.wrappedValue.isZero
@@ -46,6 +47,29 @@ final class SelectPriceViewModel: ObservableObject {
         let intCount = Int(count) ?? 0
 
         price.wrappedValue = .calculate(id: UUID(), value: sumAtOne, count: intCount)
+    }
+    
+    func updateMultiPrice(
+        value: String,
+        count: String,
+        secondVale: String,
+        secondCount: String
+    ) {
+        let formattedValue = value.replacingOccurrences(of: ",", with: ".")
+        let sumAtOne = Double(formattedValue) ?? .zero
+        let intCount = Int(count) ?? 0
+        
+        let formattedSecondValue = secondVale.replacingOccurrences(of: ",", with: ".")
+        let secondSumAtOne = Double(formattedSecondValue) ?? .zero
+        let secondIntCount = Int(secondCount) ?? 0
+        
+        price.wrappedValue = .multi(
+            id: UUID(),
+            firstValue: sumAtOne,
+            firstCount: intCount,
+            secondValue: secondSumAtOne,
+            secondCount: secondIntCount
+        )
     }
     
     func saveButtonTapped() {
