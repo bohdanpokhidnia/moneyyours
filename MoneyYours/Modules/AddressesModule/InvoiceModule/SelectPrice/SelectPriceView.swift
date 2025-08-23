@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct SelectPriceView: View {
-    @State private var priceText: String = ""
-    @State private var valueText: String = "0"
-    @State private var countText: String = "0"
-    @State private var secondValueText: String = "0"
-    @State private var secondCountText: String = "0"
-    @ObservedObject var viewModel: SelectPriceViewModel
+    struct TextFieldState {
+        var title: String
+        var placeholder: String
+        var text: Binding<String>
+        var keyboardType: UIKeyboardType
+    }
+    
+    @StateObject var viewModel: SelectPriceViewModel
+    @FocusState private var isFocusedPriceText: Bool
     
     var body: some View {
         VStack(spacing: 32) {
@@ -37,47 +40,66 @@ struct SelectPriceView: View {
                 }
             }
         }
-        .onAppear {
-            updateSumText()
-        }
     }
 }
 
 private extension SelectPriceView {
     private var contentView: some View {
-        VStack(spacing: 32) {
-            Button {
-                viewModel.priceTypeButtonTapped()
-            } label: {
-                SelectPriceRow(priceKind: viewModel.price.wrappedValue.kind)
+        ScrollView {
+            VStack(spacing: 32) {
+                communalInvoiceTypeView(type: viewModel.communalInvoiceType)
+                
+                priceTextField
+                
+                textFields(for: viewModel.communalInvoiceType)
             }
-            
-            priceTextField
-            
-            additionalFields
         }
+    }
+    
+    private func communalInvoiceTypeView(type: CommunalInvoiceType) -> some View {
+        Text(type.emoji + " " + type.name)
+            .font(.headline)
+            .padding(.vertical, 8)
+            .padding(.horizontal, 16)
+            .background {
+                RoundedRectangle(cornerRadius: 32)
+                    .foregroundStyle(type.color.gradient)
+            }
     }
     
     private var priceTextField: some View {
         VStack(spacing: 8) {
-            Text("Sum")
+            Text("Sum:")
                 .foregroundStyle(.starDust)
-                .font(.footnote)
+                .font(.subheadline)
             
             HStack(spacing: 8) {
-                PriceTextField(text: $priceText)
-                    .background {
-                        GeometryReader { geometry in
-                            Color.clear
-                                .frame(width: geometry.size.width, height: geometry.size.height)
+                TextField(
+                    "",
+                    text: Binding(
+                        get: { viewModel.priceText },
+                        set: { newValue in
+                            let formatted = viewModel.formattedPrice(text: newValue)
+                            viewModel.priceText = formatted
                         }
+                    )
+                )
+                .focused($isFocusedPriceText)
+                .background {
+                    GeometryReader { geometry in
+                        Color.clear
+                            .frame(width: geometry.size.width, height: geometry.size.height)
                     }
-                    .fixedSize()
-                    .tint(.beanRed)
-                    .keyboardType(.decimalPad)
-                    .onChange(of: priceText) { _, newValue in
-                        viewModel.updateFixedPrice(text: newValue)
+                }
+                .fixedSize()
+                .tint(.beanRed)
+                .keyboardType(.decimalPad)
+                .onChange(of: isFocusedPriceText) { _, newValue in
+                    guard newValue else {
+                        return
                     }
+                    viewModel.beginEditingPriceIfNeeded()
+                }
                 
                 Text(viewModel.currency.string)
             }
@@ -85,136 +107,63 @@ private extension SelectPriceView {
         }
     }
     
-    @ViewBuilder
-    private var additionalFields: some View {
-        switch viewModel.price.wrappedValue.kind {
-        case .fixed:
-            EmptyView()
-            
-        case .calculate:
-            calculatePriceView
-            
-        case .multi:
-            multiPriceView
-        }
-    }
-    
-    private var calculatePriceView: some View {
-        HStack(spacing: 16) {
-            textField(
-                title: "Enter sum at 1",
-                placeholder: "Sum",
-                text: $valueText,
-                keyboardType: .decimalPad,
-                updatedText: valueText
-            ) { newValue in
-                viewModel.updatedCalculatedPrice(value: newValue, count: countText)
-            }
-            
-            textField(
-                title: "Enter count",
-                placeholder: "Count",
-                text: $countText,
-                keyboardType: .numberPad,
-                updatedText: countText
-            ) { newValue in
-                viewModel.updatedCalculatedPrice(value: valueText, count: newValue)
-            }
-        }
-    }
-    
-    private var multiPriceView: some View {
+    func textFields(for type: CommunalInvoiceType) -> some View {
         VStack(spacing: 16) {
-            HStack(spacing: 16) {
-                textField(
-                    title: "Enter sum at 1",
-                    placeholder: "Sum",
-                    text: $valueText,
-                    keyboardType: .decimalPad,
-                    updatedText: valueText
-                ) { newValue in
-                    viewModel.updateMultiPrice(
-                        value: newValue,
-                        count: countText,
-                        secondVale: secondValueText,
-                        secondCount: secondCountText
-                    )
-                }
+            switch type {
+            case .electricity:
+                sectionTextFieldRow(
+                    sectionTitle: "T1",
+                    valueState: TextFieldState(title: "Sum at 1", placeholder: "Sum", text: $viewModel.valueText, keyboardType: .decimalPad),
+                    countState: TextFieldState(title: "Count", placeholder: "Count", text: $viewModel.countText, keyboardType: .numberPad)
+                )
                 
-                textField(
-                    title: "Enter count",
-                    placeholder: "Count",
-                    text: $countText,
-                    keyboardType: .numberPad,
-                    updatedText: countText
-                ) { newValue in
-                    viewModel.updateMultiPrice(
-                        value: valueText,
-                        count: newValue,
-                        secondVale: secondValueText,
-                        secondCount: secondCountText
-                    )
-                }
+                sectionTextFieldRow(
+                    sectionTitle: "T2",
+                    valueState: TextFieldState(title: "Sum at 1", placeholder: "Sum", text: $viewModel.secondValueText, keyboardType: .decimalPad),
+                    countState: TextFieldState(title: "Count", placeholder: "Count", text: $viewModel.secondCountText, keyboardType: .numberPad)
+                )
+                
+            case .internet:
+                textFieldRow(
+                    valueState: TextFieldState(title: "Sum at 1 day", placeholder: "Sum", text: $viewModel.valueText, keyboardType: .decimalPad),
+                    countState: TextFieldState(title: "Count days", placeholder: "Count", text: $viewModel.countText, keyboardType: .numberPad)
+                )
+                
+            case .water, .heating, .gas, .gasDelivery, .garbageDisposal, .rent, .notSelected:
+                EmptyView()
             }
+        }
+    }
+    
+    func sectionTextFieldRow(sectionTitle: String, valueState: TextFieldState, countState: TextFieldState) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(sectionTitle)
+                .font(.headline)
             
             Divider()
             
-            HStack(spacing: 16) {
-                textField(
-                    title: "Enter sum at 1",
-                    placeholder: "Sum",
-                    text: $secondValueText,
-                    keyboardType: .decimalPad,
-                    updatedText: secondValueText
-                ) { newValue in
-                    viewModel.updateMultiPrice(
-                        value: valueText,
-                        count: countText,
-                        secondVale: newValue,
-                        secondCount: secondCountText
-                    )
-                }
-                
-                textField(
-                    title: "Enter count",
-                    placeholder: "Count",
-                    text: $secondCountText,
-                    keyboardType: .numberPad,
-                    updatedText: secondCountText
-                ) { newValue in
-                    viewModel.updateMultiPrice(
-                        value: valueText,
-                        count: countText,
-                        secondVale: secondValueText,
-                        secondCount: newValue
-                    )
-                }
-            }
+            textFieldRow(valueState: valueState, countState: countState)
         }
     }
     
-    private func textField(
-        title: String,
-        placeholder: String,
-        text: Binding<String>,
-        keyboardType: UIKeyboardType,
-        updatedText: String,
-        onChange: @escaping (String) -> Void
+    func textFieldRow(
+        valueState: TextFieldState,
+        countState: TextFieldState
     ) -> some View {
-        TitleTextField(
-            title: title,
-            placeholder: placeholder,
-            text: text
-        )
-        .keyboardType(keyboardType)
-        .onChange(of: updatedText) { _, newValue in
-            onChange(newValue)
-            updatePriceText()
+        HStack(spacing: 16) {
+            textField(state: valueState)
+            
+            textField(state: countState)
         }
     }
     
-    private func updatePriceText() {
-        priceText = viewModel.price.wrappedValue.sumString
+    private func textField(state: TextFieldState) -> some View {
+        TitleTextField(
+            title: state.title,
+            placeholder: state.placeholder,
+            text: state.text
+        )
+        .keyboardType(state.keyboardType)
     }
     
     private var saveButton: some View {
@@ -226,37 +175,25 @@ private extension SelectPriceView {
         )
         .disabled(viewModel.isDisableSaveButton)
     }
-    
-    private func updateSumText() {
-        let price = viewModel.price.wrappedValue
-        
-        switch price.kind {
-        case .fixed:
-            break
-            
-        case .calculate:
-            valueText = price.value?.formatted(viewModel.currencyFormatStyle) ?? "0"
-            countText = price.count?.description ?? "0"
-            
-        case .multi:
-            valueText = price.value?.formatted(viewModel.currencyFormatStyle) ?? "0"
-            countText = price.count?.description ?? "0"
-            secondValueText = price.secondValue?.formatted(viewModel.currencyFormatStyle) ?? "0"
-            secondCountText = price.secondCount?.description ?? "0"
-        }
-        
-        priceText = price.sumString
-    }
 }
 
 #Preview {
+//    @Previewable @State var price: Price = .fixed(id: UUID(5), value: 4.0)
     @Previewable @State var price: Price = .calculate(id: UUID(5), value: 5.0, count: 1)
+//    @Previewable @State var price: Price = .multi(
+//        id: UUID(5),
+//        firstValue: 4.32,
+//        firstCount: 250,
+//        secondValue: 2.18,
+//        secondCount: 130
+//    )
 
     PreviewCoordinatorNavigationStack {
         SelectPriceView(
             viewModel: SelectPriceViewModel(
                 coordinator: .preview,
-                price: $price
+                price: $price,
+                communalInvoiceType: .internet
             )
         )
     }

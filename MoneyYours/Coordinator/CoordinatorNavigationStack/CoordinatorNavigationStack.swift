@@ -75,7 +75,8 @@ struct CoordinatorNavigationStack<Content: View>: View {
                         SelectPriceView(
                             viewModel: SelectPriceViewModel(
                                 coordinator: coordinator,
-                                price: $price
+                                price: $price,
+                                communalInvoiceType: communalInvoiceType
                             )
                         )
                         
@@ -114,13 +115,7 @@ struct CoordinatorNavigationStack<Content: View>: View {
                 ) { sheet in
                     switch sheet {
                     case .selectPriceType:
-                        SelectPriceTypeView(
-                            viewModel: SelectPriceTypeViewModel(
-                                coordinator: coordinator,
-                                priceKind: $price.kind
-                            )
-                        )
-                        .presentationDetents([.height(260)])
+                        EmptyView()
                     }
                 }
                 .alert(

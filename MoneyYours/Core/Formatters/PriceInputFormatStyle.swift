@@ -41,6 +41,10 @@ struct PriceInputFormatStyle: FormatStyle {
             return "0"
         }
         
+        if filtered.count == 1, filtered.first == "." {
+            return "0"
+        }
+        
         return filtered
     }
 }
