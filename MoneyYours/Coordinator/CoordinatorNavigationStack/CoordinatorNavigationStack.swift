@@ -14,7 +14,7 @@ struct CoordinatorNavigationStack<Content: View>: View {
     @State private var invoiceName: String = "Name"
     @State private var communalInvoiceType: CommunalInvoiceType = .notSelected
     @State private var month: Month = .unknown
-    @State private var price: Price = .fixed(id: UUID(), value: .zero)
+    @State private var price: Price = .single(id: UUID(), value: .zero)
     
     init(
         coordinator: Coordinator,

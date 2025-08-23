@@ -106,6 +106,6 @@ private extension AddCommunalInvoiceViewModel {
     func resetFields() {
         name.wrappedValue = "Name"
         communalInvoiceType.wrappedValue = .notSelected
-        price.wrappedValue = .fixed(id: UUID(), value: .zero)
+        price.wrappedValue = .single(id: UUID(), value: .zero)
     }
 }

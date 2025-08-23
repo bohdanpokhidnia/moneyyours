@@ -86,7 +86,7 @@ struct AddCommunalInvoiceView: View {
                 monthInvoice: .preview,
                 name: .constant("Name"),
                 communalInvoiceType: $communalInvoiceType,
-                price: .constant(.fixed(id: UUID(5), value: .zero))
+                price: .constant(.single(id: UUID(5), value: 5.0))
             )
         )
     }

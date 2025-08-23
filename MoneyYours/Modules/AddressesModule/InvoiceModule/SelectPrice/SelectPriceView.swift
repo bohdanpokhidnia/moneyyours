@@ -95,10 +95,11 @@ private extension SelectPriceView {
                 .tint(.beanRed)
                 .keyboardType(.decimalPad)
                 .onChange(of: isFocusedPriceText) { _, newValue in
-                    guard newValue else {
-                        return
+                    if newValue {
+                        viewModel.beginEditingPriceIfNeeded()
+                    } else {
+                        viewModel.priceText = viewModel.formattedPrice(text: viewModel.price.wrappedValue.sumString)
                     }
-                    viewModel.beginEditingPriceIfNeeded()
                 }
                 
                 Text(viewModel.currency.string)
@@ -113,20 +114,50 @@ private extension SelectPriceView {
             case .electricity:
                 sectionTextFieldRow(
                     sectionTitle: "T1",
-                    valueState: TextFieldState(title: "Sum at 1", placeholder: "Sum", text: $viewModel.valueText, keyboardType: .decimalPad),
-                    countState: TextFieldState(title: "Count", placeholder: "Count", text: $viewModel.countText, keyboardType: .numberPad)
+                    valueState: TextFieldState(
+                        title: "Sum at 1",
+                        placeholder: "Sum",
+                        text: $viewModel.valueText,
+                        keyboardType: .decimalPad
+                    ),
+                    countState: TextFieldState(
+                        title: "Count",
+                        placeholder: "Count",
+                        text: $viewModel.countText,
+                        keyboardType: .numberPad
+                    )
                 )
                 
                 sectionTextFieldRow(
                     sectionTitle: "T2",
-                    valueState: TextFieldState(title: "Sum at 1", placeholder: "Sum", text: $viewModel.secondValueText, keyboardType: .decimalPad),
-                    countState: TextFieldState(title: "Count", placeholder: "Count", text: $viewModel.secondCountText, keyboardType: .numberPad)
+                    valueState: TextFieldState(
+                        title: "Sum at 1",
+                        placeholder: "Sum",
+                        text: $viewModel.secondValueText,
+                        keyboardType: .decimalPad
+                    ),
+                    countState: TextFieldState(
+                        title: "Count",
+                        placeholder: "Count",
+                        text: $viewModel.secondCountText,
+                        keyboardType: .numberPad
+                    )
                 )
                 
             case .internet:
                 textFieldRow(
-                    valueState: TextFieldState(title: "Sum at 1 day", placeholder: "Sum", text: $viewModel.valueText, keyboardType: .decimalPad),
-                    countState: TextFieldState(title: "Count days", placeholder: "Count", text: $viewModel.countText, keyboardType: .numberPad)
+                    valueState: TextFieldState(
+                        title: "Sum at 1 day",
+                        placeholder: "Sum",
+                        text: $viewModel.valueText,
+                        keyboardType: .decimalPad
+                    ),
+                    countState: TextFieldState(
+                        title: "Count days",
+                        placeholder: "Count",
+                        text: $viewModel.countText,
+                        keyboardType: .numberPad
+                    )
                 )
                 
             case .water, .heating, .gas, .gasDelivery, .garbageDisposal, .rent, .notSelected:
@@ -161,7 +192,16 @@ private extension SelectPriceView {
         TitleTextField(
             title: state.title,
             placeholder: state.placeholder,
-            text: state.text
+            text: Binding(
+                get: { state.text.wrappedValue },
+                set: { newValue in
+                    if state.keyboardType == .decimalPad {
+                        state.text.wrappedValue = newValue.formatted(.priceInput)
+                    } else {
+                        state.text.wrappedValue = newValue
+                    }
+                }
+            )
         )
         .keyboardType(state.keyboardType)
     }
@@ -179,7 +219,7 @@ private extension SelectPriceView {
 
 #Preview {
 //    @Previewable @State var price: Price = .fixed(id: UUID(5), value: 4.0)
-    @Previewable @State var price: Price = .calculate(id: UUID(5), value: 5.0, count: 1)
+    @Previewable @State var price: Price = .row(id: UUID(5), value: 5.0, count: 1)
 //    @Previewable @State var price: Price = .multi(
 //        id: UUID(5),
 //        firstValue: 4.32,
