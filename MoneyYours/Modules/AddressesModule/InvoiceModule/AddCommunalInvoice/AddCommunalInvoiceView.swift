@@ -44,6 +44,7 @@ struct AddCommunalInvoiceView: View {
                         inputType: .text(viewModel.price.wrappedValue.sum.formatted(.ua))
                     )
                 }
+                .disabled(viewModel.isDisablePriceButton)
             }
             .padding(16)
             .lightThemeShadow()

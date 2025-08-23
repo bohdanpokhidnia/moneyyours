@@ -19,6 +19,7 @@ struct EmojiFieldView: View {
     let inputType: InputType
     var keyboardType: UIKeyboardType = .default
     @FocusState private var isTextFieldFocused: Bool
+    @Environment(\.isEnabled) private var isEnabled
     
     var body: some View {
         switch inputType {
@@ -56,6 +57,7 @@ struct EmojiFieldView: View {
         }
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .opacity(isEnabled ? 1.0 : 0.5)
     }
     
     @ViewBuilder
@@ -85,6 +87,8 @@ struct EmojiFieldView: View {
             emoji: "📁",
             inputType: .text("123")
         )
+        .disabled(true)
     }
+    .background(.appBackground)
     .padding(.horizontal, 16)
 }
