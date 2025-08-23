@@ -14,14 +14,12 @@ final class AddMonthViewModel: ObservableObject {
     
     @Dependency(\.dateService) private var dateService
     @Dependency(\.defaultDatabase) private var database
-    @Published private(set) var months: [Month] = []
+    private(set) var months: [Month] = []
     
     init(coordinator: Coordinator, addressId: Address.ID) {
         self.coordinator = coordinator
         self.addressId = addressId
-    }
-    
-    func onAppear() {
+        
         fetchMonths()
     }
     
