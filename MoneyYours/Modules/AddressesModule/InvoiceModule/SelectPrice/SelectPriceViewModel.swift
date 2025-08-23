@@ -19,14 +19,11 @@ final class SelectPriceViewModel: ObservableObject {
     @Published var countText: String = "0"
     @Published var secondValueText: String = "0"
     @Published var secondCountText: String = "0"
+    @Published var isDisableSaveButton: Bool = true
     
     private var cancellables: Set<AnyCancellable> = []
     private let currencyFormatStyle = UkrainianHryvniaFormatStyle()
     private var isFirstUserEdit: Bool = true
-    
-    var isDisableSaveButton: Bool {
-        price.wrappedValue.isZero
-    }
     
     init(
         coordinator: Coordinator,
@@ -76,6 +73,7 @@ private extension SelectPriceViewModel {
     func updateFixedPrice(text: String) {
         let newPrice = Double(text) ?? .zero
         price.wrappedValue = .fixed(id: UUID(), value: newPrice)
+        isDisableSaveButton = price.wrappedValue.isZero
         
         print("[dev] prevPrice: \(price.wrappedValue.sum) newPrice: \(newPrice) , isFirstEdit: \(isFirstUserEdit)")
     }
