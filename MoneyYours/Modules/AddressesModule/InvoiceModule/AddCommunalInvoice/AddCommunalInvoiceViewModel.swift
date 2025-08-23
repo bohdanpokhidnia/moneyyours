@@ -1,5 +1,5 @@
 //
-//  AddInvoiceViewModel.swift
+//  AddCommunalInvoiceViewModel.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 17.12.2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import SharingGRDB
 
-final class AddInvoiceViewModel: ObservableObject {
+final class AddCommunalInvoiceViewModel: ObservableObject {
     @ObservedObject private var coordinator: Coordinator
     
     var name: Binding<String>
@@ -86,7 +86,7 @@ final class AddInvoiceViewModel: ObservableObject {
     }
 }
 
-private extension AddInvoiceViewModel {
+private extension AddCommunalInvoiceViewModel {
     func save(price: Price, invoice: CommunalInvoice) throws {
         try database.write { db in
             try Price

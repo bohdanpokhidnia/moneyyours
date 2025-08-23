@@ -1,5 +1,5 @@
 //
-//  AddInvoiceView.swift
+//  AddCommunalInvoiceView.swift
 //  MoneyYours
 //
 //  Created by Bohdan Pokhidnia on 17.12.2024.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AddInvoiceView: View {
-    @ObservedObject var viewModel: AddInvoiceViewModel
+struct AddCommunalInvoiceView: View {
+    @ObservedObject var viewModel: AddCommunalInvoiceViewModel
     
     var body: some View {
         ScrollableGradientHeaderView(
-            title: "Add invoice",
+            title: "Add communal invoice",
             configuration: .addresses
         ) {
             VStack(spacing: 16) {
@@ -28,9 +28,9 @@ struct AddInvoiceView: View {
                 } label: {
                     EmojiFieldView(
                         title: "Invoice type",
-                        emoji: viewModel.invoiceType.wrappedValue.emoji,
-                        emojiBackground: viewModel.invoiceType.wrappedValue.color,
-                        inputType: .text(viewModel.invoiceType.wrappedValue.name)
+                        emoji: viewModel.communalInvoiceType.wrappedValue.emoji,
+                        emojiBackground: viewModel.communalInvoiceType.wrappedValue.color,
+                        inputType: .text(viewModel.communalInvoiceType.wrappedValue.name)
                     )
                 }
                 
@@ -74,14 +74,17 @@ struct AddInvoiceView: View {
     }
 }
 
+
 #Preview {
-    NavigationStack {
-        AddInvoiceView(
-            viewModel: AddInvoiceViewModel(
+    @Previewable @State var communalInvoiceType: CommunalInvoiceType = .internet
+    
+    PreviewCoordinatorNavigationStack {
+        AddCommunalInvoiceView(
+            viewModel: AddCommunalInvoiceViewModel(
                 coordinator: .preview,
                 monthInvoice: .preview,
                 name: .constant("Name"),
-                invoiceType: .constant(.notSelected),
+                communalInvoiceType: $communalInvoiceType,
                 price: .constant(.fixed(id: UUID(5), value: .zero))
             )
         )

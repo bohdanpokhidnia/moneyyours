@@ -45,12 +45,12 @@ struct CoordinatorNavigationStack<Content: View>: View {
                         )
                         
                     case let .addInvoice(monthInvoice):
-                        AddInvoiceView(
-                            viewModel: AddInvoiceViewModel(
+                        AddCommunalInvoiceView(
+                            viewModel: AddCommunalInvoiceViewModel(
                                 coordinator: coordinator,
                                 monthInvoice: monthInvoice,
                                 name: $invoiceName,
-                                invoiceType: $communalInvoiceType,
+                                communalInvoiceType: $communalInvoiceType,
                                 price: $price
                             )
                         )
