@@ -68,6 +68,13 @@ private extension SelectPriceViewModel {
                 self?.updateFixedPrice(text: priceText)
             }
             .store(in: &cancellables)
+        
+        $valueText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] valueText in
+                self?.updatedCalculatedPrice(value: valueText, count: self?.countText)
+            }
+            .store(in: &cancellables)
     }
     
     func updateFixedPrice(text: String) {
@@ -78,13 +85,16 @@ private extension SelectPriceViewModel {
         print("[dev] prevPrice: \(price.wrappedValue.sum) newPrice: \(newPrice) , isFirstEdit: \(isFirstUserEdit)")
     }
     
-//    func updatedCalculatedPrice(value: String, count: String) {
-//        let formattedValue = value.replacingOccurrences(of: ",", with: ".")
-//        let sumAtOne = Double(formattedValue) ?? .zero
-//        let intCount = Int(count) ?? 0
-//
-//        price.wrappedValue = .calculate(id: UUID(), value: sumAtOne, count: intCount)
-//    }
+    func updatedCalculatedPrice(value: String?, count: String?) {
+//        let formattedValue = (value ?? "").replacingOccurrences(of: ",", with: ".")
+        let formattedValue = (value ?? "").formatted(.priceInput)
+        let sumAtOne = Double(formattedValue) ?? .zero
+        let intCount = Int(count ?? "") ?? 0
+
+        price.wrappedValue = .calculate(id: UUID(), value: sumAtOne, count: intCount)
+        
+        print("[dev] prevPrice: \(price.wrappedValue.sum) sumAtOne: \(sumAtOne)")
+    }
 //    
 //    func updateMultiPrice(
 //        value: String,
