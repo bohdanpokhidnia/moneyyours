@@ -41,7 +41,6 @@ func createPriceTable(for queue: DatabaseQueue) throws {
     try queue.write { db in
         try db.create(table: Table.prices.rawValue, ifNotExists: true) { t in
             t.column("id", .text).primaryKey()
-            t.column("kind", .text).notNull()
             t.column("value", .double)
             t.column("count", .integer)
             t.column("secondValue", .double)
