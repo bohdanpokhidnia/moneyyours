@@ -11,6 +11,10 @@ final class Coordinator: ObservableObject {
     @Published var path: [Screen] = []
     @Published var presentedSheet: Sheet?
     @Published var presentedAlert: Alert?
+    @Published var invoiceName: String = "Name"
+    @Published var communalInvoiceType: CommunalInvoiceType = .notSelected
+    @Published var month: Month = .unknown
+    @Published var price: Price = .single(id: UUID(), value: .zero)
     private(set) var lastPresentedSheet: Sheet?
     
     var isPresentedAlert: Binding<Bool> {

@@ -11,11 +11,6 @@ struct CoordinatorNavigationStack<Content: View>: View {
     @ObservedObject var coordinator: Coordinator
     var content: (() -> Content)
     
-    @State private var invoiceName: String = "Name"
-    @State private var communalInvoiceType: CommunalInvoiceType = .notSelected
-    @State private var month: Month = .unknown
-    @State private var price: Price = .single(id: UUID(), value: .zero)
-    
     init(
         coordinator: Coordinator,
         content: @escaping () -> Content
@@ -49,9 +44,9 @@ struct CoordinatorNavigationStack<Content: View>: View {
                             viewModel: AddCommunalInvoiceViewModel(
                                 coordinator: coordinator,
                                 monthInvoice: monthInvoice,
-                                name: $invoiceName,
-                                communalInvoiceType: $communalInvoiceType,
-                                price: $price
+                                name: $coordinator.invoiceName,
+                                communalInvoiceType: $coordinator.communalInvoiceType,
+                                price: $coordinator.price
                             )
                         )
                         
@@ -67,16 +62,17 @@ struct CoordinatorNavigationStack<Content: View>: View {
                         SelectCommunalInvoiceTypeView(
                             viewModel: SelectCommunalInvoiceTypeViewModel(
                                 coordinator: coordinator,
-                                selectedInvoiceType: $communalInvoiceType
+                                selectedInvoiceType: $coordinator.communalInvoiceType
                             )
                         )
                         
-                    case .selectPrice:
+                    case let .selectPrice(monthInvoice):
                         SelectPriceView(
                             viewModel: SelectPriceViewModel(
                                 coordinator: coordinator,
-                                price: $price,
-                                communalInvoiceType: communalInvoiceType
+                                price: $coordinator.price,
+                                communalInvoiceType: coordinator.communalInvoiceType,
+                                monthInvoice: monthInvoice
                             )
                         )
                         

@@ -19,15 +19,20 @@ struct SelectPriceView: View {
     @FocusState private var isFocusedPriceText: Bool
     
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
-            
+        ScrollView {
+            VStack(spacing: 32) {
+                communalInvoiceTypeView(type: viewModel.communalInvoiceType)
+                
+                priceTextField
+                
+                textFields(for: viewModel.communalInvoiceType)
+                    .padding([.horizontal, .bottom], 16)
+            }
+        }
+        .safeAreaInset(edge: .bottom) {
             saveButton
+                .padding([.horizontal, .bottom], 16)
         }
-        .overlay(alignment: .top) {
-            contentView
-        }
-        .padding([.horizontal, .bottom], 16)
         .background(.invoiceBackground)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -44,18 +49,6 @@ struct SelectPriceView: View {
 }
 
 private extension SelectPriceView {
-    private var contentView: some View {
-        ScrollView {
-            VStack(spacing: 32) {
-                communalInvoiceTypeView(type: viewModel.communalInvoiceType)
-                
-                priceTextField
-                
-                textFields(for: viewModel.communalInvoiceType)
-            }
-        }
-    }
-    
     private func communalInvoiceTypeView(type: CommunalInvoiceType) -> some View {
         Text(type.emoji + " " + type.name)
             .font(.headline)
@@ -166,7 +159,11 @@ private extension SelectPriceView {
         }
     }
     
-    func sectionTextFieldRow(sectionTitle: String, valueState: TextFieldState, countState: TextFieldState) -> some View {
+    func sectionTextFieldRow(
+        sectionTitle: String,
+        valueState: TextFieldState,
+        countState: TextFieldState
+    ) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             Text(sectionTitle)
                 .font(.headline)
@@ -218,22 +215,20 @@ private extension SelectPriceView {
 }
 
 #Preview {
-//    @Previewable @State var price: Price = .fixed(id: UUID(5), value: 4.0)
     @Previewable @State var price: Price = .row(id: UUID(5), value: 5.0, count: 1)
-//    @Previewable @State var price: Price = .multi(
-//        id: UUID(5),
-//        firstValue: 4.32,
-//        firstCount: 250,
-//        secondValue: 2.18,
-//        secondCount: 130
-//    )
 
     PreviewCoordinatorNavigationStack {
         SelectPriceView(
             viewModel: SelectPriceViewModel(
                 coordinator: .preview,
                 price: $price,
-                communalInvoiceType: .internet
+                communalInvoiceType: .electricity,
+                monthInvoice: MonthInvoice(
+                    id: UUID(6),
+                    addressId: UUID(1),
+                    year: 2025,
+                    month: .august
+                )
             )
         )
     }

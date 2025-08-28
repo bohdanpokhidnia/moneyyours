@@ -21,7 +21,7 @@ final class AddressViewModel: ObservableObject {
     @Published var monthInvoiceLists: [MonthInvoiceList] = []
     
     @FetchAll(animation: .easeIn) private var monthInvoices: [MonthInvoice]
-    @Dependency(\.defaultDatabase)private var database
+    @Dependency(\.defaultDatabase) private var database
     
     init(
         coordinator: Coordinator,

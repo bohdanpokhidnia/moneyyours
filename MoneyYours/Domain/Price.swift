@@ -18,10 +18,10 @@ struct Price: Identifiable, Codable, Equatable, Hashable {
     
     init(
         id: UUID,
-        value: Double? = nil,
-        count: Int? = nil,
-        secondValue: Double? = nil,
-        secondCount: Int? = nil
+        value: Double,
+        count: Int,
+        secondValue: Double?,
+        secondCount: Int?
     ) {
         self.id = id
         self.value = value
@@ -37,7 +37,9 @@ struct Price: Identifiable, Codable, Equatable, Hashable {
         Price(
             id: id,
             value: value,
-            count: 1
+            count: 1,
+            secondValue: nil,
+            secondCount: nil
         )
     }
     
@@ -49,7 +51,9 @@ struct Price: Identifiable, Codable, Equatable, Hashable {
         Price(
             id: id,
             value: value,
-            count: count
+            count: count,
+            secondValue: nil,
+            secondCount: nil
         )
     }
     

@@ -66,7 +66,7 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
     }
     
     func priceButtonTapped() {
-        coordinator.push(screen: .selectPrice)
+        coordinator.push(screen: .selectPrice(monthInvoice: monthInvoice))
     }
     
     func saveButtonTapped() {
