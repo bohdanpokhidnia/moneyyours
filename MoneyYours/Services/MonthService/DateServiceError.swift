@@ -9,4 +9,5 @@ import Foundation
 
 enum DateServiceError: Error {
     case invalidMonthNumber
+    case failedPreviousMonth
 }

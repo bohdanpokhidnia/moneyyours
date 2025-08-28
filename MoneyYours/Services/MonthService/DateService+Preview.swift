@@ -13,6 +13,9 @@ extension DateService {
             currentMonth: { _, _  in
                 return .january
             },
+            previousMonthAtCurrent: { _ in
+                return .december
+            },
             sortedMonthAtCurrent: { _, _ in
                 return Month.allCases
             },

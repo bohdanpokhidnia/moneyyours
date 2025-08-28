@@ -5,7 +5,7 @@
 //  Created by Bohdan Pokhidnia on 18.12.2024.
 //
 
-import SharingGRDB
+import Dependencies
 
 extension DateService: DependencyKey {
     static var liveValue: DateService {
@@ -16,6 +16,19 @@ extension DateService: DependencyKey {
                     throw .invalidMonthNumber
                 }
                 return month
+            },
+            previousMonthAtCurrent: { month throws(DateServiceError) in
+                let currentMonthNumber = month.rawValue
+                var previousMonthNumber = currentMonthNumber - 1
+                
+                if previousMonthNumber < 1 {
+                    previousMonthNumber = 12
+                }
+                
+                guard let previousMonth = Month(rawValue: previousMonthNumber) else {
+                    throw .invalidMonthNumber
+                }
+                return previousMonth
             },
             sortedMonthAtCurrent: { calendar, date throws(DateServiceError) in
                 let allMonths = Month.allCases
@@ -31,12 +44,5 @@ extension DateService: DependencyKey {
                 return year
             }
         )
-    }
-}
-
-extension DependencyValues {
-    var dateService: DateService {
-        get { self[DateService.self] }
-        set { self[DateService.self] = newValue }
     }
 }
