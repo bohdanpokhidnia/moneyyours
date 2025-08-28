@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct HintGrayTextField: TextFieldStyle {
-    let prompt: String
+    let title: String
     
     func _body(configuration: TextField<_Label>) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(prompt)
+            Text(title)
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundStyle(.mountainMist)
             

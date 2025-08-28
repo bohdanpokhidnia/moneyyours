@@ -67,8 +67,9 @@ private extension SelectPriceView {
                 .font(.subheadline)
             
             HStack(spacing: 8) {
-                TextField(
-                    "",
+                PriceTextField(
+                    placeholder: "",
+                    alignment: .center,
                     text: $viewModel.priceText
                 )
                 .background {
@@ -81,20 +82,21 @@ private extension SelectPriceView {
                 .tint(.beanRed)
                 .keyboardType(.decimalPad)
                 .focused($isFocusedPriceText)
-//                .onChange(of: isFocusedPriceText) { _, newValue in
-//                    if newValue {
-//                        viewModel.beginEditingPriceIfNeeded()
-//                    } else {
-//                        viewModel.priceText = viewModel.formattedPrice(text: viewModel.priceText)
-//                    }
-//                }
+                .onChange(of: isFocusedPriceText) { _, newValue in
+                    if newValue {
+                        viewModel.beginEditingPriceIfNeeded()
+                    } else {
+                        viewModel.priceText = viewModel.formattedPrice(text: viewModel.priceText)
+                    }
+                }
                 
                 Text(viewModel.currency.string)
             }
             .font(.price)
             
             Text("Total:")
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.starDust)
+                .font(.subheadline)
             
             HStack {
                 Text(viewModel.sumText)
@@ -190,7 +192,7 @@ private extension SelectPriceView {
     }
     
     private func textField(state: TextFieldState) -> some View {
-        TitleTextField(
+        TitlePriceTextField(
             title: state.title,
             placeholder: state.placeholder,
             text: state.text

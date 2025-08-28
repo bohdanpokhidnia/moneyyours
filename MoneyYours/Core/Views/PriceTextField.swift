@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct PriceTextField: View {
+    var placeholder: String
+    var alignment: TextAlignment
     @Binding var text: String
     
     var body: some View {
-        TextField("", text: $text)
-            .multilineTextAlignment(.center)
+        TextField(placeholder, text: $text)
+            .multilineTextAlignment(alignment)
             .onChange(of: text) { oldValue, newValue in
                 if newValue.count == 3, oldValue == "0.00" {
                     text = "0"
@@ -26,5 +28,9 @@ struct PriceTextField: View {
 #Preview {
     @Previewable @State var text: String = "0.00"
     
-    PriceTextField(text: $text)
+    PriceTextField(
+        placeholder: "",
+        alignment: .center,
+        text: $text
+    )
 }
