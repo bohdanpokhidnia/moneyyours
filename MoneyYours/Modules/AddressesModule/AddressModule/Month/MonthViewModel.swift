@@ -75,7 +75,7 @@ private extension MonthViewModel {
             guard let price = prices.first(where: { $0.id == invoice.priceId }) else {
                 continue
             }
-            let sum = price.sum
+            let sum = Sum(price: price).sum
             let title = [invoice.name, ", Price:", sum.formatted(.ua)].joined(separator: " ")
             
             let list = CommunalInvoiceList(

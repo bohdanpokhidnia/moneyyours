@@ -41,7 +41,7 @@ struct AddCommunalInvoiceView: View {
                         title: "Price",
                         emoji: "💵",
                         emojiBackground: Color(hex: "#D4EFDF"),
-                        inputType: .text(viewModel.price.wrappedValue.sum.formatted(.ua))
+                        inputType: .text(viewModel.sum)
                     )
                 }
                 .disabled(viewModel.isDisablePriceButton)

@@ -17,7 +17,9 @@ final class SelectPriceViewModel: ObservableObject {
     
     let currency: Currency = .UAH
     let currencyFormatStyle = UkrainianHryvniaFormatStyle()
-    @Published var priceText: String
+    
+    @Published var priceText: String = "0"
+    @Published var sumText: String = "0"
     @Published var valueText: String = "0"
     @Published var countText: String = "1"
     @Published var secondValueText: String = "0"
@@ -43,9 +45,10 @@ final class SelectPriceViewModel: ObservableObject {
         self.price = price
         self.communalInvoiceType = communalInvoiceType
         self.monthInvoice = monthInvoice
-        priceText = price.wrappedValue.sumString
         
+        setup()
         bind()
+        updateSaveButtonDisabled()
 //        fetchPreviousMonthInvoice()
     }
     
@@ -72,18 +75,29 @@ final class SelectPriceViewModel: ObservableObject {
 }
 
 private extension SelectPriceViewModel {
+    func setup() {
+        let sumString = Sum(price: price.wrappedValue).sumString
+        priceText = sumString
+        sumText = sumString
+    }
+    
     func bind() {
         $priceText
+            .removeDuplicates()
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updateMainPrice()
+                self?.updateSaveButtonDisabled()
             }
             .store(in: &cancellables)
         
         Publishers.CombineLatest4($valueText, $countText, $secondValueText, $secondCountText)
+            .dropFirst()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.updatePrice()
+                self?.updateSaveButtonDisabled()
             }
             .store(in: &cancellables)
     }
@@ -132,44 +146,44 @@ private extension SelectPriceViewModel {
 //    }
     
     func updateMainPrice() {
-        let newPrice = Double(priceText) ?? .zero
-        let count = Int(countText) ?? 0
-        let secondValue = Double(secondValueText) ?? .zero
-        let secondCount = Int(secondCountText) ?? 0
-        
-//        price.wrappedValue = .single(id: UUID(), value: newPrice)
-        
-        price.wrappedValue = Price(
-            id: UUID(),
-            value: newPrice,
-            count: count,
-            secondValue: secondValue,
-            secondCount: secondCount
+        let value = Double(priceText) ?? .zero
+        let count = Int(countText) ?? .zero
+
+        price.update(
+            price: Price(
+                id: UUID(),
+                value: value,
+                count: count,
+                secondValue: nil,
+                secondCount: nil
+            )
         )
-        
-        let isDisableSaveButton = price.wrappedValue.isZero
-        setSaveButton(disabled: isDisableSaveButton)
+    
+        sumText = Sum(price: price.wrappedValue).sumString
     }
     
     func updatePrice() {
         let value = Double(valueText) ?? .zero
-        let count = price.wrappedValue.count ?? 0
-        let secondValue = price.wrappedValue.secondValue ?? .zero
-        let secondCount = price.wrappedValue.secondCount ?? 0
-        
-        price.wrappedValue = Price(
-            id: UUID(),
-            value: value,
-            count: count,
-            secondValue: secondValue,
-            secondCount: secondCount
+        let count = Int(countText) ?? .zero
+        let secondValue = Double(secondValueText) ?? .zero
+        let secondCount = Int(secondCountText) ?? .zero
+
+        price.update(
+            price: Price(
+                id: UUID(),
+                value: value,
+                count: count,
+                secondValue: secondValue,
+                secondCount: secondCount
+            )
         )
-        
-        let isDisableSaveButton = price.wrappedValue.isZero
+
+        sumText = Sum(price: price.wrappedValue).sumString
+    }
+    
+    func updateSaveButtonDisabled() {
+        let isDisableSaveButton = Sum(price: price.wrappedValue).isZero
         setSaveButton(disabled: isDisableSaveButton)
-        priceText = price.wrappedValue.sumString
-        
-        print("[dev] price: \(price)")
     }
     
     func setSaveButton(disabled: Bool) {

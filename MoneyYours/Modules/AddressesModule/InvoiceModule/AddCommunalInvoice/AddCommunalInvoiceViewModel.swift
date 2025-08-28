@@ -24,6 +24,10 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
          isFailedName || isFailedInvoiceType || isFailedPrice
     }
     
+    var sum: String {
+        Sum(price: price.wrappedValue).sum.formatted(.ua)
+    }
+    
     private var isFailedName: Bool {
         name.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
@@ -33,7 +37,7 @@ final class AddCommunalInvoiceViewModel: ObservableObject {
     }
     
     private var isFailedPrice: Bool {
-        price.wrappedValue.sum == .zero
+        Sum(price: price.wrappedValue).isZero
     }
     
     @Dependency(\.defaultDatabase) private var database

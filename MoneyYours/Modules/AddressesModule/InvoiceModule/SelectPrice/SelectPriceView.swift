@@ -69,15 +69,8 @@ private extension SelectPriceView {
             HStack(spacing: 8) {
                 TextField(
                     "",
-                    text: Binding(
-                        get: { viewModel.priceText },
-                        set: { newValue in
-                            let formatted = viewModel.formattedPrice(text: newValue)
-                            viewModel.priceText = formatted
-                        }
-                    )
+                    text: $viewModel.priceText
                 )
-                .focused($isFocusedPriceText)
                 .background {
                     GeometryReader { geometry in
                         Color.clear
@@ -87,17 +80,28 @@ private extension SelectPriceView {
                 .fixedSize()
                 .tint(.beanRed)
                 .keyboardType(.decimalPad)
-                .onChange(of: isFocusedPriceText) { _, newValue in
-                    if newValue {
-                        viewModel.beginEditingPriceIfNeeded()
-                    } else {
-                        viewModel.priceText = viewModel.formattedPrice(text: viewModel.price.wrappedValue.sumString)
-                    }
-                }
+                .focused($isFocusedPriceText)
+//                .onChange(of: isFocusedPriceText) { _, newValue in
+//                    if newValue {
+//                        viewModel.beginEditingPriceIfNeeded()
+//                    } else {
+//                        viewModel.priceText = viewModel.formattedPrice(text: viewModel.priceText)
+//                    }
+//                }
                 
                 Text(viewModel.currency.string)
             }
             .font(.price)
+            
+            Text("Total:")
+                .foregroundStyle(.secondary)
+            
+            HStack {
+                Text(viewModel.sumText)
+                
+                Text(viewModel.currency.string)
+            }
+            .font(.price) // або інший стиль
         }
     }
     
@@ -189,16 +193,7 @@ private extension SelectPriceView {
         TitleTextField(
             title: state.title,
             placeholder: state.placeholder,
-            text: Binding(
-                get: { state.text.wrappedValue },
-                set: { newValue in
-                    if state.keyboardType == .decimalPad {
-                        state.text.wrappedValue = newValue.formatted(.priceInput)
-                    } else {
-                        state.text.wrappedValue = newValue
-                    }
-                }
-            )
+            text: state.text
         )
         .keyboardType(state.keyboardType)
     }
@@ -215,7 +210,7 @@ private extension SelectPriceView {
 }
 
 #Preview {
-    @Previewable @State var price: Price = .row(id: UUID(5), value: 5.0, count: 1)
+    @Previewable @State var price: Price = .row(id: UUID(5), value: 0.0, count: 1)
 
     PreviewCoordinatorNavigationStack {
         SelectPriceView(
